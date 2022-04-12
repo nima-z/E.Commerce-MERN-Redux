@@ -1,10 +1,12 @@
 import { Add, Remove } from "@mui/icons-material";
+import { mobile } from "../../responsive";
 
 import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
   padding: 2rem;
+  ${mobile({ flexDirection: "column", padding: "1rem" })}
 `;
 const ImageContainer = styled.div`
   flex: 1;
@@ -15,9 +17,11 @@ const Image = styled.img`
   width: 70%;
   height: 75vh;
   object-fit: cover;
+  ${mobile({ height: "50vh", width: "100%" })}
 `;
 const InfoContainer = styled.div`
   flex: 1;
+  ${mobile({ padding: "0.5rem" })}
 `;
 const Title = styled.h2``;
 
@@ -36,6 +40,7 @@ const FilterContainer = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 2rem;
+  ${mobile({ padding: "0.5rem", width: "100%" })}
 `;
 
 const Filter = styled.div`
@@ -45,6 +50,7 @@ const Filter = styled.div`
 const FilterTitle = styled.span`
   font-size: 2rem;
   font-weight: 200;
+  ${mobile({ fontSize: "1.2rem" })}
 `;
 
 const FilterColor = styled.div`
@@ -68,6 +74,7 @@ const AddContainer = styled.div`
   align-items: center;
   width: 70%;
   padding: 2rem;
+  ${mobile({ padding: "1.5rem 1rem", width: "100%" })}
 `;
 
 const AmountContainer = styled.div`
@@ -138,8 +145,8 @@ export default function SingleProduct(props) {
             <Add />
             <Amount>1</Amount>
             <Remove />
-            <Button>Add to cart</Button>
           </AmountContainer>
+          <Button>Add to cart</Button>
         </AddContainer>
       </InfoContainer>
     </Container>

@@ -1,7 +1,9 @@
 import styled from "styled-components";
+import { mobile } from "../../responsive";
 
 export const Container = styled.div`
   display: flex;
+  ${mobile({ flexDirection: "column" })}
 `;
 
 export const LeftSide = styled.div`
@@ -34,6 +36,7 @@ export const SocialIcon = styled.div`
 export const Center = styled.div`
   flex: 1;
   padding: 1.7rem;
+  ${mobile({ display: "none" })}
 `;
 
 export const Title = styled.h3`
@@ -55,6 +58,7 @@ export const ListItem = styled.li`
 export const RightSide = styled.div`
   flex: 1;
   padding: 1.5rem;
+  ${mobile({ backgroundColor: "#eee" })}
 `;
 
 export const ContactItem = styled.div`

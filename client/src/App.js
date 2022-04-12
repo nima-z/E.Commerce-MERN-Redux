@@ -10,10 +10,10 @@ import "./App.css";
 function App() {
   return (
     <Layout>
-      {/* <HomePage /> */}
-      {/* <AllProducts /> */}
-      {/* <ProductDetail /> */}
-      {/* <Authentication /> */}
+      <HomePage />
+      <AllProducts />
+      <ProductDetail />
+      <Authentication />
       <CartPage />
     </Layout>
   );

@@ -1,7 +1,9 @@
 import styled from "styled-components";
+import { mobile } from "../../responsive";
 
 export const Container = styled.header`
   height: 80px;
+  ${mobile({ height: "60px" })}
 `;
 
 export const Wrapper = styled.div`
@@ -9,16 +11,19 @@ export const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  ${mobile({ justifyContent: "space-around" })}
 `;
 
 export const Left = styled.div`
   flex: 1;
   display: flex;
   margin-left: 0.5rem;
+  ${mobile({ display: "none" })}
 `;
 export const Center = styled.div`
   flex: 1;
   text-align: center;
+  ${mobile({ textAlign: "left" })}
 `;
 export const Right = styled.div`
   flex: 1;
@@ -49,6 +54,7 @@ export const Input = styled.input`
 
 export const Logo = styled.h1`
   font-weight: bold;
+  ${mobile({ fontSize: "1.5rem" })}
 `;
 
 export const MenuItem = styled.div`

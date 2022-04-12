@@ -29,8 +29,7 @@ function NavBar() {
           <Logo>Boutique</Logo>
         </Center>
         <Right>
-          <MenuItem>REGISTER</MenuItem>
-          <MenuItem>SIGN IN</MenuItem>
+          <MenuItem>Sign in</MenuItem>
           <Badge badgeContent={4} color="primary">
             <MdOutlineShoppingCart />
           </Badge>

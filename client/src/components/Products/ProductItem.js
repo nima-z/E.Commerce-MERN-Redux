@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import { mobile } from "../../responsive";
 
 const Container = styled.div`
   width: 200px;
@@ -14,6 +15,12 @@ const Container = styled.div`
   &:hover > .icons {
     opacity: 1;
   }
+  ${mobile({
+    width: "150px",
+    height: "220px",
+    display: "flex",
+    flexDirection: "column",
+  })}
 `;
 
 const Image = styled.img`
@@ -64,6 +71,7 @@ const Info = styled.div`
 const Price = styled.p`
   font-weight: 500;
   color: rgba(0, 0, 0, 0.7);
+  ${mobile({ fontSize: "0.9rem", fontWeight: 300 })}
 `;
 
 function ProductItem({ item }) {

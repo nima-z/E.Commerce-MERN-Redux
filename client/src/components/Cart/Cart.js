@@ -1,8 +1,10 @@
 import { Add, Remove } from "@mui/icons-material";
 import styled from "styled-components";
+import { mobile } from "../../responsive";
 
 const Container = styled.div`
   padding: 1.5rem;
+  ${mobile({ padding: "0.3rem" })}
 `;
 
 const Title = styled.h1`
@@ -27,7 +29,9 @@ const TopButton = styled.button`
     props.type === "filled" ? "black" : "transparent"};
 `;
 
-const TopTexts = styled.div``;
+const TopTexts = styled.div`
+  ${mobile({ display: "none" })}
+`;
 
 const TopText = styled.span`
   cursor: pointer;
@@ -39,6 +43,7 @@ const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 2rem;
+  ${mobile({ flexDirection: "column" })}
 `;
 
 const Info = styled.div`
@@ -48,6 +53,7 @@ const Info = styled.div`
 const Product = styled.div`
   display: flex;
   justify-content: space-between;
+  ${mobile({ flexDirection: "column" })}
 `;
 
 const ProductDetail = styled.div`
@@ -96,11 +102,13 @@ const AmountContainer = styled.div`
 const Amount = styled.div`
   font-size: 1.5rem;
   margin: 0.5rem;
+  ${mobile({ margin: "1rem 1.5rem" })}
 `;
 
 const Price = styled.div`
   font-size: 2.5rem;
   font-weight: 200;
+  ${mobile({ marginBottom: "1.5rem", fontSize: "2rem" })}
 `;
 
 const Hr = styled.hr`
