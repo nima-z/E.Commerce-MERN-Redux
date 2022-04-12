@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 export const Container = styled.header`
-  height: 100px;
+  height: 80px;
 `;
 
 export const Wrapper = styled.div`
-  padding: 0.5rem 2rem;
+  padding: 0 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -54,4 +54,5 @@ export const Logo = styled.h1`
 export const MenuItem = styled.div`
   font-size: 14px;
   cursor: pointer;
+  margin-right: 1rem;
 `;

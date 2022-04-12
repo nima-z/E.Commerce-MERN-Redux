@@ -1,18 +1,16 @@
-import NavBar from "../components/Header/NavBar";
-import Announcement from "../components/Header/Announcement";
+import { Fragment } from "react";
+
 import Slider from "../components/Slider/Slider";
 import CategoryGrid from "../components/Category/CategoryGrid";
 import NewsLetter from "../components/NewsLetter/NewsLetter";
 
 function HomePage() {
   return (
-    <div>
-      <Announcement />
-      <NavBar />
+    <Fragment>
       <Slider />
       <CategoryGrid />
       <NewsLetter />
-    </div>
+    </Fragment>
   );
 }
 

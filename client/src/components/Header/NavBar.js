@@ -26,7 +26,7 @@ function NavBar() {
           </SearchBox>
         </Left>
         <Center>
-          <Logo>E.SHOP</Logo>
+          <Logo>Boutique</Logo>
         </Center>
         <Right>
           <MenuItem>REGISTER</MenuItem>
