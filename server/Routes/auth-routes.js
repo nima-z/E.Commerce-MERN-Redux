@@ -1,12 +1,15 @@
+//libraries
 const express = require("express");
+
+//modules
 const authController = require("../Controllers/auth-controller");
+//-------------------------------
 
 const router = express.Router();
 
+//routes
 router.post("/register", authController.register);
+router.post("/login", authController.login);
 
-router.get("/login", (req, res) => {
-  res.send("loged in");
-});
-
+//-------------------------------
 module.exports = router;
