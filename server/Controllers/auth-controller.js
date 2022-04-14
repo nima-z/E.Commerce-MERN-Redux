@@ -1,6 +1,7 @@
 //modules
 const dbConnection = require("../Helper/db-connection");
 const cryptoJS = require("crypto-js");
+const jwt = require("jsonwebtoken");
 //--------------------------------------
 
 // REGISTER USER
@@ -58,16 +59,23 @@ async function login(req, res) {
     const decryptedPass = cryptoJS.AES.decrypt(
       existedUser.password,
       process.env.SEC_PASS_PHRASE
-    );
+    ).toString(cryptoJS.enc.Utf8);
 
-    const originalPass = decryptedPass.toString(cryptoJS.enc.Utf8);
-
-    if (originalPass !== password) {
+    if (decryptedPass !== password) {
       res.status(500).json({ message: "password is wrong" });
     }
 
+    const accessToken = jwt.sign(
+      {
+        id: existedUser._id,
+        isAdmin: existedUser.isAdmin,
+      },
+      process.env.JWT_SEC,
+      { expiresIn: "2d" }
+    );
+
     const { password: userPass, ...others } = existedUser;
-    res.status(200).json(others);
+    res.status(200).json({ ...others, accessToken });
   } catch (err) {
     res.status(500).json("could not search in db", err);
   }
