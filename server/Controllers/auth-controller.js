@@ -1,8 +1,9 @@
-//modules
-const dbConnection = require("../Helper/db-connection");
+//libraries
 const cryptoJS = require("crypto-js");
 const jwt = require("jsonwebtoken");
-//--------------------------------------
+//modules
+const dbConnection = require("../Helper/db-connection");
+//-------------------------------------------------------
 
 // REGISTER USER
 async function register(req, res) {
@@ -81,6 +82,6 @@ async function login(req, res) {
   }
 }
 
-//----------------------------
+//============================
 exports.register = register;
 exports.login = login;

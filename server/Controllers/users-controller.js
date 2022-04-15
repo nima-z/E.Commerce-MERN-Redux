@@ -1,7 +1,11 @@
+//libraries
 const cryptoJS = require("crypto-js");
 const { ObjectId } = require("mongodb");
+//modules
 const dbConnection = require("../Helper/db-connection");
+//--------------------------------------------------------
 
+//Edit User
 async function editUser(req, res) {
   const { password } = req.body;
   const { id } = req.params;
@@ -29,4 +33,5 @@ async function editUser(req, res) {
   }
 }
 
+//============================
 exports.editUser = editUser;

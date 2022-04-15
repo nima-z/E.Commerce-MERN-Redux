@@ -1,5 +1,8 @@
+//libraries
 const jwt = require("jsonwebtoken");
+//------------------------------------
 
+//Verifyin Token
 function verifyToken(req, res, next) {
   const { token } = req.headers;
   if (token) {
@@ -16,6 +19,7 @@ function verifyToken(req, res, next) {
   }
 }
 
+//Verifying Token and ID
 function verifyId(req, res, next) {
   verifyToken(req, res, () => {
     if (req.user.id === req.params.id || req.user.isAdmin) {
@@ -26,6 +30,5 @@ function verifyId(req, res, next) {
   });
 }
 
-// exports.verifyToken = verifyToken;
-// exports.verifyId = verifyId;
+//==========================================
 module.exports = { verifyToken, verifyId };

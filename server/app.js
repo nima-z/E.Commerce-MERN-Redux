@@ -1,4 +1,4 @@
-// Third-party libraries
+// libraries
 const express = require("express");
 const dotenv = require("dotenv");
 
@@ -6,18 +6,16 @@ const dotenv = require("dotenv");
 const usersRoutes = require("./Routes/users-routes");
 const authRoutes = require("./Routes/auth-routes");
 //--------------------------------------
-dotenv.config();
 
+dotenv.config();
 const app = express();
 
-// middleware
+// middlewares
 app.use(express.json());
 
 // routes
 app.use("/api/users", usersRoutes);
 app.use("/api/auth", authRoutes);
-
-// database connection
 
 //express port
 app.listen(process.env.PORT || 5000, () => {

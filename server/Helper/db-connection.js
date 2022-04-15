@@ -1,4 +1,6 @@
+//libraries
 const mongo = require("mongodb");
+//--------------------------------
 
 const MongoClient = mongo.MongoClient;
 
@@ -12,4 +14,5 @@ async function dbConnection() {
   }
 }
 
+//============================
 module.exports = dbConnection;
