@@ -40,7 +40,7 @@ async function register(req, res) {
     res.status(502).json({ message: err });
   }
   client.close();
-  res.status(201).json({ newUser });
+  res.status(201).json({ message: "User has been created", user: newUser });
 }
 
 //LOGIN USER
@@ -76,7 +76,9 @@ async function login(req, res) {
     );
 
     const { password: userPass, ...others } = existedUser;
-    res.status(200).json({ ...others, accessToken });
+    res
+      .status(200)
+      .json({ message: "Logged in", user: { ...others, accessToken } });
   } catch (err) {
     res.status(500).json("could not search in db", err);
   }

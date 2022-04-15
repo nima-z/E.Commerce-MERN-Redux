@@ -2,7 +2,7 @@
 const jwt = require("jsonwebtoken");
 //------------------------------------
 
-//Verifyin Token
+//Verify Token
 function verifyToken(req, res, next) {
   const { token } = req.headers;
   if (token) {
@@ -19,8 +19,8 @@ function verifyToken(req, res, next) {
   }
 }
 
-//Verifying Token and ID
-function verifyId(req, res, next) {
+//Verify user ID
+function verifyTokenAndId(req, res, next) {
   verifyToken(req, res, () => {
     if (req.user.id === req.params.id || req.user.isAdmin) {
       next();
@@ -30,5 +30,16 @@ function verifyId(req, res, next) {
   });
 }
 
+//verify Admin
+function verifyTokenAndAdmin(req, res, next) {
+  verifyToken(req, res, () => {
+    if (req.user.isAdmin) {
+      next();
+    } else {
+      res.status(403).json("You are not allowed");
+    }
+  });
+}
+
 //==========================================
-module.exports = { verifyToken, verifyId };
+module.exports = { verifyToken, verifyTokenAndId, verifyTokenAndAdmin };
