@@ -43,7 +43,7 @@ async function deleteUser(req, res) {
   const db = client.db();
 
   try {
-    await db.collection("users").findOneAndDelete({ _id: id });
+    await db.collection("users").findOneAndDelete({ _id: ObjectId(id) });
     client.close();
     res.status(200).json({ message: "User has been deleted" });
   } catch (err) {
@@ -72,17 +72,16 @@ async function getUser(req, res) {
 }
 
 //Get all users
-async function getAllUser(req, res) {
-  const query = req.query.new;
+async function getAllUsers(req, res) {
+  const { latest } = req.query;
 
   const client = await dbConnection();
   const db = client.db();
 
   try {
-    const users = query
+    const users = latest
       ? await db.collection("users").find().sort({ _id: -1 }).limit(5).toArray()
       : await db.collection("users").find().toArray();
-    console.log(users);
     client.close();
     res.status(200).json({ message: "users has been found", users: users });
   } catch (err) {
@@ -90,8 +89,34 @@ async function getAllUser(req, res) {
     res.status(500).json(err);
   }
 }
+
+//Get All Stats
+async function getAllStats(req, res) {
+  const date = new Date();
+  const lastYear = new Date(date.setFullYear(date.getFullYear() - 1));
+
+  const client = await dbConnection();
+  const db = client.db();
+
+  try {
+    const data = await db
+      .collection("users")
+      .aggregate([
+        { $match: { createdAt: { $gte: lastYear } } },
+        { $group: { _id: { $month: "$createdAt" }, total: { $sum: 1 } } },
+      ])
+      .toArray();
+    client.close();
+    res.status(200).json({ message: "stat is done", data });
+  } catch (err) {
+    client.close();
+    res.status(500).json({ message: "something went wrong", err });
+  }
+}
+
 //============================
 exports.editUser = editUser;
 exports.deleteUser = deleteUser;
 exports.getUser = getUser;
-exports.getAllUser = getAllUser;
+exports.getAllUsers = getAllUsers;
+exports.getAllStats = getAllStats;

@@ -13,8 +13,9 @@ const router = express.Router();
 //routes
 router.patch("/:id", verifyTokenAndId, usersController.editUser);
 router.delete("/:id", verifyTokenAndId, usersController.deleteUser);
+router.get("/stats", verifyTokenAndAdmin, usersController.getAllStats);
+router.get("/", verifyTokenAndAdmin, usersController.getAllUsers);
 router.get("/:id", verifyTokenAndAdmin, usersController.getUser);
-router.get("/", verifyTokenAndAdmin, usersController.getAllUser);
 
 //========================
 module.exports = router;
