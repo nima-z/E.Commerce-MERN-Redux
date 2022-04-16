@@ -85,5 +85,6 @@ async function login(req, res) {
 }
 
 //============================
-exports.register = register;
-exports.login = login;
+module.exports = { register, login };
+// exports.register = register;
+// exports.login = login;

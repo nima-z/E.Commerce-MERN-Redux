@@ -8,7 +8,7 @@ const dbConnection = require("../Helper/db-connection");
 //Edit User
 async function editUser(req, res) {
   const { password } = req.body;
-  const { id } = req.params;
+  const { userId } = req.params;
   if (password) {
     req.body.password = cryptoJS.AES.encrypt(
       password,
@@ -20,7 +20,7 @@ async function editUser(req, res) {
 
   try {
     const updatedUser = await db.collection("users").findOneAndUpdate(
-      { _id: ObjectId(id) },
+      { _id: ObjectId(userId) },
       {
         $set: req.body,
         $currentDate: { updatedAt: true },
@@ -37,13 +37,13 @@ async function editUser(req, res) {
 
 //Delete User
 async function deleteUser(req, res) {
-  const { id } = req.params;
+  const { userId } = req.params;
 
   const client = await dbConnection();
   const db = client.db();
 
   try {
-    await db.collection("users").findOneAndDelete({ _id: ObjectId(id) });
+    await db.collection("users").findOneAndDelete({ _id: ObjectId(userId) });
     client.close();
     res.status(200).json({ message: "User has been deleted" });
   } catch (err) {
@@ -54,7 +54,7 @@ async function deleteUser(req, res) {
 
 //Get a single user
 async function getUser(req, res) {
-  const { id } = req.params;
+  const { userId } = req.params;
 
   const client = await dbConnection();
   const db = client.db();
@@ -62,7 +62,7 @@ async function getUser(req, res) {
   try {
     const foundUser = await db
       .collection("users")
-      .findOne({ _id: ObjectId(id) });
+      .findOne({ _id: ObjectId(userId) });
     client.close();
     res.status(200).json({ message: "user has been found", user: foundUser });
   } catch (err) {
