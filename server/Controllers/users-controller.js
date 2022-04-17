@@ -115,8 +115,4 @@ async function getAllStats(req, res) {
 }
 
 //============================
-exports.editUser = editUser;
-exports.deleteUser = deleteUser;
-exports.getUser = getUser;
-exports.getAllUsers = getAllUsers;
-exports.getAllStats = getAllStats;
+module.exports = { getAllUsers, getUser, getAllStats, editUser, deleteUser };

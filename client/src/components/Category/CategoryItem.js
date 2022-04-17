@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { mobile } from "../../responsive";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -36,8 +37,13 @@ const Title = styled.h1`
 `;
 
 function CategoryItem(props) {
+  const navigate = useNavigate();
+
+  function navigation(e) {
+    navigate("/products/category");
+  }
   return (
-    <Container>
+    <Container onClick={navigation}>
       <Image src={props.image} alt={props.title} className="image" />
       <Info>
         <Title className="title">{props.title}</Title>

@@ -2,19 +2,22 @@
 const express = require("express");
 //modules
 const { verifyTokenAndAdmin } = require("../Helper/verifyTokenAndId");
-const productController = require("../Controllers/product-controller");
-//-------------------------------
+const {
+  createNewProduct,
+  editProduct,
+  deleteProduct,
+  getAllProducts,
+  getProduct,
+} = require("../Controllers/product-controller");
+//----------------------------------------------------------------
+
 const router = express.Router();
 
-router.post("/", verifyTokenAndAdmin, productController.createNewProduct);
-router.patch("/:productId", verifyTokenAndAdmin, productController.editProduct);
-router.delete(
-  "/:productId",
-  verifyTokenAndAdmin,
-  productController.deleteProduct
-);
-router.get("/", productController.getAllProducts);
-router.get("/:productId", productController.getProduct);
+router.post("/", verifyTokenAndAdmin, createNewProduct);
+router.patch("/:productId", verifyTokenAndAdmin, editProduct);
+router.delete("/:productId", verifyTokenAndAdmin, deleteProduct);
+router.get("/", getAllProducts);
+router.get("/:productId", getProduct);
 
 //=====================
 module.exports = router;

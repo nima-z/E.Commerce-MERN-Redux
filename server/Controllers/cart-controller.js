@@ -88,7 +88,7 @@ async function getCart(req, res) {
   }
 }
 
-async function getAllCart(req, res) {
+async function getAllCarts(req, res) {
   const client = await dbConnection();
   const db = client.db();
 
@@ -104,8 +104,4 @@ async function getAllCart(req, res) {
 }
 
 //===========================================
-exports.createCart = createCart;
-exports.updateCart = updateCart;
-exports.deleteCart = deleteCart;
-exports.getCart = getCart;
-exports.getAllCart = getAllCart;
+module.exports = { createCart, updateCart, deleteCart, getCart, getAllCarts };

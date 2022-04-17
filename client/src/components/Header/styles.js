@@ -55,6 +55,7 @@ export const Input = styled.input`
 export const Logo = styled.h1`
   font-weight: bold;
   ${mobile({ fontSize: "1.5rem" })}
+  cursor: pointer;
 `;
 
 export const MenuItem = styled.div`

@@ -13,8 +13,13 @@ import {
 
 import { MdSearch, MdOutlineShoppingCart } from "react-icons/md";
 import Badge from "@mui/material/Badge";
+import { useNavigate, Link } from "react-router-dom";
 
 function NavBar() {
+  const navigate = useNavigate();
+  function navigation(e) {
+    navigate("/");
+  }
   return (
     <Container>
       <Wrapper>
@@ -26,13 +31,17 @@ function NavBar() {
           </SearchBox>
         </Left>
         <Center>
-          <Logo>Boutique</Logo>
+          <Logo onClick={navigation}>Boutique</Logo>
         </Center>
         <Right>
-          <MenuItem>Sign in</MenuItem>
-          <Badge badgeContent={4} color="primary">
-            <MdOutlineShoppingCart />
-          </Badge>
+          <MenuItem>
+            <Link to="/authentication">Sign in</Link>
+          </MenuItem>
+          <Link to="/cart">
+            <Badge badgeContent={4} color="primary">
+              <MdOutlineShoppingCart />
+            </Badge>
+          </Link>
         </Right>
       </Wrapper>
     </Container>

@@ -85,6 +85,4 @@ async function login(req, res) {
 }
 
 //============================
-// module.exports = { register, login };
-exports.register = register;
-exports.login = login;
+module.exports = { register, login };

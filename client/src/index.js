@@ -3,9 +3,16 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 
+import { BrowserRouter } from "react-router-dom";
+import Layout from "./components/Layout/Layout";
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <BrowserRouter>
+    <React.StrictMode>
+      <Layout>
+        <App />
+      </Layout>
+    </React.StrictMode>
+  </BrowserRouter>,
   document.getElementById("root")
 );

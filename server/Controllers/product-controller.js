@@ -124,8 +124,10 @@ async function getAllProducts(req, res) {
 }
 
 //===========================================
-exports.createNewProduct = createNewProduct;
-exports.editProduct = editProduct;
-exports.deleteProduct = deleteProduct;
-exports.getProduct = getProduct;
-exports.getAllProducts = getAllProducts;
+module.exports = {
+  getAllProducts,
+  getProduct,
+  createNewProduct,
+  editProduct,
+  deleteProduct,
+};

@@ -126,9 +126,11 @@ async function getMonthlyIncome(req, res) {
 }
 
 //===========================================
-exports.createOrder = createOrder;
-exports.updateOrder = updateOrder;
-exports.deleteOrder = deleteOrder;
-exports.getOrder = getOrder;
-exports.getAllOrders = getAllOrders;
-exports.getMonthlyIncome = getMonthlyIncome;
+module.exports = {
+  getAllOrders,
+  getOrder,
+  getMonthlyIncome,
+  createOrder,
+  updateOrder,
+  deleteOrder,
+};

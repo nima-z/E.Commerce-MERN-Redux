@@ -6,18 +6,25 @@ const {
   verifyTokenAndId,
   verifyTokenAndAdmin,
 } = require("../Helper/verifyTokenAndId");
-const orderController = require("../Controllers/order-controller");
+const {
+  getAllOrders,
+  getOrder,
+  getMonthlyIncome,
+  createOrder,
+  updateOrder,
+  deleteOrder,
+} = require("../Controllers/order-controller");
 //--------------------------------
 
 const router = express.Router();
 
 //routes
-router.get("/", verifyTokenAndAdmin, orderController.getAllOrders);
-router.get("/find/:userId", verifyTokenAndId, orderController.getOrder);
-router.get("/income", verifyTokenAndAdmin, orderController.getMonthlyIncome);
-router.post("/", verifyToken, orderController.createOrder);
-router.patch("/:orderId", verifyTokenAndAdmin, orderController.updateOrder);
-router.delete("/:orderId", verifyTokenAndAdmin, orderController.deleteOrder);
+router.get("/", verifyTokenAndAdmin, getAllOrders);
+router.get("/find/:userId", verifyTokenAndId, getOrder);
+router.get("/income", verifyTokenAndAdmin, getMonthlyIncome);
+router.post("/", verifyToken, createOrder);
+router.patch("/:orderId", verifyTokenAndAdmin, updateOrder);
+router.delete("/:orderId", verifyTokenAndAdmin, deleteOrder);
 
 //========================
 module.exports = router;

@@ -1,7 +1,13 @@
 //libraries
 const express = require("express");
 //modules
-const usersController = require("../Controllers/users-controller");
+const {
+  getAllUsers,
+  getUser,
+  getAllStats,
+  editUser,
+  deleteUser,
+} = require("../Controllers/users-controller");
 const {
   verifyTokenAndId,
   verifyTokenAndAdmin,
@@ -11,11 +17,11 @@ const {
 const router = express.Router();
 
 //routes
-router.patch("/:userId", verifyTokenAndId, usersController.editUser);
-router.delete("/:userId", verifyTokenAndId, usersController.deleteUser);
-router.get("/stats", verifyTokenAndAdmin, usersController.getAllStats);
-router.get("/", verifyTokenAndAdmin, usersController.getAllUsers);
-router.get("/:userId", verifyTokenAndAdmin, usersController.getUser);
+router.patch("/:userId", verifyTokenAndId, editUser);
+router.delete("/:userId", verifyTokenAndId, deleteUser);
+router.get("/stats", verifyTokenAndAdmin, getAllStats);
+router.get("/", verifyTokenAndAdmin, getAllUsers);
+router.get("/:userId", verifyTokenAndAdmin, getUser);
 
 //========================
 module.exports = router;
