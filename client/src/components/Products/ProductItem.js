@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
@@ -71,25 +72,28 @@ const Info = styled.div`
 const Price = styled.p`
   font-weight: 500;
   color: rgba(0, 0, 0, 0.7);
+  text-decoration: none;
   ${mobile({ fontSize: "0.9rem", fontWeight: 300 })}
 `;
 
 function ProductItem({ item }) {
   return (
-    <Container>
-      <Image src={item.image} />
-      <Icons className="icons">
-        <Icon>
-          <ShoppingCartOutlinedIcon />
-        </Icon>
-        <Icon>
-          <FavoriteBorderOutlinedIcon />
-        </Icon>
-      </Icons>
-      <Info>
-        <Price>Price: $ {item.price}</Price>
-      </Info>
-    </Container>
+    <Link to={`/product/${item.id}`}>
+      <Container>
+        <Image src={item.image} />
+        <Icons className="icons">
+          <Icon>
+            <ShoppingCartOutlinedIcon />
+          </Icon>
+          <Icon>
+            <FavoriteBorderOutlinedIcon />
+          </Icon>
+        </Icons>
+        <Info>
+          <Price>Price: $ {item.price}</Price>
+        </Info>
+      </Container>
+    </Link>
   );
 }
 

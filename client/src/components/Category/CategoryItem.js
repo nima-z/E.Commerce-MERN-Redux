@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { mobile } from "../../responsive";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   display: flex;
@@ -10,7 +10,6 @@ const Container = styled.div`
   box-shadow: 2px 2px 6px 0px #6c757d;
 
   &:hover > .image {
-    /* filter: blur(2px); */
     filter: contrast(100%);
   }
 
@@ -37,18 +36,17 @@ const Title = styled.h1`
 `;
 
 function CategoryItem(props) {
-  const navigate = useNavigate();
+  const category = props.title.toLowerCase();
 
-  function navigation(e) {
-    navigate("/products/category");
-  }
   return (
-    <Container onClick={navigation}>
-      <Image src={props.image} alt={props.title} className="image" />
-      <Info>
-        <Title className="title">{props.title}</Title>
-      </Info>
-    </Container>
+    <Link to={`/products/${category}`}>
+      <Container>
+        <Image src={props.image} alt={props.title} className="image" />
+        <Info>
+          <Title className="title">{props.title}</Title>
+        </Info>
+      </Container>
+    </Link>
   );
 }
 

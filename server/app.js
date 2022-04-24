@@ -10,6 +10,8 @@ const productRoutes = require("./Routes/product-routes");
 const cartRoutes = require("./Routes/cart-routes");
 const orderRoutes = require("./Routes/order-routes");
 const stripeRoute = require("./Routes/stripe-route");
+
+// const dbRoute = require("./Routes/firstDb-route");
 //--------------------------------------
 
 dotenv.config();
@@ -26,6 +28,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/carta", cartRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/stripe", stripeRoute);
+// app.use("/api/db", dbRoute);
 
 //express port
 app.listen(process.env.PORT || 5000, () => {

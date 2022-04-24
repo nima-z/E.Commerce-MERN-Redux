@@ -107,21 +107,16 @@ const Button = styled.button`
   }
 `;
 
-export default function SingleProduct(props) {
+export default function SingleProduct({ item }) {
   return (
     <Container>
       <ImageContainer>
-        <Image src="https://media.missguided.com/i/missguided/DD928119_01" />
+        <Image src={item.image} />
       </ImageContainer>
       <InfoContainer>
-        <Title>Dress</Title>
-        <Desc>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime
-          mollitia repellendus totam ipsa eos expedita alias in, ab quidem.
-          Laudantium voluptate ipsa consequatur libero magni esse, quas atque.
-          Harum, amet?
-        </Desc>
-        <Price>$ 299</Price>
+        <Title>{item.title}</Title>
+        <Desc>{item.desc}</Desc>
+        <Price>$ {item.price}</Price>
         <FilterContainer>
           <Filter>
             <FilterTitle>Color</FilterTitle>

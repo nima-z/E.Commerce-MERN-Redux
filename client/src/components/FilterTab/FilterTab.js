@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Container,
   FilterContainer,
@@ -8,15 +9,27 @@ import {
 } from "./styles";
 
 export default function FilterTab() {
+  const [filter, setFilter] = useState({});
+  const [sort, setSort] = useState("newest");
+
+  function filterHandler(e) {
+    const value = e.target.value;
+    setFilter((prev) => {
+      return { ...prev, [e.target.name]: value };
+    });
+  }
+
+  function sortHandler(e) {
+    setSort(e.target.value);
+  }
+
   return (
     <Container>
       <FilterContainer>
         <Filter>
           <FilterText>Filter Products:</FilterText>
-          <Select>
-            <Option disabled selected>
-              Color
-            </Option>
+          <Select defaultValue={"Color"} name="color" onChange={filterHandler}>
+            <Option disabled>Color</Option>
             <Option>White</Option>
             <Option>Black</Option>
             <Option>Red</Option>
@@ -24,10 +37,8 @@ export default function FilterTab() {
             <Option>Green</Option>
             <Option>Yellow</Option>
           </Select>
-          <Select>
-            <Option disabled selected>
-              Size
-            </Option>
+          <Select defaultValue={"Size"} name="size" onChange={filterHandler}>
+            <Option disabled>Size</Option>
             <Option>XS</Option>
             <Option>S</Option>
             <Option>M</Option>
@@ -37,10 +48,10 @@ export default function FilterTab() {
         </Filter>
         <Filter>
           <FilterText>Sort Products:</FilterText>
-          <Select>
-            <Option selected>Newest</Option>
-            <Option>Price (asc)</Option>
-            <Option>Price (desc)</Option>
+          <Select onChange={sortHandler}>
+            <Option value="newest">Newest</Option>
+            <Option value="asc">Price (asc)</Option>
+            <Option value="desc">Price (desc)</Option>
           </Select>
         </Filter>
       </FilterContainer>
