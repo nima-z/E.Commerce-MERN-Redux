@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { mobile } from "../../responsive";
+import { SearchOffOutlined } from "@mui/icons-material";
 
 const Container = styled.div`
   width: 200px;
@@ -74,26 +75,31 @@ const Price = styled.p`
   color: rgba(0, 0, 0, 0.7);
   text-decoration: none;
   ${mobile({ fontSize: "0.9rem", fontWeight: 300 })}
+
+  text-decoration: none;
 `;
 
 function ProductItem({ item }) {
   return (
-    <Link to={`/product/${item._id}`}>
-      <Container>
-        <Image src={item.image} />
-        <Icons className="icons">
-          <Icon>
-            <ShoppingCartOutlinedIcon />
-          </Icon>
-          <Icon>
-            <FavoriteBorderOutlinedIcon />
-          </Icon>
-        </Icons>
-        <Info>
-          <Price>Price: $ {item.price}</Price>
-        </Info>
-      </Container>
-    </Link>
+    <Container>
+      <Image src={item.image} />
+      <Icons className="icons">
+        <Icon>
+          <ShoppingCartOutlinedIcon />
+        </Icon>
+        <Icon>
+          <FavoriteBorderOutlinedIcon />
+        </Icon>
+        <Icon>
+          <Link to={`/product/${item._id}`}>
+            <SearchOffOutlined />
+          </Link>
+        </Icon>
+      </Icons>
+      <Info>
+        <Price>Price: $ {item.price}</Price>
+      </Info>
+    </Container>
   );
 }
 

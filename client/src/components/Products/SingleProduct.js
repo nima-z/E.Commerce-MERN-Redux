@@ -2,6 +2,7 @@ import { Add, Remove } from "@mui/icons-material";
 import { mobile } from "../../responsive";
 
 import styled from "styled-components";
+import { useState } from "react";
 
 const Container = styled.div`
   display: flex;
@@ -48,7 +49,7 @@ const Filter = styled.div`
   align-items: center;
 `;
 const FilterTitle = styled.span`
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 200;
   ${mobile({ fontSize: "1.2rem" })}
 `;
@@ -57,6 +58,8 @@ const FilterColor = styled.div`
   width: 20px;
   height: 20px;
   border-radius: 50%;
+  border: ${(props) =>
+    props.selected ? "2px solid teal" : "0.5px solid gray"};
   background-color: ${(props) => props.color};
   margin-left: 0.5rem;
   cursor: pointer;
@@ -88,10 +91,20 @@ const Amount = styled.span`
   height: 30px;
   border-radius: 0.5rem;
   border: 1px solid teal;
+  border-color: ${(props) => (props.empty ? "red" : "teal")};
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0 0.5rem;
+`;
+
+const IconButton = styled.button`
+  background: none;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: ${(props) => (props.disabled ? "default" : "pointer")};
 `;
 
 const Button = styled.button`
@@ -108,6 +121,44 @@ const Button = styled.button`
 `;
 
 export default function SingleProduct({ item }) {
+  const [quantity, setQuantity] = useState(1);
+  const [max, setMax] = useState(false);
+  const [min, setMin] = useState(true);
+  const [color, setColor] = useState("");
+  const [size, setSize] = useState("");
+
+  function increaseItem() {
+    setMin(false);
+    let newQ;
+    if (quantity === item.inStock) {
+      newQ = quantity;
+      setMax(true);
+    } else {
+      newQ = quantity + 1;
+    }
+    setQuantity(newQ);
+  }
+  function decreaseItem() {
+    setMax(false);
+    let newQ;
+    if (quantity === 2) {
+      setMin(true);
+      newQ = quantity - 1;
+    } else {
+      newQ = quantity - 1;
+    }
+    setQuantity(newQ);
+  }
+  function pickColor(c) {
+    setColor(c);
+  }
+
+  function pickSize(e) {
+    setSize(e.target.value);
+  }
+
+  console.log(size, color, quantity);
+
   return (
     <Container>
       <ImageContainer>
@@ -118,28 +169,42 @@ export default function SingleProduct({ item }) {
         <Desc>{item.desc}</Desc>
         <Price>$ {item.price}</Price>
         <FilterContainer>
-          <Filter>
-            <FilterTitle>Color</FilterTitle>
-            <FilterColor color="black" />
-            <FilterColor color="blue" />
-            <FilterColor color="red" />
-          </Filter>
-          <Filter>
-            <FilterTitle>Size</FilterTitle>
-            <FilterSize>
-              <SizeOption>XS</SizeOption>
-              <SizeOption>S</SizeOption>
-              <SizeOption>M</SizeOption>
-              <SizeOption>L</SizeOption>
-              <SizeOption>XL</SizeOption>
-            </FilterSize>
-          </Filter>
+          {item.color && (
+            <Filter>
+              <FilterTitle>Color</FilterTitle>
+              {/* {item.color.map((c) => (
+              <FilterColor color={c} />
+            ))} */}
+              <FilterColor
+                color={item.color}
+                selected={item.color === color}
+                onClick={() => {
+                  pickColor(item.color);
+                }}
+              />
+            </Filter>
+          )}
+          {item.size && (
+            <Filter>
+              <FilterTitle>Size</FilterTitle>
+              <FilterSize onChange={pickSize}>
+                {item.size.map((s) => (
+                  <SizeOption key={s}>{s}</SizeOption>
+                ))}
+              </FilterSize>
+            </Filter>
+          )}
         </FilterContainer>
+        {max && <p>There is no more item in the stock</p>}
         <AddContainer>
           <AmountContainer>
-            <Add />
-            <Amount>1</Amount>
-            <Remove />
+            <IconButton onClick={increaseItem} disabled={max}>
+              <Add />
+            </IconButton>
+            <Amount empty={max}>{quantity}</Amount>
+            <IconButton onClick={decreaseItem} disabled={min}>
+              <Remove />
+            </IconButton>
           </AmountContainer>
           <Button>Add to cart</Button>
         </AddContainer>

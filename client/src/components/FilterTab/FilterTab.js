@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Container,
   FilterContainer,
@@ -9,10 +8,7 @@ import {
   // FilterButton,
 } from "./styles";
 
-export default function FilterTab() {
-  const [filter, setFilter] = useState({});
-  const [sort, setSort] = useState("newest");
-
+export default function FilterTab({ setFilter, setSort }) {
   function filterHandler(e) {
     const value = e.target.value;
     setFilter((prev) => {
@@ -31,12 +27,12 @@ export default function FilterTab() {
           <FilterText>Filter Products:</FilterText>
           <Select defaultValue={"Color"} name="color" onChange={filterHandler}>
             <Option disabled>Color</Option>
-            <Option>White</Option>
-            <Option>Black</Option>
-            <Option>Red</Option>
-            <Option>Blue</Option>
-            <Option>Green</Option>
-            <Option>Yellow</Option>
+            <Option>white</Option>
+            <Option>black</Option>
+            <Option>red</Option>
+            <Option>blue</Option>
+            <Option>green</Option>
+            <Option>yellow</Option>
           </Select>
           <Select defaultValue={"Size"} name="size" onChange={filterHandler}>
             <Option disabled>Size</Option>

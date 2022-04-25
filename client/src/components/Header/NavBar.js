@@ -24,9 +24,9 @@ function NavBar() {
     <Container>
       <Wrapper>
         <Left>
-          <Language>EN</Language>
+          {/* <Language>EN</Language> */}
           <SearchBox>
-            <Input />
+            <Input placeholder="Search" />
             <MdSearch style={{ color: "grey", fontSize: "16" }} />
           </SearchBox>
         </Left>

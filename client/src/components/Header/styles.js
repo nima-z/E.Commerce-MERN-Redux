@@ -17,7 +17,8 @@ export const Wrapper = styled.div`
 export const Left = styled.div`
   flex: 1;
   display: flex;
-  margin-left: 0.5rem;
+  align-items: center;
+  /* margin-left: 0.5rem; */
   ${mobile({ display: "none" })}
 `;
 export const Center = styled.div`
@@ -42,14 +43,21 @@ export const SearchBox = styled.div`
   background-color: white;
   display: flex;
   align-items: center;
-  margin-left: 1rem;
+  /* margin-left: 1rem; */
+  border: 1px solid lightgray;
   border-radius: 3px;
-  padding: 0 0.2rem;
+  padding: 0.2rem 0.2rem;
 `;
 
 export const Input = styled.input`
   border: none;
   width: 100%;
+  padding-left: 0.3rem;
+  font-size: 12px;
+  color: gray;
+  &:focus-visible {
+    outline: none;
+  }
 `;
 
 export const Logo = styled.h1`
@@ -62,4 +70,7 @@ export const MenuItem = styled.div`
   font-size: 14px;
   cursor: pointer;
   margin-right: 1rem;
+  & a {
+    text-decoration: none;
+  }
 `;

@@ -8,7 +8,7 @@ const products = [
     color: "Blue",
     size: ["S", "M", "L"],
     inStock: 5,
-
+    createdAt: new Date(),
     tag: ["jeans", "pants", "blue", "women"],
   },
   {
@@ -20,7 +20,7 @@ const products = [
     color: "Blue",
     size: ["S", "M", "L", "XL"],
     inStock: 4,
-
+    createdAt: new Date(),
     tag: ["jeans", "pants", "blue", "women", "men"],
   },
   {
@@ -32,7 +32,7 @@ const products = [
     color: "Blue",
     size: ["XS", "S", "M", "L"],
     inStock: 10,
-
+    createdAt: new Date(),
     tag: ["jeans", "pants", "blue", "teens", "men"],
   },
   {
@@ -44,7 +44,7 @@ const products = [
     color: "Blue",
     size: ["M"],
     inStock: 20,
-
+    createdAt: new Date(),
     tag: ["perfumes", "blue", "men"],
   },
   {
@@ -56,7 +56,7 @@ const products = [
     color: "Pink",
     size: ["M"],
     inStock: 14,
-
+    createdAt: new Date(),
     tag: ["perfumes", "pink", "women"],
   },
   {
@@ -68,7 +68,7 @@ const products = [
     color: "Black",
     size: ["M"],
     inStock: 1,
-
+    createdAt: new Date(),
     tag: ["perfumes", "black", "men"],
   },
   {
@@ -80,7 +80,7 @@ const products = [
     color: "Red",
     size: ["S", "M", "L"],
     inStock: 13,
-
+    createdAt: new Date(),
     tag: ["shoes", "snickers", "red", "men", "women"],
   },
   {
@@ -92,7 +92,7 @@ const products = [
     color: "White",
     size: ["M", "L"],
     inStock: 2,
-
+    createdAt: new Date(),
     tag: ["shoes", "snickers", "men", "women", "rainbow"],
   },
   {
@@ -104,7 +104,7 @@ const products = [
     color: "Brown",
     size: ["S", "M"],
     inStock: 6,
-
+    createdAt: new Date(),
     tag: ["shoes", "snickers", "brown", "men"],
   },
   {
@@ -116,7 +116,7 @@ const products = [
     color: "Black",
     size: ["S", "M", "L", "XL"],
     inStock: 20,
-
+    createdAt: new Date(),
     tag: ["shoes", "snickers", "black", "men", "women"],
   },
   {
@@ -128,7 +128,7 @@ const products = [
     color: "Blue",
     size: ["S"],
     inStock: 4,
-
+    createdAt: new Date(),
     tag: ["shirts", "blue", "women"],
   },
   {
@@ -140,7 +140,7 @@ const products = [
     color: "Red",
     size: ["S", "M", "L"],
     inStock: 10,
-
+    createdAt: new Date(),
     tag: ["shirts", "red", "women", "men", "teens"],
   },
   {
@@ -152,7 +152,7 @@ const products = [
     color: "White",
     size: ["S", "M"],
     inStock: 6,
-
+    createdAt: new Date(),
     tag: ["shirts", "white", "men"],
   },
   {
@@ -164,7 +164,7 @@ const products = [
     color: "White",
     size: ["S", "M"],
     inStock: 16,
-
+    createdAt: new Date(),
     tag: ["skirts", "white", "women", "teens"],
   },
   {
@@ -176,7 +176,7 @@ const products = [
     color: "Yellow",
     size: ["M", "L"],
     inStock: 7,
-
+    createdAt: new Date(),
     tag: ["skirts", "yellow", "women"],
   },
   {
@@ -188,7 +188,7 @@ const products = [
     color: "Pink",
     size: ["S", "M"],
     inStock: 2,
-
+    createdAt: new Date(),
     tag: ["skirts", "pink", "women", "teens"],
   },
   {
@@ -200,7 +200,7 @@ const products = [
     color: "Brown",
     size: ["M"],
     inStock: 3,
-
+    createdAt: new Date(),
     tag: ["hats", "women", "brown"],
   },
   {
@@ -212,7 +212,7 @@ const products = [
     color: "Blue",
     size: ["S", "M"],
     inStock: 6,
-
+    createdAt: new Date(),
     tag: ["hats", "women", "blue"],
   },
   {
@@ -224,7 +224,7 @@ const products = [
     color: "Brown",
     size: ["M"],
     inStock: 5,
-
+    createdAt: new Date(),
     tag: ["hats", "women", "brown"],
   },
   {
@@ -236,7 +236,7 @@ const products = [
     color: "Brown",
     size: ["M"],
     inStock: 12,
-
+    createdAt: new Date(),
     tag: ["hats", "women", "brown"],
   },
 ];
