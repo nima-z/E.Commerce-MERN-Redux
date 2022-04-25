@@ -78,7 +78,7 @@ const Price = styled.p`
 
 function ProductItem({ item }) {
   return (
-    <Link to={`/product/${item.id}`}>
+    <Link to={`/product/${item._id}`}>
       <Container>
         <Image src={item.image} />
         <Icons className="icons">

@@ -16,7 +16,7 @@ function ProductGrid({ products }) {
   return (
     <Container>
       {products.map((item) => (
-        <ProductItem key={item.id} item={item} />
+        <ProductItem key={item._id} item={item} />
       ))}
     </Container>
   );

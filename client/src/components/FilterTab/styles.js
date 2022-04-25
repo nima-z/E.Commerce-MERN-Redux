@@ -26,3 +26,5 @@ export const Select = styled.select`
   ${mobile({ padding: "0.2rem", marginTop: "0.5rem" })}
 `;
 export const Option = styled.option``;
+
+export const FilterButton = styled.button``;

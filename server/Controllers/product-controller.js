@@ -93,6 +93,7 @@ async function getProduct(req, res) {
 //Get all Products
 async function getAllProducts(req, res) {
   const { latest, qcategory } = req.query;
+  console.log(qcategory);
 
   const client = await dbConnection();
   const db = client.db();
@@ -109,7 +110,7 @@ async function getAllProducts(req, res) {
     } else if (qcategory) {
       products = await db
         .collection("products")
-        .find({ category: { $in: [qcategory] } })
+        .find({ tag: { $in: [qcategory] } })
         .toArray();
     } else {
       products = await db.collection("products").find().toArray();

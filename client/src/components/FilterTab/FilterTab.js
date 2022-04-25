@@ -6,6 +6,7 @@ import {
   FilterText,
   Select,
   Option,
+  // FilterButton,
 } from "./styles";
 
 export default function FilterTab() {
@@ -46,6 +47,7 @@ export default function FilterTab() {
             <Option>XL</Option>
           </Select>
         </Filter>
+        {/* <FilterButton>Filter</FilterButton> */}
         <Filter>
           <FilterText>Sort Products:</FilterText>
           <Select onChange={sortHandler}>
