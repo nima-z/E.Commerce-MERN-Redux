@@ -1,6 +1,8 @@
 import { Add, Remove } from "@mui/icons-material";
 import styled from "styled-components";
 import { mobile } from "../../responsive";
+import { useSelector } from "react-redux";
+import { Fragment } from "react";
 
 const Container = styled.div`
   padding: 1.5rem;
@@ -149,6 +151,8 @@ const SummaryButton = styled.button`
 `;
 
 export default function Cart() {
+  const cart = useSelector((state) => state.cart);
+
   return (
     <Container>
       <Title>Your Cart</Title>
@@ -162,63 +166,43 @@ export default function Cart() {
       </Top>
       <Bottom>
         <Info>
-          <Product>
-            <ProductDetail>
-              <Image src="https://img.ltwebstatic.com/images3_pi/2020/12/12/1607739151946560c21817f9262cd527e1e5a6404c_thumbnail_900x.webp" />
-              <Details>
-                <ProductName>
-                  <b>Product:</b> something
-                </ProductName>
-                <ProductId>
-                  <b>ID:</b> 123365478
-                </ProductId>
-                <ProductColor color="black" />
-                <ProductSize>
-                  <b>Size:</b> XL
-                </ProductSize>
-              </Details>
-            </ProductDetail>
-            <PriceDetail>
-              <AmountContainer>
-                <Add />
-                <Amount>2</Amount>
-                <Remove />
-              </AmountContainer>
-              <Price> $ 30</Price>
-            </PriceDetail>
-          </Product>
-          <Hr />
-          <Product>
-            <ProductDetail>
-              <Image src="https://img.ltwebstatic.com/images3_pi/2020/12/12/1607739151946560c21817f9262cd527e1e5a6404c_thumbnail_900x.webp" />
-              <Details>
-                <ProductName>
-                  <b>Product:</b> something
-                </ProductName>
-                <ProductId>
-                  <b>ID:</b> 123365478
-                </ProductId>
-                <ProductColor color="black" />
-                <ProductSize>
-                  <b>Size:</b> XL
-                </ProductSize>
-              </Details>
-            </ProductDetail>
-            <PriceDetail>
-              <AmountContainer>
-                <Add />
-                <Amount>2</Amount>
-                <Remove />
-              </AmountContainer>
-              <Price> $ 30</Price>
-            </PriceDetail>
-          </Product>
+          {cart &&
+            cart.products.map((product) => (
+              <Fragment key={`${product._id} ${product.color} ${product.size}`}>
+                <Product>
+                  <ProductDetail>
+                    <Image src={product.image} />
+                    <Details>
+                      <ProductName>
+                        <b>Product:</b> {product.title}
+                      </ProductName>
+                      <ProductId>
+                        <b>ID:</b> {product._id}
+                      </ProductId>
+                      <ProductColor color={product.color} />
+                      <ProductSize>
+                        <b>Size:</b> {product.size}
+                      </ProductSize>
+                    </Details>
+                  </ProductDetail>
+                  <PriceDetail>
+                    <AmountContainer>
+                      <Add />
+                      <Amount>{product.quantity}</Amount>
+                      <Remove />
+                    </AmountContainer>
+                    <Price> $ {product.totalPrice}</Price>
+                  </PriceDetail>
+                </Product>
+                <Hr />
+              </Fragment>
+            ))}
         </Info>
         <Summary>
           <SummaryTitle>Order Summary</SummaryTitle>
           <SummaryItem>
             <SummaryItemText>Subtotal</SummaryItemText>
-            <SummaryItemPrice>$ 80</SummaryItemPrice>
+            <SummaryItemPrice>{cart.total}</SummaryItemPrice>
           </SummaryItem>
           <SummaryItem>
             <SummaryItemText>Estimated Shipping</SummaryItemText>
@@ -230,7 +214,7 @@ export default function Cart() {
           </SummaryItem>
           <SummaryItem type="total">
             <SummaryItemText>Total</SummaryItemText>
-            <SummaryItemPrice>$ 80</SummaryItemPrice>
+            <SummaryItemPrice>{cart.total}</SummaryItemPrice>
           </SummaryItem>
           <SummaryButton>Checkout Now</SummaryButton>
         </Summary>

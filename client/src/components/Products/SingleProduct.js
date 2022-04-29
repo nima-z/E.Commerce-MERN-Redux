@@ -3,6 +3,8 @@ import { mobile } from "../../responsive";
 
 import styled from "styled-components";
 import { useState } from "react";
+import { addProduct } from "../../redux/CartRedux";
+import { useDispatch } from "react-redux";
 
 const Container = styled.div`
   display: flex;
@@ -124,8 +126,9 @@ export default function SingleProduct({ item }) {
   const [quantity, setQuantity] = useState(1);
   const [max, setMax] = useState(false);
   const [min, setMin] = useState(true);
-  const [color, setColor] = useState("");
-  const [size, setSize] = useState("");
+  const [color, setColor] = useState(item.color);
+  const [size, setSize] = useState(item.size[0]);
+  const dispatch = useDispatch();
 
   function increaseItem() {
     setMin(false);
@@ -155,6 +158,18 @@ export default function SingleProduct({ item }) {
 
   function pickSize(e) {
     setSize(e.target.value);
+  }
+
+  function BuyHandler() {
+    dispatch(
+      addProduct({
+        ...item,
+        size,
+        color,
+        quantity,
+        totalPrice: parseFloat((item.price * quantity).toFixed(2)),
+      })
+    );
   }
 
   console.log(size, color, quantity);
@@ -206,7 +221,7 @@ export default function SingleProduct({ item }) {
               <Remove />
             </IconButton>
           </AmountContainer>
-          <Button>Add to cart</Button>
+          <Button onClick={BuyHandler}>Add to cart</Button>
         </AddContainer>
       </InfoContainer>
     </Container>

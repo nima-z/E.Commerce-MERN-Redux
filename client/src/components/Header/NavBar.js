@@ -14,8 +14,10 @@ import {
 import { MdSearch, MdOutlineShoppingCart } from "react-icons/md";
 import Badge from "@mui/material/Badge";
 import { useNavigate, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function NavBar() {
+  const cart = useSelector((state) => state.cart);
   const navigate = useNavigate();
   function navigation(e) {
     navigate("/");
@@ -38,7 +40,7 @@ function NavBar() {
             <Link to="/authentication">Sign in</Link>
           </MenuItem>
           <Link to="/cart">
-            <Badge badgeContent={4} color="primary">
+            <Badge badgeContent={cart.quantity} color="primary">
               <MdOutlineShoppingCart />
             </Badge>
           </Link>
