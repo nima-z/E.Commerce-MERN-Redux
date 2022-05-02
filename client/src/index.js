@@ -1,20 +1,16 @@
+//Libraries
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+//Imports
+import "./index.css";
+import App from "./App";
 import Store from "./redux/Store";
 import Layout from "./components/Layout/Layout";
-import {
-  useQuery,
-  useQueryClient,
-  useMutation,
-  QueryClient,
-  QueryClientProvider,
-} from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
+//-------------------------------------------------
 
 const queryClient = new QueryClient();
 
