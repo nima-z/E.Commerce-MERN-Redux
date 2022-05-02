@@ -1,28 +1,21 @@
-//libraries
+//Libraries
 import { Routes, Route } from "react-router-dom";
 
-//modules
+//Imports
 import HomePage from "./pages/HomePage";
 import AllProducts from "./pages/AllProducts";
 import ProductDetail from "./pages/ProductDetail";
 import Authentication from "./pages/Authentication";
 import CartPage from "./pages/CartPage";
-// import {
-//   useQuery,
-//   useQueryClient,
-//   useMutation,
-//   QueryClient,
-//   QueryClientProvider,
-// } from "react-query";
-// import { ReactQueryDevtools } from "react-query/devtools";
+import useInitial from "./hooks/useInitial";
 import "./App.css";
 //------------------------------------------------------
 
 function App() {
-  // const queryClient = new QueryClient()
+  useInitial();
+
   const user = false;
   return (
-    // <QueryClientProvider client={queryClient}>
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/products">
@@ -36,8 +29,6 @@ function App() {
       ></Route>
       <Route path="/cart" element={<CartPage />} />
     </Routes>
-    //   <ReactQueryDevtools initialIsOpen={false} />
-    // </QueryClientProvider>
   );
 }
 

@@ -105,7 +105,6 @@ function Slider() {
     } else {
       setIndexSlider(indexSlider < 2 ? indexSlider + 1 : 0);
     }
-    console.log(indexSlider);
   }
   return (
     <Container>

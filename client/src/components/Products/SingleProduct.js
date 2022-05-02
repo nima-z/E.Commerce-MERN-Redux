@@ -172,8 +172,6 @@ export default function SingleProduct({ item }) {
     );
   }
 
-  console.log(size, color, quantity);
-
   return (
     <Container>
       <ImageContainer>
