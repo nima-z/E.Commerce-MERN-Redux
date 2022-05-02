@@ -2,14 +2,27 @@ import ProductGrid from "../components/Products/ProductGrid";
 import FilterTab from "../components/FilterTab/FilterTab";
 
 import { useEffect, useState } from "react";
+import { useQueryClient } from "react-query";
+
 import useProducts from "../hooks/useProducts";
+import { useParams } from "react-router-dom";
 
 function AllProducts() {
+  const { category } = useParams();
   const [filter, setFilter] = useState({});
   const [sort, setSort] = useState("newest");
   const [filteredProducts, setFilteredProducts] = useState([]);
 
-  const { data, isLoading, isError, error, status } = useProducts();
+  const { data, isLoading, isError, error, status } = useProducts(category);
+  // const queryClient = useQueryClient();
+
+  // const staledQuery = queryClient.getQueriesData("products");
+
+  // let oldItems;
+  // if (staledQuery.length !== 0 && !isLoading && !data) {
+  //   console.log("here");
+  //   oldItems = staledQuery[0][1].products;
+  // }
 
   useEffect(() => {
     if (status === "success") {
@@ -56,6 +69,10 @@ function AllProducts() {
   }, [sort, setFilteredProducts]);
 
   if (isLoading) {
+    // if (
+    //   (staledQuery.length === 0 && isLoading) ||
+    //   (!staledQuery[0][1] && isLoading)
+    // ) {
     return <p>Loading...</p>;
   }
 
