@@ -1,28 +1,24 @@
 import SingleProduct from "../components/Products/SingleProduct";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useQueryClient } from "react-query";
+import useProduct from "../hooks/useProduct";
 
 export default function ProductDetail() {
   const { id } = useParams();
-  const [product, setProduct] = useState();
 
-  useEffect(() => {
-    async function getProduct() {
-      try {
-        const res = await axios.get(`http://localhost:5000/api/products/${id}`);
-        const data = res.data.product;
-        setProduct(data);
-      } catch (err) {
-        console.log(err);
-      }
-    }
-    getProduct();
-  }, [id]);
+  const queryClient = useQueryClient();
+  const staledData = queryClient.getQueriesData("products");
 
-  if (!product) {
+  let oldItem;
+  if (staledData.length !== 0) {
+    oldItem = staledData[0][1].products.find((p) => p._id === id);
+  }
+
+  const { data, isLoading } = useProduct(id);
+
+  if (staledData.length === 0 && isLoading) {
     return <p>Loading...</p>;
   } else {
-    return <SingleProduct item={product} />;
+    return <SingleProduct item={data ? data.product : oldItem} />;
   }
 }

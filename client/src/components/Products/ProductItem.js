@@ -5,6 +5,8 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { mobile } from "../../responsive";
 import { SearchOffOutlined } from "@mui/icons-material";
+import { addProduct } from "../../redux/CartRedux";
+import { useDispatch } from "react-redux";
 
 const Container = styled.div`
   width: 200px;
@@ -80,11 +82,24 @@ const Price = styled.p`
 `;
 
 function ProductItem({ item }) {
+  const dispatch = useDispatch();
+
+  function buyingHandler() {
+    dispatch(
+      addProduct({
+        ...item,
+        color: item.color,
+        size: item.size[0],
+        quantity: 1,
+        totalPrice: parseFloat(item.price.toFixed(2)),
+      })
+    );
+  }
   return (
     <Container>
       <Image src={item.image} />
       <Icons className="icons">
-        <Icon>
+        <Icon onClick={buyingHandler}>
           <ShoppingCartOutlinedIcon />
         </Icon>
         <Icon>

@@ -1,59 +1,44 @@
 import ProductGrid from "../components/Products/ProductGrid";
 import FilterTab from "../components/FilterTab/FilterTab";
 
-// import { products } from "../dataForDb";
-import { useParams } from "react-router-dom";
-import axios from "axios";
 import { useEffect, useState } from "react";
+import useProducts from "../hooks/useProducts";
 
 function AllProducts() {
   const [filter, setFilter] = useState({});
   const [sort, setSort] = useState("newest");
-  const [products, setProducts] = useState();
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const { category } = useParams();
+
+  const { data, isLoading, isError, error, status } = useProducts();
 
   useEffect(() => {
-    const getData = async () => {
-      try {
-        const res = await axios.get(
-          category
-            ? `http://localhost:5000/api/products?qcategory=${category}`
-            : "http://localhost:5000/api/products"
-        );
-        const data = res.data.products;
-        setProducts(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getData();
-  }, [category]);
+    if (status === "success") {
+      const products = data.products;
+      let filteredItems;
 
-  useEffect(() => {
-    if (products) {
       if (filter["color"] && !filter["size"]) {
-        const hhh = products.filter((item) =>
+        filteredItems = products.filter((item) =>
           item.tag.includes(filter["color"])
         );
-        setFilteredProducts(hhh);
+        setFilteredProducts(filteredItems);
       } else if (filter["size"] && !filter["color"]) {
-        setFilteredProducts(
-          products.filter((item) => item.size.includes(filter["size"]))
+        filteredItems = products.filter((item) =>
+          item.size.includes(filter["size"])
         );
+        setFilteredProducts(filteredItems);
       } else if (filter["color"] && filter["size"]) {
-        setFilteredProducts(
-          products.filter(
-            (item) =>
-              item.size.includes(filter["size"]) &&
-              item.tag.includes(filter["color"])
-          )
+        filteredItems = products.filter(
+          (item) =>
+            item.size.includes(filter["size"]) &&
+            item.tag.includes(filter["color"])
         );
+        setFilteredProducts(filteredItems);
       } else {
         setFilteredProducts(products);
       }
     }
-  }, [setFilteredProducts, filter, products]);
+  }, [setFilteredProducts, filter, status, data]);
+
   useEffect(() => {
     if (sort === "newest") {
       setFilteredProducts((prev) =>
@@ -70,16 +55,25 @@ function AllProducts() {
     }
   }, [sort, setFilteredProducts]);
 
-  if (!products) {
+  if (isLoading) {
     return <p>Loading...</p>;
-  } else {
+  }
+
+  if (isError) {
     return (
-      <div>
-        <FilterTab setFilter={setFilter} setSort={setSort} />
-        <ProductGrid products={filteredProducts} />
-      </div>
+      <p>
+        An error has occured.
+        <hr /> {error.message}
+        <hr /> please refresh the page
+      </p>
     );
   }
+  return (
+    <div>
+      <FilterTab setFilter={setFilter} setSort={setSort} />
+      <ProductGrid products={filteredProducts} />
+    </div>
+  );
 }
 
 export default AllProducts;

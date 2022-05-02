@@ -7,14 +7,27 @@ import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import Store from "./redux/Store";
 import Layout from "./components/Layout/Layout";
+import {
+  useQuery,
+  useQueryClient,
+  useMutation,
+  QueryClient,
+  QueryClientProvider,
+} from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+
+const queryClient = new QueryClient();
 
 ReactDOM.render(
-  <Provider store={Store}>
-    <BrowserRouter>
-      <Layout>
-        <App />
-      </Layout>
-    </BrowserRouter>
-  </Provider>,
+  <QueryClientProvider client={queryClient}>
+    <Provider store={Store}>
+      <BrowserRouter>
+        <Layout>
+          <App />
+        </Layout>
+      </BrowserRouter>
+    </Provider>
+    <ReactQueryDevtools initialIsOpen={false} />
+  </QueryClientProvider>,
   document.getElementById("root")
 );
