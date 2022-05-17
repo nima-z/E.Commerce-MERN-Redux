@@ -17,13 +17,16 @@ const cartSlice = createSlice({
       );
 
       state.quantity += action.payload.quantity;
-      state.total += parseFloat(
-        (action.payload.price * action.payload.quantity).toFixed(2)
+      state.total = parseFloat(
+        state.total +
+          +(action.payload.price * action.payload.quantity).toFixed(2)
       );
 
       if (existItem) {
         existItem.quantity += action.payload.quantity;
-        existItem.totalPrice += action.payload.totalPrice;
+        existItem.totalPrice = parseFloat(
+          existItem.totalPrice + action.payload.totalPrice
+        ).toFixed(2);
       } else {
         state.products.push(action.payload);
       }

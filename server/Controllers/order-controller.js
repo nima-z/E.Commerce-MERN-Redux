@@ -6,8 +6,9 @@ const dbConnection = require("../Helper/db-connection");
 
 //Create Order
 async function createOrder(req, res) {
-  const { title, desc, price, category } = req.body;
-  const newOrder = { title, desc, price, category };
+  const { userId, products, amount, address, status } = req.body;
+
+  const newOrder = { userId, products, amount, address, status };
 
   const client = await dbConnection();
   const db = client.db();

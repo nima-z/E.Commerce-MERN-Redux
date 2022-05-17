@@ -3,6 +3,10 @@ import styled from "styled-components";
 import { mobile } from "../../responsive";
 import { useSelector } from "react-redux";
 import { Fragment } from "react";
+import StripeCheckout from "react-stripe-checkout";
+import { useState, useEffect } from "react";
+import { userRequest } from "../../helpers/requestMethods";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   padding: 1.5rem;
@@ -83,6 +87,7 @@ const ProductColor = styled.div`
   height: 20px;
   border-radius: 50%;
   background: ${(props) => props.color};
+  border: 2px solid darkgray;
 `;
 
 const ProductSize = styled.span``;
@@ -148,10 +153,37 @@ const SummaryButton = styled.button`
   padding: 0.8rem;
   background-color: black;
   color: white;
+  cursor: pointer;
 `;
 
 export default function Cart() {
+  const [stripeToken, setStripeToken] = useState(null);
+  const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
+
+  const STRIPE_KEY = process.env.REACT_APP_STRIPE;
+
+  function onToken(token) {
+    setStripeToken(token);
+  }
+
+  useEffect(() => {
+    async function paymentRequest() {
+      try {
+        const res = await userRequest.post("/checkout/payment", {
+          tokenId: stripeToken.id,
+          amount: cart.total * 100,
+        });
+        console.log(res.data);
+        navigate("/success", {
+          state: { products: cart.products, data: res.data },
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    stripeToken && cart.total >= 1 && paymentRequest();
+  }, [stripeToken, navigate, cart.total, cart.products]);
 
   return (
     <Container>
@@ -177,7 +209,7 @@ export default function Cart() {
                         <b>Product:</b> {product.title}
                       </ProductName>
                       <ProductId>
-                        <b>ID:</b> {product._id}
+                        <b>Price:</b> $ {product.price}
                       </ProductId>
                       <ProductColor color={product.color} />
                       <ProductSize>
@@ -216,7 +248,18 @@ export default function Cart() {
             <SummaryItemText>Total</SummaryItemText>
             <SummaryItemPrice>{cart.total}</SummaryItemPrice>
           </SummaryItem>
-          <SummaryButton>Checkout Now</SummaryButton>
+          <StripeCheckout
+            name="Boutique"
+            image="https://media.istockphoto.com/vectors/fashion-boutique-and-store-logo-label-emblems-with-doodle-line-art-vector-id1034771616?k=20&m=1034771616&s=612x612&w=0&h=_d6sgEXXV1f-bGNwNu8zrDrr89o6OOknS8Nlu4Hz4MA="
+            billingAddress
+            shippingAddress
+            description={`Total: $${cart.total}`}
+            amount={cart.total * 100}
+            token={onToken}
+            stripeKey={STRIPE_KEY}
+          >
+            <SummaryButton>Checkout Now</SummaryButton>
+          </StripeCheckout>
         </Summary>
       </Bottom>
     </Container>

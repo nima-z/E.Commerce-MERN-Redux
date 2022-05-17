@@ -1,6 +1,6 @@
 // libraries
+require("dotenv").config();
 const express = require("express");
-const dotenv = require("dotenv");
 const cors = require("cors");
 
 // modules
@@ -14,7 +14,6 @@ const stripeRoute = require("./Routes/stripe-route");
 // const dbRoute = require("./Routes/firstDb-route");
 //--------------------------------------
 
-dotenv.config();
 const app = express();
 
 // middlewares
@@ -27,10 +26,10 @@ app.use("/api/users", usersRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/carta", cartRoutes);
 app.use("/api/orders", orderRoutes);
-app.use("/api/stripe", stripeRoute);
+app.use("/api/checkout", stripeRoute);
 // app.use("/api/db", dbRoute);
 
 //express port
 app.listen(process.env.PORT || 5000, () => {
-  console.log("backend is running");
+  console.log("Server is Listening");
 });
