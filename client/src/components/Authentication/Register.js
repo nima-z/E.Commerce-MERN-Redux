@@ -1,6 +1,8 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { mobile } from "../../responsive";
+import { useDispatch } from "react-redux";
+import { loggingIn } from "../../helpers/authMethods";
 
 const Container = styled.div`
   width: 100%;
@@ -43,6 +45,12 @@ const Agreement = styled.span`
 const Button = styled.button`
   max-width: 100px;
   padding: 0.5rem 1rem;
+  cursor: pointer; ;
+`;
+
+const ChangeDiv = styled.div`
+  display: flex;
+  align-items: baseline;
 `;
 
 const ChangeButton = styled.button`
@@ -51,55 +59,83 @@ const ChangeButton = styled.button`
   color: darkblue;
   cursor: pointer;
   font-weight: 600;
+  font-size: 0.9rem;
 `;
 
 export default function Register() {
   const [login, setLogin] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confrimPassword, setConfirmPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const dispatch = useDispatch();
 
-  function ChangeForm(e) {
-    setLogin(!login);
+  function usernameHandler(e) {
+    setUsername(e.target.value);
+  }
+  function passwordHandler(e) {
+    setPassword(e.target.value);
+  }
+  function confirmPasswordHandler(e) {
+    setConfirmPassword(e.target.value);
+  }
+  function emailHandler(e) {
+    setEmail(e.target.value);
   }
 
-  console.log(login);
+  function submitForm(event) {
+    event.preventDefault();
+    if (login) {
+      loggingIn(dispatch, { email, password });
+    } else {
+      console.log("sign up");
+    }
+  }
+
+  function ChangeForm() {
+    setLogin(!login);
+  }
 
   return (
     <Container>
       <Wrapper>
         <Title>{login ? "Login" : "Create Account"}</Title>
-        {login && (
-          <Form>
-            <Input placeholder="username" />
-            <Input placeholder="password" />
-
-            <p>
-              Do not have an account?
-              <ChangeButton type="button" onClick={ChangeForm}>
-                Sign up
-              </ChangeButton>
-            </p>
-            <Button>Login</Button>
-          </Form>
-        )}
-        {!login && (
-          <Form>
-            <Input placeholder="name" />
-            <Input placeholder="lastname" />
-            <Input placeholder="email" />
-            <Input placeholder="password" />
-            <Input placeholder="confirm password" />
+        <Form onSubmit={submitForm}>
+          <Input placeholder="email" onChange={emailHandler} />
+          {!login && (
+            <Input placeholder="username" onChange={usernameHandler} />
+          )}
+          <Input placeholder="password" onChange={passwordHandler} />
+          {!login && (
+            <Input
+              placeholder="confirm password"
+              onChange={confirmPasswordHandler}
+            />
+          )}
+          {!login && (
             <Agreement>
               By signing up, you agree to the Terms of Service and Privacy
               Policy, including Cookie Use.
             </Agreement>
-            <p>
-              Already have an account?
+          )}
+          <ChangeDiv>
+            {login ? (
+              <p>Do not have an account?</p>
+            ) : (
+              <p>Already have an account?</p>
+            )}
+            {login ? (
               <ChangeButton type="button" onClick={ChangeForm}>
-                Sign in
+                Sign Up
               </ChangeButton>
-            </p>
-            <Button>Create</Button>
-          </Form>
-        )}
+            ) : (
+              <ChangeButton type="button" onClick={ChangeForm}>
+                Login
+              </ChangeButton>
+            )}
+          </ChangeDiv>
+          {login ? <Button>Login</Button> : <Button>Create</Button>}
+        </Form>
       </Wrapper>
     </Container>
   );
