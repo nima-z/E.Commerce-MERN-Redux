@@ -1,5 +1,6 @@
 //Libraries
 import { Routes, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 //Imports
 import HomePage from "./pages/HomePage";
@@ -17,7 +18,7 @@ function App() {
   useInitial();
 
   // control user login state
-  const user = false;
+  const user = useSelector((state) => state.user.currentUser);
 
   return (
     <Routes>

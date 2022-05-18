@@ -4,7 +4,6 @@ import {
   Left,
   Center,
   Right,
-  Language,
   SearchBox,
   Input,
   Logo,
@@ -18,6 +17,7 @@ import { useSelector } from "react-redux";
 
 function NavBar() {
   const cart = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.user.currentUser);
   const navigate = useNavigate();
   function navigation(e) {
     navigate("/");
@@ -37,7 +37,11 @@ function NavBar() {
         </Center>
         <Right>
           <MenuItem>
-            <Link to="/authentication">Sign in</Link>
+            {user ? (
+              <button>Sign out</button>
+            ) : (
+              <Link to="/authentication">Sign in</Link>
+            )}
           </MenuItem>
           <Link to="/cart">
             <Badge badgeContent={cart.quantity} color="primary">

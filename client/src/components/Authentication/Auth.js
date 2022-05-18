@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { mobile } from "../../responsive";
 import { useDispatch } from "react-redux";
 import { loggingIn } from "../../helpers/authMethods";
+import { useSelector } from "react-redux";
 
 const Container = styled.div`
   width: 100%;
@@ -45,7 +46,10 @@ const Agreement = styled.span`
 const Button = styled.button`
   max-width: 100px;
   padding: 0.5rem 1rem;
-  cursor: pointer; ;
+  cursor: pointer;
+  &:disabled {
+    cursor: not-allowed;
+  }
 `;
 
 const ChangeDiv = styled.div`
@@ -62,13 +66,19 @@ const ChangeButton = styled.button`
   font-size: 0.9rem;
 `;
 
-export default function Register() {
-  const [login, setLogin] = useState(false);
+const Error = styled.span`
+  color: red;
+  margin-top: 0.8rem;
+`;
+
+export default function Auth() {
+  const [login, setLogin] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confrimPassword, setConfirmPassword] = useState("");
   const [email, setEmail] = useState("");
   const dispatch = useDispatch();
+  const { isFetching, error } = useSelector((state) => state.user);
 
   function usernameHandler(e) {
     setUsername(e.target.value);
@@ -105,11 +115,16 @@ export default function Register() {
           {!login && (
             <Input placeholder="username" onChange={usernameHandler} />
           )}
-          <Input placeholder="password" onChange={passwordHandler} />
+          <Input
+            placeholder="password"
+            onChange={passwordHandler}
+            type="password"
+          />
           {!login && (
             <Input
               placeholder="confirm password"
               onChange={confirmPasswordHandler}
+              type="password"
             />
           )}
           {!login && (
@@ -134,7 +149,12 @@ export default function Register() {
               </ChangeButton>
             )}
           </ChangeDiv>
-          {login ? <Button>Login</Button> : <Button>Create</Button>}
+          {login ? (
+            <Button disabled={isFetching}>Login</Button>
+          ) : (
+            <Button>Create</Button>
+          )}
+          {error && <Error>Email or Password is not correct!</Error>}
         </Form>
       </Wrapper>
     </Container>
