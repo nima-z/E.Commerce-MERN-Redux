@@ -93,7 +93,6 @@ async function getProduct(req, res) {
 //Get all Products
 async function getAllProducts(req, res) {
   const { latest, qcategory } = req.query;
-  console.log(qcategory);
 
   const client = await dbConnection();
   const db = client.db();

@@ -1,6 +1,5 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import cartReducer from "./CartRedux";
-import userReducer from "./UserRedux";
+import userReducer from "./userRedux";
 
 import {
   persistStore,
@@ -20,12 +19,10 @@ const persistConfig = {
   version: 1,
   storage,
 };
-
-const rootReducer = combineReducers({ user: userReducer, cart: cartReducer });
-
+const rootReducer = combineReducers({ user: userReducer });
 const persistedRoot = persistReducer(persistConfig, rootReducer);
 
-export const Store = configureStore({
+export const store = configureStore({
   reducer: persistedRoot,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -35,4 +32,4 @@ export const Store = configureStore({
     }),
 });
 
-export const persistor = persistStore(Store);
+export const persistor = persistStore(store);

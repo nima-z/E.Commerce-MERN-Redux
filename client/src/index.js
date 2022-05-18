@@ -8,20 +8,29 @@ import { ReactQueryDevtools } from "react-query/devtools";
 //Imports
 import "./index.css";
 import App from "./App";
-import Store from "./redux/Store";
+import { Store, persistor } from "./redux/Store";
+import { PersistGate } from "redux-persist/integration/react";
 import Layout from "./components/Layout/Layout";
 //-------------------------------------------------
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 30000,
+    },
+  },
+});
 
 ReactDOM.render(
   <QueryClientProvider client={queryClient}>
     <Provider store={Store}>
-      <BrowserRouter>
-        <Layout>
-          <App />
-        </Layout>
-      </BrowserRouter>
+      <PersistGate loading={null} persistor={persistor}>
+        <BrowserRouter>
+          <Layout>
+            <App />
+          </Layout>
+        </BrowserRouter>
+      </PersistGate>
     </Provider>
     <ReactQueryDevtools initialIsOpen={false} />
   </QueryClientProvider>,
