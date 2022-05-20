@@ -11,18 +11,21 @@ import Product from "./pages/product/Product";
 import NewProduct from "./pages/newProduct/NewProduct";
 import Auth from "./pages/authentication/auth";
 import { Fragment } from "react";
+import { Redirect } from "react-router-dom";
 
 function App() {
-  const admin = JSON.parse(
-    JSON.parse(localStorage.getItem("persist:root")).user
-  ).currentUser.user.isAdmin;
+  const admin =
+    localStorage.getItem("persist:root") &&
+    JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user)
+      .currentUser
+      ? JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user)
+          .currentUser.user.isAdmin
+      : false;
 
   return (
     <Router>
       <Switch>
-        <Route path="/auth">
-          <Auth />
-        </Route>
+        <Route path="/auth">{!admin ? <Auth /> : <Redirect to="/" />}</Route>
         {admin ? (
           <Fragment>
             <Topbar />
@@ -52,7 +55,8 @@ function App() {
             </div>
           </Fragment>
         ) : (
-          <Auth />
+          // <Auth />
+          <Redirect to="/auth" />
         )}
       </Switch>
     </Router>
