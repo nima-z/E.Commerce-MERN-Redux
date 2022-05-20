@@ -6,9 +6,19 @@ const dbConnection = require("../Helper/db-connection");
 
 //Create Order
 async function createOrder(req, res) {
-  const { userId, products, amount, address, status } = req.body;
+  const { userId, userName, products, amount, address, status } = req.body;
 
-  const newOrder = { userId, products, amount, address, status };
+  const createdDate = new Date();
+
+  const newOrder = {
+    userId,
+    userName,
+    products,
+    amount,
+    address,
+    status,
+    createdAt: createdDate,
+  };
 
   const client = await dbConnection();
   const db = client.db();
@@ -105,21 +115,52 @@ async function getAllOrders(req, res) {
 
 async function getMonthlyIncome(req, res) {
   const date = new Date();
-  const lastMonth = new Date(date.setMonth(date.getMonth() - 1));
-  const previousMonth = new Date(date.setMonth(date.getMonth() - 2));
+  const lastYear = new Date(date.setFullYear(date.getFullYear() - 1));
 
   const client = await dbConnection();
   const db = client.db();
 
+  const MONTHS = [
+    "",
+    "jan",
+    "feb",
+    "mar",
+    "apr",
+    "may",
+    "jun",
+    "jul",
+    "aug",
+    "sep",
+    "oct",
+    "nov",
+    "dec",
+  ];
+
   try {
-    const income = await db.collection("orders").aggregate([
-      { $match: { createdAt: { $gte: previousMonth } } },
-      {
-        $project: { $month: "$createdAt" },
-        sales: "$amount",
-      },
-      { $group: { _id: "$month", total: "$sales" } },
-    ]);
+    const income = await db
+      .collection("orders")
+      .aggregate([
+        { $match: { createdAt: { $gte: lastYear } } },
+        {
+          $group: {
+            _id: { $month: "$createdAt" },
+            sales: { $sum: "$amount" },
+            quantity: { $sum: 1 },
+          },
+        },
+        {
+          $project: {
+            month: {
+              $arrayElemAt: [MONTHS, "$_id"],
+            },
+            sales: 1,
+            quantity: 1,
+            _id: 0,
+          },
+        },
+      ])
+      .toArray();
+    console.log("income :" + income);
     res.status(200).json(income);
   } catch (err) {
     res.status(500).json(err);

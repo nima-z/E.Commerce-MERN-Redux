@@ -8,9 +8,12 @@ export default function WidgetSm() {
 
   useEffect(() => {
     async function getLastFiveUsers() {
-      const res = await userRequest("/users/?latest=true");
-
-      setUsers(res.data.users);
+      try {
+        const res = await userRequest("/users/?latest=true");
+        setUsers(res.data.users);
+      } catch (err) {
+        console.log(err);
+      }
     }
     getLastFiveUsers();
   }, []);
@@ -20,7 +23,7 @@ export default function WidgetSm() {
       <span className="widgetSmTitle">New Join Members</span>
       <ul className="widgetSmList">
         {users.map((user) => (
-          <li className="widgetSmListItem" key={users._id}>
+          <li className="widgetSmListItem" key={user._id}>
             <img
               src={
                 user.img ||
