@@ -115,7 +115,8 @@ async function getAllOrders(req, res) {
 
 async function getMonthlyIncome(req, res) {
   const date = new Date();
-  const lastYear = new Date(date.setFullYear(date.getFullYear() - 1));
+  const currentMonth = new Date(date.setMonth(date.getMonth() - 1));
+  const prevMonth = new Date(date.setMonth(date.getMonth() - 2));
 
   const client = await dbConnection();
   const db = client.db();
