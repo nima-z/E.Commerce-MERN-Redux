@@ -2,8 +2,12 @@ import axios from "axios";
 
 const baseURL = "http://localhost:5000/api/";
 
-const token = JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user)
-  .currentUser.user.accessToken;
+const token =
+  localStorage.getItem("persist:admin") &&
+  JSON.parse(JSON.parse(localStorage.getItem("persist:admin")).user)
+    .currentUser &&
+  JSON.parse(JSON.parse(localStorage.getItem("persist:admin")).user).currentUser
+    .user.accessToken;
 
 export const publicRequest = axios.create({
   baseURL,
@@ -11,5 +15,5 @@ export const publicRequest = axios.create({
 
 export const userRequest = axios.create({
   baseURL,
-  header: { token: `Bearer ${token}` },
+  headers: { token: `Bearer ${token}` },
 });

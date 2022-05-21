@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./auth.module.css";
 import { useDispatch } from "react-redux";
-import { loggingIn } from "../../helpers/authMethod";
+import { LoggingIn } from "../../helpers/authMethod";
 
 export default function Auth() {
   const [email, setEmail] = useState("");
@@ -16,7 +16,7 @@ export default function Auth() {
   }
   function submitHandler(e) {
     e.preventDefault();
-    loggingIn(dispatch, { email, password });
+    LoggingIn(dispatch, { email, password });
   }
 
   return (

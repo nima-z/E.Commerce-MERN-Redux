@@ -12,10 +12,8 @@ async function payment(req, res) {
     },
     (err, data) => {
       if (err) {
-        console.log(err, err.message);
         res.status(500).json({ message: "could not proceed", err });
       } else {
-        console.log(data);
         res.status(200).json(data);
       }
     }

@@ -80,7 +80,7 @@ async function getAllUsers(req, res) {
 
   try {
     const users = latest
-      ? await db.collection("users").find().sort({ _id: -1 }).limit(5).toArray()
+      ? await db.collection("users").find().sort({ _id: -1 }).limit(2).toArray()
       : await db.collection("users").find().toArray();
     client.close();
     res.status(200).json({ message: "users has been found", users: users });
@@ -99,7 +99,7 @@ async function getAllStats(req, res) {
   const db = client.db();
 
   try {
-    const data = await db
+    const stats = await db
       .collection("users")
       .aggregate([
         { $match: { createdAt: { $gte: lastYear } } },
@@ -107,7 +107,7 @@ async function getAllStats(req, res) {
       ])
       .toArray();
     client.close();
-    res.status(200).json({ message: "stat is done", data });
+    res.status(200).json({ message: "stat is done", stats });
   } catch (err) {
     client.close();
     res.status(500).json({ message: "something went wrong", err });

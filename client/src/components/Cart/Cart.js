@@ -1,12 +1,13 @@
 import { Add, Remove } from "@mui/icons-material";
 import styled from "styled-components";
 import { mobile } from "../../responsive";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Fragment } from "react";
 import StripeCheckout from "react-stripe-checkout";
 import { useState, useEffect } from "react";
 import { userRequest } from "../../helpers/requestMethods";
 import { useNavigate } from "react-router-dom";
+import { clearCart } from "../../redux/CartRedux";
 
 const Container = styled.div`
   padding: 1.5rem;
@@ -160,6 +161,11 @@ export default function Cart() {
   const [stripeToken, setStripeToken] = useState(null);
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+
+  function onClearCart() {
+    dispatch(clearCart());
+  }
 
   const STRIPE_KEY = process.env.REACT_APP_STRIPE;
 
@@ -174,7 +180,6 @@ export default function Cart() {
           tokenId: stripeToken.id,
           amount: cart.total * 100,
         });
-        console.log(res.data);
         navigate("/success", {
           state: { products: cart.products, data: res.data },
         });
@@ -194,7 +199,9 @@ export default function Cart() {
           <TopText>Shopping cart (2)</TopText>
           <TopText>Your Wishlist (0)</TopText>
         </TopTexts>
-        <TopButton type="filled">Checkout</TopButton>
+        <TopButton type="filled" onClick={onClearCart}>
+          Clear Cart
+        </TopButton>
       </Top>
       <Bottom>
         <Info>

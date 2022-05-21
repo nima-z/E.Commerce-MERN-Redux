@@ -31,6 +31,7 @@ export const Right = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  gap: 1.5rem;
 `;
 
 export const Language = styled.span`
@@ -64,13 +65,4 @@ export const Logo = styled.h1`
   font-weight: bold;
   ${mobile({ fontSize: "1.5rem" })}
   cursor: pointer;
-`;
-
-export const MenuItem = styled.div`
-  font-size: 14px;
-  cursor: pointer;
-  margin-right: 1rem;
-  & a {
-    text-decoration: none;
-  }
 `;

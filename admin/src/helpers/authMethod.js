@@ -1,7 +1,7 @@
 import { loginFailure, loginStart, loginSuccess } from "../redux/userRedux";
 import { publicRequest } from "./requestMethod";
 
-export async function loggingIn(dispatch, user) {
+export async function LoggingIn(dispatch, user) {
   dispatch(loginStart());
   try {
     const res = await publicRequest.post("auth/login", user);
