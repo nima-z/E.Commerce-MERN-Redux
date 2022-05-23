@@ -10,6 +10,7 @@ const productRoutes = require("./Routes/product-routes");
 const cartRoutes = require("./Routes/cart-routes");
 const orderRoutes = require("./Routes/order-routes");
 const stripeRoute = require("./Routes/stripe-route");
+const searchRoutes = require("./Routes/search-routes");
 
 // const dbRoute = require("./Routes/firstDb-route");
 //--------------------------------------
@@ -27,6 +28,7 @@ app.use("/api/products", productRoutes);
 app.use("/api/carta", cartRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/checkout", stripeRoute);
+app.use("/api/search", searchRoutes);
 // app.use("/api/db", dbRoute);
 
 //express port

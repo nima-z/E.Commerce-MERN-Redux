@@ -1,38 +1,30 @@
-import {
-  Container,
-  Wrapper,
-  Left,
-  Center,
-  Right,
-  SearchBox,
-  Input,
-  Logo,
-} from "./styles";
+import { Container, Wrapper, Left, Center, Right, Logo } from "./styles";
 
 import ProfileMenu from "./ProfileMenu";
 import { MdSearch, MdOutlineShoppingCart } from "react-icons/md";
 import Badge from "@mui/material/Badge";
 import { useNavigate, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import SearchBox from "./SearchBox";
 
 function NavBar() {
   const cart = useSelector((state) => state.cart);
-  const user = useSelector((state) => state.user.currentUser.user);
+  const currentUser = useSelector((state) => state.user.currentUser);
   const navigate = useNavigate();
   function navigation(e) {
     navigate("/");
   }
 
-  const firstLetter = user.name.charAt(0).toUpperCase();
+  let firstLetter;
+  if (currentUser) {
+    firstLetter = currentUser.user.name.charAt(0).toUpperCase();
+  }
 
   return (
     <Container>
       <Wrapper>
         <Left>
-          <SearchBox>
-            <Input placeholder="Search" />
-            <MdSearch style={{ color: "grey", fontSize: "16" }} />
-          </SearchBox>
+          <SearchBox />
         </Left>
         <Center>
           <Logo onClick={navigation}>Boutique</Logo>
@@ -43,7 +35,13 @@ function NavBar() {
               <MdOutlineShoppingCart size="20px" />
             </Badge>
           </Link>
-          {user && <ProfileMenu letter={firstLetter} />}
+          {currentUser ? (
+            <ProfileMenu letter={firstLetter} />
+          ) : (
+            <Link to="/authentication" style={{ textDecoration: "none" }}>
+              Sign in
+            </Link>
+          )}
         </Right>
       </Wrapper>
     </Container>

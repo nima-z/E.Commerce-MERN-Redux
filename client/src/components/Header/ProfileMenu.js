@@ -9,7 +9,12 @@ import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import Logout from "@mui/icons-material/Logout";
 
+import { logout } from "../../redux/UserRedux";
+import { useDispatch } from "react-redux";
+
 export default function ProfileMenu({ letter }) {
+  const dispatch = useDispatch();
+
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -18,6 +23,10 @@ export default function ProfileMenu({ letter }) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  function onLogout() {
+    dispatch(logout());
+  }
 
   return (
     <Fragment>
@@ -84,7 +93,7 @@ export default function ProfileMenu({ letter }) {
         </MenuItem>
         <Divider />
 
-        <MenuItem>
+        <MenuItem onClick={onLogout}>
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
