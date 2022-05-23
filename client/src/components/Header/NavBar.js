@@ -21,7 +21,7 @@ function NavBar() {
   }
 
   return (
-    <Container>
+    <Container id="boutique">
       <Wrapper>
         <Left>
           <SearchBox />

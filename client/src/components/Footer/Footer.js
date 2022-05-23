@@ -22,6 +22,8 @@ import {
   Payment,
 } from "./styles";
 
+import { Link } from "react-router-dom";
+
 export default function Footer() {
   return (
     <Container>
@@ -48,10 +50,17 @@ export default function Footer() {
       <Center>
         <Title>Links</Title>
         <List>
-          <ListItem>Home</ListItem>
-          <ListItem>Cart</ListItem>
-          <ListItem>Wish List</ListItem>
+          <ListItem>
+            <Link to="/#boutique">Home</Link>
+          </ListItem>
+          <ListItem>
+            <Link to="/cart#boutique">Cart</Link>
+          </ListItem>
+          <ListItem>
+            <Link to="/#category">Catergory</Link>
+          </ListItem>
           <ListItem>My Account</ListItem>
+          <ListItem>Wish List</ListItem>
           <ListItem>About</ListItem>
         </List>
       </Center>

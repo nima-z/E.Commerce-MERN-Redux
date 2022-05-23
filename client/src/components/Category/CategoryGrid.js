@@ -4,7 +4,7 @@ import CatBox from "./CatBox";
 
 function CategoryGrid() {
   return (
-    <Container>
+    <Container id="category">
       {categories.map((item) => (
         <CatBox key={item.id} item={item} />
       ))}

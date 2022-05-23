@@ -54,6 +54,9 @@ export const List = styled.ul`
 export const ListItem = styled.li`
   width: 50%;
   margin-bottom: 0.8rem;
+  & a {
+    text-decoration: none;
+  }
 `;
 export const RightSide = styled.div`
   flex: 1;
