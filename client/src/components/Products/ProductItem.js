@@ -91,7 +91,7 @@ function ProductItem({ item }) {
         color: item.color,
         size: item.size[0],
         quantity: 1,
-        totalPrice: parseFloat(item.price.toFixed(2)),
+        totalPrice: item.price,
       })
     );
   }

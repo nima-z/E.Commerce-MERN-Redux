@@ -6,8 +6,8 @@ import { Fragment } from "react";
 import StripeCheckout from "react-stripe-checkout";
 import { useState, useEffect } from "react";
 import { userRequest } from "../../helpers/requestMethods";
-import { useNavigate } from "react-router-dom";
-import { clearCart } from "../../redux/CartRedux";
+import { Link, useNavigate } from "react-router-dom";
+import { clearCart, addProduct, removeProduct } from "../../redux/CartRedux";
 
 const Container = styled.div`
   padding: 1.5rem;
@@ -34,6 +34,9 @@ const TopButton = styled.button`
   color: ${(props) => props.type === "filled" && "white "};
   background-color: ${(props) =>
     props.type === "filled" ? "black" : "transparent"};
+  & a {
+    text-decoration: none;
+  }
 `;
 
 const TopTexts = styled.div`
@@ -157,7 +160,19 @@ const SummaryButton = styled.button`
   cursor: pointer;
 `;
 
+const IconButton = styled.button`
+  background: none;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: ${(props) => (props.disabled ? "default" : "pointer")};
+`;
+
 export default function Cart() {
+  const [quantity, setQuantity] = useState(1);
+  const [max, setMax] = useState(false);
+  const [min, setMin] = useState(true);
   const [stripeToken, setStripeToken] = useState(null);
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
@@ -166,6 +181,40 @@ export default function Cart() {
   function onClearCart() {
     dispatch(clearCart());
   }
+
+  function increaseItem(product) {
+    setMin(false);
+    let newQ;
+    if (quantity === product.inStock) {
+      newQ = quantity;
+      setMax(true);
+    } else {
+      newQ = quantity + 1;
+      dispatch(
+        addProduct({ ...product, quantity: 1, totalPrice: +product.price })
+      );
+    }
+    setQuantity(newQ);
+  }
+  function decreaseItem(product) {
+    setMax(false);
+    let newQ;
+    if (quantity === 2) {
+      setMin(true);
+      newQ = quantity - 1;
+    } else {
+      newQ = quantity - 1;
+    }
+    setQuantity(newQ);
+    dispatch(removeProduct({ ...product }));
+  }
+  // function onAddProduct() {
+  //   dispatch(addProduct());
+  // }
+
+  // function onRemoveProduct() {
+  //   dispatch(removeProduct());
+  // }
 
   const STRIPE_KEY = process.env.REACT_APP_STRIPE;
 
@@ -194,10 +243,16 @@ export default function Cart() {
     <Container>
       <Title>Your Cart</Title>
       <Top>
-        <TopButton>Continue Shopping</TopButton>
+        <TopButton>
+          <Link to="/products">Continue Shopping</Link>
+        </TopButton>
         <TopTexts>
-          <TopText>Shopping cart (2)</TopText>
-          <TopText>Your Wishlist (0)</TopText>
+          <TopText>
+            <Link to="/cart">Shopping cart ({cart.quantity})</Link>
+          </TopText>
+          <TopText>
+            <Link to="/wishlist">Your Wishlist</Link>
+          </TopText>
         </TopTexts>
         <TopButton type="filled" onClick={onClearCart}>
           Clear Cart
@@ -210,7 +265,9 @@ export default function Cart() {
               <Fragment key={`${product._id} ${product.color} ${product.size}`}>
                 <Product>
                   <ProductDetail>
-                    <Image src={product.image} />
+                    <Link to={`/product/${product._id}#boutique`}>
+                      <Image src={product.image} />
+                    </Link>
                     <Details>
                       <ProductName>
                         <b>Product:</b> {product.title}
@@ -226,9 +283,22 @@ export default function Cart() {
                   </ProductDetail>
                   <PriceDetail>
                     <AmountContainer>
-                      <Add />
+                      <IconButton
+                        onClick={() => {
+                          increaseItem(product);
+                        }}
+                      >
+                        <Add />
+                      </IconButton>
+
                       <Amount>{product.quantity}</Amount>
-                      <Remove />
+                      <IconButton
+                        onClick={() => {
+                          decreaseItem(product);
+                        }}
+                      >
+                        <Remove />
+                      </IconButton>
                     </AmountContainer>
                     <Price> $ {product.totalPrice}</Price>
                   </PriceDetail>

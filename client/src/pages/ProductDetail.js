@@ -1,13 +1,20 @@
 // Libraries
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { useQueryClient } from "react-query";
 //Imports
 import SingleProduct from "../components/Products/SingleProduct";
 import useProduct from "../hooks/useProduct";
+import { useEffect } from "react";
 //------------------------------------------------
 
 export default function ProductDetail() {
+  const location = useLocation();
   const { id } = useParams();
+
+  useEffect(() => {
+    const element = document.getElementById(location.hash.slice(1));
+    element.scrollIntoView({ behavior: "smooth" });
+  }, [location]);
 
   const queryClient = useQueryClient();
   const staledData = queryClient.getQueriesData("products");
