@@ -115,7 +115,6 @@ async function getAllOrders(req, res) {
 
 async function getMonthlyIncome(req, res) {
   const date = new Date();
-  const currentMonth = new Date(date.setMonth(date.getMonth() - 1));
   const prevMonth = new Date(date.setMonth(date.getMonth() - 2));
 
   const client = await dbConnection();
@@ -141,7 +140,7 @@ async function getMonthlyIncome(req, res) {
     const income = await db
       .collection("orders")
       .aggregate([
-        { $match: { createdAt: { $gte: lastYear } } },
+        { $match: { createdAt: { $gte: prevMonth } } },
         {
           $group: {
             _id: { $month: "$createdAt" },

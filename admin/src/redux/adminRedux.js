@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const userSlice = createSlice({
-  name: "user",
+const adminSlice = createSlice({
+  name: "admin",
   initialState: {
     currentUser: null,
     isFetching: false,
@@ -22,5 +22,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { loginStart, loginSuccess, loginFailure } = userSlice.actions;
-export default userSlice.reducer;
+export const { loginStart, loginSuccess, loginFailure } = adminSlice.actions;
+export default adminSlice.reducer;

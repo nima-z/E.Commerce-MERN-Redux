@@ -15,8 +15,8 @@ const Container = styled.div`
 function ProductGrid({ products }) {
   return (
     <Container>
-      {products.map((item) => (
-        <ProductItem key={item._id} item={item} />
+      {products.map((product) => (
+        <ProductItem key={product._id} product={product} />
       ))}
     </Container>
   );

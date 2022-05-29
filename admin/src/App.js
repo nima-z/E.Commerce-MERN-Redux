@@ -16,9 +16,9 @@ import { Redirect } from "react-router-dom";
 function App() {
   const admin =
     localStorage.getItem("persist:admin") &&
-    JSON.parse(JSON.parse(localStorage.getItem("persist:admin")).user)
+    JSON.parse(JSON.parse(localStorage.getItem("persist:admin")).admin)
       .currentUser
-      ? JSON.parse(JSON.parse(localStorage.getItem("persist:admin")).user)
+      ? JSON.parse(JSON.parse(localStorage.getItem("persist:admin")).admin)
           .currentUser.user.isAdmin
       : false;
 

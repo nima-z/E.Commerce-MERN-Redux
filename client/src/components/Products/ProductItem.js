@@ -1,12 +1,17 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import { mobile } from "../../responsive";
-import { SearchOffOutlined } from "@mui/icons-material";
+import {
+  FavoriteBorderOutlined,
+  FavoriteOutlined,
+  SearchOffOutlined,
+  ShoppingCartOutlined,
+} from "@mui/icons-material";
 import { addProduct } from "../../redux/CartRedux";
-import { useDispatch } from "react-redux";
+import { likeProduct } from "../../redux/WishListRedux";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 const Container = styled.div`
   width: 200px;
@@ -81,38 +86,58 @@ const Price = styled.p`
   text-decoration: none;
 `;
 
-function ProductItem({ item }) {
+function ProductItem({ product }) {
+  const [liked, setLiked] = useState(false);
   const dispatch = useDispatch();
+  const wishList = useSelector((state) => state.wishList.products);
+
+  useEffect(() => {
+    const isLiked = wishList.find((item) => item._id === product._id);
+    if (isLiked) {
+      setLiked(true);
+    }
+  }, [wishList, product._id]);
 
   function buyingHandler() {
     dispatch(
       addProduct({
-        ...item,
-        color: item.color,
-        size: item.size[0],
+        ...product,
+        color: product.color,
+        size: product.size[0],
         quantity: 1,
-        totalPrice: item.price,
+        totalPrice: product.price,
       })
     );
   }
+
+  function likeHandler() {
+    setLiked((prev) => !prev);
+    dispatch(likeProduct({ ...product }));
+  }
+
   return (
     <Container>
-      <Image src={item.image} />
+      <Image src={product.image} />
+
       <Icons className="icons">
         <Icon onClick={buyingHandler}>
-          <ShoppingCartOutlinedIcon />
+          <ShoppingCartOutlined />
+        </Icon>
+        <Icon onClick={likeHandler}>
+          {liked ? (
+            <FavoriteOutlined style={{ color: "red" }} />
+          ) : (
+            <FavoriteBorderOutlined />
+          )}
         </Icon>
         <Icon>
-          <FavoriteBorderOutlinedIcon />
-        </Icon>
-        <Icon>
-          <Link to={`/product/${item._id}`}>
+          <Link to={`/product/${product._id}`}>
             <SearchOffOutlined />
           </Link>
         </Icon>
       </Icons>
       <Info>
-        <Price>Price: $ {item.price}</Price>
+        <Price>Price: $ {product.price}</Price>
       </Info>
     </Container>
   );

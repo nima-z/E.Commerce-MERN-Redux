@@ -37,3 +37,14 @@
   font-weight: 600;
   cursor: pointer;
 }
+
+.checkBoxContainer {
+  display: flex;
+  gap: 3rem;
+}
+.checkBoxItem {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
+}
