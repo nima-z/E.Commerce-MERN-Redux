@@ -1,4 +1,4 @@
-import { loginFailure, loginStart, loginSuccess } from "../redux/userRedux";
+import { loginFailure, loginStart, loginSuccess } from "../redux/adminRedux";
 import { publicRequest } from "./requestMethod";
 
 export async function LoggingIn(dispatch, user) {

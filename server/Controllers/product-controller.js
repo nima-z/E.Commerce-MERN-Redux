@@ -7,7 +7,7 @@ const dbConnection = require("../Helper/db-connection");
 //Create new product
 async function createNewProduct(req, res) {
   const { title, desc, price, category } = req.body;
-  const newProduct = { title, desc, price, category };
+  const newProduct = { title, desc, price: +price, category: [] };
 
   const client = await dbConnection();
   const db = client.db();
@@ -58,11 +58,14 @@ async function deleteProduct(req, res) {
   const db = client.db();
 
   try {
-    await db
+    const deletedItem = await db
       .collection("products")
       .findOneAndDelete({ _id: ObjectId(productId) });
     client.close();
-    res.status(200).json({ message: "Product has been deleted" });
+    res.status(200).json({
+      message: "Product has been deleted",
+      product: deletedItem.value,
+    });
   } catch (err) {
     client.close();
     res.status(500).json(err);

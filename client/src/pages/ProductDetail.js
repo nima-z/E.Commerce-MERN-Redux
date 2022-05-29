@@ -13,7 +13,9 @@ export default function ProductDetail() {
 
   useEffect(() => {
     const element = document.getElementById(location.hash.slice(1));
-    element.scrollIntoView({ behavior: "smooth" });
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
   }, [location]);
 
   const queryClient = useQueryClient();
