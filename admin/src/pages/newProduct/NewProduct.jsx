@@ -18,7 +18,6 @@ export default function NewProduct() {
   const [color, setColor] = useState([]);
   const [size, setSize] = useState([]);
   const [file, setFile] = useState();
-  const [img, setImg] = useState("");
 
   const dispatch = useDispatch();
   const history = useHistory();

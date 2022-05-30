@@ -43,7 +43,7 @@ const productSlice = createSlice({
       state.isFetching = false;
       state.products[
         state.products.findIndex((item) => item._id === action.payload._id)
-      ] = action.payload.product;
+      ] = action.payload;
     },
     updateProductsFailure: (state) => {
       state.isFetching = false;
