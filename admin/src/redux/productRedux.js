@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+//==============================================
 
 const productSlice = createSlice({
   name: "product",
@@ -63,6 +64,7 @@ const productSlice = createSlice({
     },
   },
 });
+//==============================================
 
 export const {
   getProductsStart,

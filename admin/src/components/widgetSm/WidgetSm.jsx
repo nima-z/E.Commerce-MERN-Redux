@@ -1,7 +1,9 @@
-import "./widgetSm.css";
-import { Visibility } from "@material-ui/icons";
 import { useEffect, useState } from "react";
+import { Visibility } from "@material-ui/icons";
+//==============================================
 import { userRequest } from "../../helpers/requestMethod";
+import "./widgetSm.css";
+//==============================================
 
 export default function WidgetSm() {
   const [users, setUsers] = useState([]);

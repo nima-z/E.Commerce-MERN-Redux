@@ -1,10 +1,13 @@
-import "./userList.css";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
-import { Link } from "react-router-dom";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+//==============================================
 import { deleteClients, getClients } from "../../helpers/clientsMethod";
+import "./userList.css";
+//==============================================
+
 export default function UserList() {
   const dispatch = useDispatch();
   const clients = useSelector((state) => state.client.clients);
@@ -13,6 +16,7 @@ export default function UserList() {
     getClients(dispatch);
   }, [dispatch]);
 
+  //function handlers
   const handleDelete = (id) => {
     deleteClients(dispatch, id);
   };

@@ -1,6 +1,4 @@
 import { useState } from "react";
-import "./newProduct.css";
-import { createProduct } from "../../helpers/productMethod";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
@@ -9,7 +7,11 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
+//==============================================
 import app from "../../firebase";
+import { createProduct } from "../../helpers/productMethod";
+import "./newProduct.css";
+//==============================================
 
 export default function NewProduct() {
   const [input, setInput] = useState();
@@ -18,18 +20,17 @@ export default function NewProduct() {
   const [color, setColor] = useState([]);
   const [size, setSize] = useState([]);
   const [file, setFile] = useState();
-
+  //----
   const dispatch = useDispatch();
   const history = useHistory();
 
+  // prepare image file to upload
   const fileName = file && new Date().getTime() + file.name;
-
   const storage = getStorage(app);
-
   const storageRef = ref(storage, `images/${fileName}`);
-
   const uploadTask = uploadBytesResumable(storageRef, file);
 
+  //function handlers
   function imageHandler(e) {
     setFile(e.target.files[0]);
   }
@@ -100,7 +101,6 @@ export default function NewProduct() {
             color,
             size,
           };
-          console.log(product);
 
           createProduct(dispatch, product);
         });
