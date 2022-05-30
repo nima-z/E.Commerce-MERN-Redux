@@ -1,26 +1,29 @@
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams, useHistory } from "react-router-dom";
 import {
   CalendarToday,
   LocationSearching,
   MailOutline,
   PhoneAndroid,
 } from "@material-ui/icons";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useParams, useHistory } from "react-router-dom";
+//==============================================
 import { updateClients } from "../../helpers/clientsMethod";
 import "./user.css";
+//==============================================
 
 export default function User() {
   const [input, setInput] = useState({});
+  //---
   const history = useHistory();
+  const dispatch = useDispatch();
   const params = useParams();
   const { userId } = params;
-  const dispatch = useDispatch();
-
   const client = useSelector((state) =>
     state.client.clients.find((item) => item._id === userId)
   );
 
+  //function handlers
   function changeHandler(e) {
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }

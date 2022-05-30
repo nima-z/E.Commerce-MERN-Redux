@@ -14,6 +14,7 @@ import {
 } from "../redux/productRedux";
 
 import { publicRequest, userRequest } from "./requestMethod";
+//==============================================
 
 export async function getProducts(dispatch) {
   dispatch(getProductsStart());
@@ -25,13 +26,13 @@ export async function getProducts(dispatch) {
   }
 }
 
-export async function deleteProduct(dispatch, pId) {
-  dispatch(deleteProductsStart());
+export async function createProduct(dispatch, newProduct) {
+  dispatch(createProductsStart());
   try {
-    const res = await userRequest.delete(`/products/${pId}`);
-    dispatch(deleteProductsSuccess(res.data.product));
+    const res = await userRequest.post(`/products`, { ...newProduct });
+    dispatch(createProductsSuccess(res.data.product));
   } catch (err) {
-    dispatch(deleteProductsFailure());
+    dispatch(createProductsFailure());
   }
 }
 
@@ -45,12 +46,12 @@ export async function updateProduct(dispatch, pId, updatedItem) {
   }
 }
 
-export async function createProduct(dispatch, newProduct) {
-  dispatch(createProductsStart());
+export async function deleteProduct(dispatch, pId) {
+  dispatch(deleteProductsStart());
   try {
-    const res = await userRequest.post(`/products`, { ...newProduct });
-    dispatch(createProductsSuccess(res.data.product));
+    const res = await userRequest.delete(`/products/${pId}`);
+    dispatch(deleteProductsSuccess(res.data.product));
   } catch (err) {
-    dispatch(createProductsFailure());
+    dispatch(deleteProductsFailure());
   }
 }

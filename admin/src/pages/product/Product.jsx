@@ -1,41 +1,42 @@
-import "./product.css";
+import { useState } from "react";
 import { Publish } from "@material-ui/icons";
 import { useParams, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { updateProduct } from "../../helpers/productMethod";
-import { useState } from "react";
 import {
   getDownloadURL,
   getStorage,
   ref,
   uploadBytesResumable,
 } from "firebase/storage";
+//==============================================
 import app from "../../firebase";
+import { updateProduct } from "../../helpers/productMethod";
+import "./product.css";
+//==============================================
 
 export default function Product() {
   const [input, setInput] = useState({});
   const [file, setFile] = useState();
-
+  //---
   const params = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
+  //---
   const { productId } = params;
-
-  const fileName = file && new Date().getTime() + file.name;
-
-  const storage = getStorage(app);
-
-  const storageRef = ref(storage, `images/${fileName}`);
-
-  const uploadTask = uploadBytesResumable(storageRef, file);
-
-  function imageHandler(e) {
-    setFile(e.target.files[0]);
-  }
-
   const product = useSelector((state) =>
     state.product.products.find((item) => item._id === productId)
   );
+
+  // preparing image file to upload
+  const fileName = file && new Date().getTime() + file.name;
+  const storage = getStorage(app);
+  const storageRef = ref(storage, `images/${fileName}`);
+  const uploadTask = uploadBytesResumable(storageRef, file);
+
+  //function handlers
+  function imageHandler(e) {
+    setFile(e.target.files[0]);
+  }
 
   function changeHandler(e) {
     const name = e.target.name;

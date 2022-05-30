@@ -1,29 +1,35 @@
+import { Fragment } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import { useSelector } from "react-redux";
+//==============================================
 import Sidebar from "./components/sidebar/Sidebar";
 import Topbar from "./components/topbar/Topbar";
-import "./App.css";
 import Home from "./pages/home/Home";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import UserList from "./pages/userList/UserList";
-import User from "./pages/user/User";
-import NewUser from "./pages/newUser/NewUser";
-import ProductList from "./pages/productList/ProductList";
-import Product from "./pages/product/Product";
-import NewProduct from "./pages/newProduct/NewProduct";
 import Auth from "./pages/authentication/auth";
-import { Fragment } from "react";
-import { Redirect } from "react-router-dom";
-// import useProducts from "./hooks/useProducts";
+import UserList from "./pages/userList/UserList";
+import ProductList from "./pages/productList/ProductList";
+import User from "./pages/user/User";
+import Product from "./pages/product/Product";
+import NewUser from "./pages/newUser/NewUser";
+import NewProduct from "./pages/newProduct/NewProduct";
+import "./App.css";
+//==============================================
 
 function App() {
-  const admin =
-    localStorage.getItem("persist:admin") &&
-    JSON.parse(JSON.parse(localStorage.getItem("persist:admin")).admin)
-      .currentUser
-      ? JSON.parse(JSON.parse(localStorage.getItem("persist:admin")).admin)
-          .currentUser.user.isAdmin
-      : false;
+  // const admin =
+  //   localStorage.getItem("persist:admin") &&
+  //   JSON.parse(JSON.parse(localStorage.getItem("persist:admin")).admin)
+  //     .currentUser
+  //     ? JSON.parse(JSON.parse(localStorage.getItem("persist:admin")).admin)
+  //         .currentUser.user.isAdmin
+  //     : false;
 
-  // useProducts();
+  const admin = useSelector((state) => state.admin.currentUser);
 
   return (
     <Router>
@@ -58,7 +64,6 @@ function App() {
             </div>
           </Fragment>
         ) : (
-          // <Auth />
           <Redirect to="/auth" />
         )}
       </Switch>

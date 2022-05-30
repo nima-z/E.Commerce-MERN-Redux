@@ -1,7 +1,9 @@
-import "./featuredInfo.css";
-import { ArrowDownward, ArrowUpward } from "@material-ui/icons";
 import { useEffect, useState } from "react";
+import { ArrowDownward, ArrowUpward } from "@material-ui/icons";
+//==============================================
 import { userRequest } from "../../helpers/requestMethod";
+import "./featuredInfo.css";
+//==============================================
 
 export default function FeaturedInfo() {
   const [income, setIncome] = useState([]);

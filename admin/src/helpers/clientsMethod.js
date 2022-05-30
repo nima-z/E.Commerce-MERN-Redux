@@ -13,8 +13,10 @@ import {
   createClientsSuccess,
 } from "../redux/clientRedux";
 
-import { publicRequest, userRequest } from "./requestMethod";
+import { userRequest } from "./requestMethod";
+//==============================================
 
+// fetch all users
 export async function getClients(dispatch) {
   dispatch(getClientsStart());
   try {
@@ -25,16 +27,18 @@ export async function getClients(dispatch) {
   }
 }
 
-export async function deleteClients(dispatch, uId) {
-  dispatch(deleteClientsStart());
+// create a user
+export async function createClients(dispatch, newClient) {
+  dispatch(createClientsStart());
   try {
-    const res = await userRequest.delete(`/users/${uId}`);
-    dispatch(deleteClientsSuccess(res.data.user));
+    const res = await userRequest.post(`/auth/register`, { ...newClient });
+    dispatch(createClientsSuccess(res.data.user));
   } catch (err) {
-    dispatch(deleteClientsFailure());
+    dispatch(createClientsFailure());
   }
 }
 
+// edit & update a users
 export async function updateClients(dispatch, pId, updatedClient) {
   dispatch(updateClientsStart());
   try {
@@ -45,12 +49,13 @@ export async function updateClients(dispatch, pId, updatedClient) {
   }
 }
 
-export async function createClients(dispatch, newClient) {
-  dispatch(createClientsStart());
+// delete a user
+export async function deleteClients(dispatch, uId) {
+  dispatch(deleteClientsStart());
   try {
-    const res = await userRequest.post(`/auth/register`, { ...newClient });
-    dispatch(createClientsSuccess(res.data.user));
+    const res = await userRequest.delete(`/users/${uId}`);
+    dispatch(deleteClientsSuccess(res.data.user));
   } catch (err) {
-    dispatch(createClientsFailure());
+    dispatch(deleteClientsFailure());
   }
 }

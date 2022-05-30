@@ -1,12 +1,12 @@
-import "./productList.css";
+import { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { DataGrid } from "@material-ui/data-grid";
 import { DeleteOutline } from "@material-ui/icons";
-import { Link } from "react-router-dom";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+//==============================================
 import { deleteProduct, getProducts } from "../../helpers/productMethod";
-// import useProducts from "../../hooks/useProducts";
-
+import "./productList.css";
+//==============================================
 export default function ProductList() {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.product.products);
@@ -18,8 +18,6 @@ export default function ProductList() {
   const handleDelete = (id) => {
     deleteProduct(dispatch, id);
   };
-
-  // const products = useProducts();
 
   const columns = [
     {
@@ -68,20 +66,18 @@ export default function ProductList() {
   ];
 
   return (
-    products && (
-      <div className="productList">
-        <Link to="/newproduct">
-          <button className="productAddButton">Create</button>
-        </Link>
-        <DataGrid
-          rows={products}
-          getRowId={(row) => row._id}
-          disableSelectionOnClick
-          columns={columns}
-          pageSize={12}
-          checkboxSelection
-        />
-      </div>
-    )
+    <div className="productList">
+      <Link to="/newproduct">
+        <button className="productAddButton">Create</button>
+      </Link>
+      <DataGrid
+        rows={products}
+        getRowId={(row) => row._id}
+        disableSelectionOnClick
+        columns={columns}
+        pageSize={12}
+        checkboxSelection
+      />
+    </div>
   );
 }

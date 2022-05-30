@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+//==============================================
 
 const adminSlice = createSlice({
   name: "admin",
@@ -21,6 +22,7 @@ const adminSlice = createSlice({
     },
   },
 });
+//==============================================
 
 export const { loginStart, loginSuccess, loginFailure } = adminSlice.actions;
 export default adminSlice.reducer;

@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+//==============================================
 
 const clientSlice = createSlice({
   name: "client",
@@ -63,6 +64,7 @@ const clientSlice = createSlice({
     },
   },
 });
+//==============================================
 
 export const {
   getClientsStart,

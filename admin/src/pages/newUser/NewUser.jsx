@@ -1,25 +1,28 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+//==============================================
 import { createClients } from "../../helpers/clientsMethod";
 import "./newUser.css";
+//==============================================
 
 export default function NewUser() {
   const [input, setInput] = useState({});
+  //---
   const history = useHistory();
   const dispatch = useDispatch();
 
+  //function handlers
   function changeHandler(e) {
     setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
-
-  console.log(input);
 
   function submitHandler(e) {
     e.preventDefault();
     createClients(dispatch, input);
     history.push("/users");
   }
+  //---------
 
   return (
     <div className="newUser">
