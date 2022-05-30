@@ -80,7 +80,7 @@ async function getAllUsers(req, res) {
 
   try {
     const users = latest
-      ? await db.collection("users").find().sort({ _id: -1 }).limit(2).toArray()
+      ? await db.collection("users").find().sort({ _id: -1 }).limit(5).toArray()
       : await db.collection("users").find().toArray();
     client.close();
     res.status(200).json({ message: "users has been found", users: users });

@@ -6,8 +6,19 @@ const dbConnection = require("../Helper/db-connection");
 
 //Create new product
 async function createNewProduct(req, res) {
-  const { title, desc, price, category } = req.body;
-  const newProduct = { title, desc, price: +price, category: [] };
+  const { title, desc, price, inStock, category, image, tag, color, size } =
+    req.body;
+  const newProduct = {
+    title,
+    desc,
+    price,
+    category,
+    image,
+    tag,
+    color,
+    size,
+    inStock,
+  };
 
   const client = await dbConnection();
   const db = client.db();

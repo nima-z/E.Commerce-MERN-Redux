@@ -12,6 +12,7 @@ import NewProduct from "./pages/newProduct/NewProduct";
 import Auth from "./pages/authentication/auth";
 import { Fragment } from "react";
 import { Redirect } from "react-router-dom";
+// import useProducts from "./hooks/useProducts";
 
 function App() {
   const admin =
@@ -21,6 +22,8 @@ function App() {
       ? JSON.parse(JSON.parse(localStorage.getItem("persist:admin")).admin)
           .currentUser.user.isAdmin
       : false;
+
+  // useProducts();
 
   return (
     <Router>

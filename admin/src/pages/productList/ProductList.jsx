@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteProduct, getProducts } from "../../helpers/productMethod";
+// import useProducts from "../../hooks/useProducts";
 
 export default function ProductList() {
   const dispatch = useDispatch();
@@ -17,6 +18,8 @@ export default function ProductList() {
   const handleDelete = (id) => {
     deleteProduct(dispatch, id);
   };
+
+  // const products = useProducts();
 
   const columns = [
     {
@@ -65,18 +68,20 @@ export default function ProductList() {
   ];
 
   return (
-    <div className="productList">
-      <Link to="/newproduct">
-        <button className="productAddButton">Create</button>
-      </Link>
-      <DataGrid
-        rows={products}
-        getRowId={(row) => row._id}
-        disableSelectionOnClick
-        columns={columns}
-        pageSize={12}
-        checkboxSelection
-      />
-    </div>
+    products && (
+      <div className="productList">
+        <Link to="/newproduct">
+          <button className="productAddButton">Create</button>
+        </Link>
+        <DataGrid
+          rows={products}
+          getRowId={(row) => row._id}
+          disableSelectionOnClick
+          columns={columns}
+          pageSize={12}
+          checkboxSelection
+        />
+      </div>
+    )
   );
 }

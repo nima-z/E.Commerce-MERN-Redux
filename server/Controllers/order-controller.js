@@ -160,7 +160,6 @@ async function getMonthlyIncome(req, res) {
         },
       ])
       .toArray();
-    console.log("income :" + income);
     res.status(200).json(income);
   } catch (err) {
     res.status(500).json(err);

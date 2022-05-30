@@ -33,15 +33,11 @@ export default function WidgetLg() {
         {orders.map((order) => (
           <tr className="widgetLgTr" key={order._id}>
             <td className="widgetLgUser">
-              <img
-                src="https://images.pexels.com/photos/4172933/pexels-photo-4172933.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-                alt=""
-                className="widgetLgImg"
-              />
-              <span className="widgetLgName">{order.userId}</span>
+              <img src="" alt="" className="widgetLgImg" />
+              <span className="widgetLgName">{order.userName}</span>
             </td>
-            <td className="widgetLgDate">time</td>
-            <td className="widgetLgAmount">${order.amount}</td>
+            <td className="widgetLgDate">{order.createdAt}</td>
+            <td className="widgetLgAmount">${order.amount / 100}</td>
             <td className="widgetLgStatus">
               <Button type={order.status} />
             </td>

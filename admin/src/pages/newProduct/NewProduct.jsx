@@ -3,6 +3,13 @@ import "./newProduct.css";
 import { createProduct } from "../../helpers/productMethod";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import app from "../../firebase";
 
 export default function NewProduct() {
   const [input, setInput] = useState();
@@ -10,8 +17,22 @@ export default function NewProduct() {
   const [tag, setTag] = useState([]);
   const [color, setColor] = useState([]);
   const [size, setSize] = useState([]);
+  const [file, setFile] = useState();
+
   const dispatch = useDispatch();
   const history = useHistory();
+
+  const fileName = file && new Date().getTime() + file.name;
+
+  const storage = getStorage(app);
+
+  const storageRef = ref(storage, `images/${fileName}`);
+
+  const uploadTask = uploadBytesResumable(storageRef, file);
+
+  function imageHandler(e) {
+    setFile(e.target.files[0]);
+  }
 
   function changeHandler(e) {
     const name = e.target.name;
@@ -46,15 +67,46 @@ export default function NewProduct() {
 
   function createHandler(e) {
     e.preventDefault();
-    const product = {
-      ...input,
-      category: cat,
-      image: "",
-      tag: [cat, ...tag, ...size, ...color],
-      color,
-      size,
-    };
-    createProduct(dispatch, product);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+        switch (snapshot.state) {
+          case "paused":
+            console.log("Upload is paused");
+            break;
+          case "running":
+            console.log("Upload is running");
+            break;
+          default:
+            console.log("Upload has no state");
+        }
+      },
+      (error) => {
+        // Handle unsuccessful uploads
+      },
+      () => {
+        // Handle successful uploads on complete
+        // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          const product = {
+            ...input,
+            category: cat,
+            image: downloadURL,
+            tag: [cat, ...tag, ...color],
+            color,
+            size,
+          };
+          console.log(product);
+
+          createProduct(dispatch, product);
+        });
+      }
+    );
+
     history.push("/products");
   }
 
@@ -64,7 +116,7 @@ export default function NewProduct() {
       <form className="addProductForm" onSubmit={createHandler}>
         <div className="addProductItem">
           <label>Image</label>
-          <input type="file" id="file" />
+          <input type="file" id="file" onChange={imageHandler} />
         </div>
         <div className="addProductItem">
           <label>Title</label>
@@ -87,7 +139,7 @@ export default function NewProduct() {
         <div className="addProductItem">
           <label>Price</label>
           <input
-            type="text"
+            type="number"
             placeholder="Price"
             name="price"
             onChange={changeHandler}

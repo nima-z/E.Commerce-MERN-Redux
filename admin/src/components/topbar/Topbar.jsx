@@ -1,6 +1,5 @@
-import React from "react";
 import "./topbar.css";
-import { NotificationsNone, Language, Settings } from "@material-ui/icons";
+import { NotificationsNone, Settings } from "@material-ui/icons";
 
 export default function Topbar() {
   return (
@@ -15,14 +14,10 @@ export default function Topbar() {
             <span className="topIconBadge">2</span>
           </div>
           <div className="topbarIconContainer">
-            <Language />
-            <span className="topIconBadge">2</span>
-          </div>
-          <div className="topbarIconContainer">
             <Settings />
           </div>
           <img
-            src="https://images.pexels.com/photos/1526814/pexels-photo-1526814.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
+            src="https://www.logomaker.com/wpstatic/uploads/2019/01/iStock-1034771616.jpg"
             alt=""
             className="topAvatar"
           />
