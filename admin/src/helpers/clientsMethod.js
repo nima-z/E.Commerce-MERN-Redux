@@ -48,7 +48,7 @@ export async function updateClients(dispatch, pId, updatedClient) {
 export async function createClients(dispatch, newClient) {
   dispatch(createClientsStart());
   try {
-    const res = await userRequest.post(`/users`, { ...newClient });
+    const res = await userRequest.post(`/auth/register`, { ...newClient });
     dispatch(createClientsSuccess(res.data.user));
   } catch (err) {
     dispatch(createClientsFailure());

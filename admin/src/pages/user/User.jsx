@@ -6,13 +6,13 @@ import {
 } from "@material-ui/icons";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { updateClients } from "../../helpers/clientsMethod";
 import "./user.css";
 
 export default function User() {
   const [input, setInput] = useState({});
-
+  const history = useHistory();
   const params = useParams();
   const { userId } = params;
   const dispatch = useDispatch();
@@ -28,9 +28,8 @@ export default function User() {
   function updateHandler(e) {
     e.preventDefault();
     updateClients(dispatch, userId, input);
+    history.push("/users");
   }
-
-  console.log(input);
 
   return (
     <div className="user">
