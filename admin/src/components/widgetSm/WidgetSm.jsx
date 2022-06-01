@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react";
 import { Visibility } from "@material-ui/icons";
 //==============================================
-import { userRequest } from "../../helpers/requestMethod";
+import { adminRequest } from "../../helpers/requestMethod";
 import "./widgetSm.css";
 //==============================================
 
-export default function WidgetSm() {
+export default function WidgetSm({ token }) {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
     async function getLastFiveUsers() {
       try {
-        const res = await userRequest("/users/?latest=true");
+        const res = await adminRequest(token).get("/users/?latest=true");
         setUsers(res.data.users);
       } catch (err) {
         console.log(err);
       }
     }
     getLastFiveUsers();
-  }, []);
+  }, [token]);
 
   return (
     <div className="widgetSm">

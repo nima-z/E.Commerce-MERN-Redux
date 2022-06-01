@@ -6,7 +6,7 @@ import { createClients } from "../../helpers/clientsMethod";
 import "./newUser.css";
 //==============================================
 
-export default function NewUser() {
+export default function NewUser({ token }) {
   const [input, setInput] = useState({});
   //---
   const history = useHistory();
@@ -19,7 +19,7 @@ export default function NewUser() {
 
   function submitHandler(e) {
     e.preventDefault();
-    createClients(dispatch, input);
+    createClients(dispatch, token, input);
     history.push("/users");
   }
   //---------

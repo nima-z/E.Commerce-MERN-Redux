@@ -1,23 +1,23 @@
 import { useEffect, useState } from "react";
 //==============================================
-import { userRequest } from "../../helpers/requestMethod";
+import { adminRequest } from "../../helpers/requestMethod";
 import "./widgetLg.css";
 //==============================================
 
-export default function WidgetLg() {
+export default function WidgetLg({ token }) {
   const [orders, setOrders] = useState([]);
 
   useEffect(() => {
     async function getOrders() {
       try {
-        const res = await userRequest("/orders");
+        const res = await adminRequest(token).get("/orders");
         setOrders(res.data.allOrders);
       } catch (err) {
         console.log(err);
       }
     }
     getOrders();
-  }, []);
+  }, [token]);
 
   const Button = ({ type }) => {
     return <button className={"widgetLgButton " + type}>{type}</button>;

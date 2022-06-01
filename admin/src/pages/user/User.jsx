@@ -12,7 +12,7 @@ import { updateClients } from "../../helpers/clientsMethod";
 import "./user.css";
 //==============================================
 
-export default function User() {
+export default function User({ token }) {
   const [input, setInput] = useState({});
   //---
   const history = useHistory();
@@ -30,7 +30,7 @@ export default function User() {
 
   function updateHandler(e) {
     e.preventDefault();
-    updateClients(dispatch, userId, input);
+    updateClients(dispatch, token, userId, input);
     history.push("/users");
   }
 

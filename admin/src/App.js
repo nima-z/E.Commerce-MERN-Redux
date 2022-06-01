@@ -1,10 +1,5 @@
 import { Fragment } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 //==============================================
 import Sidebar from "./components/sidebar/Sidebar";
@@ -21,50 +16,41 @@ import "./App.css";
 //==============================================
 
 function App() {
-  // const admin =
-  //   localStorage.getItem("persist:admin") &&
-  //   JSON.parse(JSON.parse(localStorage.getItem("persist:admin")).admin)
-  //     .currentUser
-  //     ? JSON.parse(JSON.parse(localStorage.getItem("persist:admin")).admin)
-  //         .currentUser.user.isAdmin
-  //     : false;
-
   const admin = useSelector((state) => state.admin.currentUser);
 
   return (
     <Router>
       <Switch>
-        <Route path="/auth">{!admin ? <Auth /> : <Redirect to="/" />}</Route>
         {admin ? (
           <Fragment>
             <Topbar />
             <div className="container">
               <Sidebar />
               <Route exact path="/">
-                <Home />
+                <Home token={admin.user.accessToken} />
               </Route>
               <Route path="/users">
-                <UserList />
+                <UserList token={admin.user.accessToken} />
               </Route>
               <Route path="/user/:userId">
-                <User />
+                <User token={admin.user.accessToken} />
               </Route>
               <Route path="/newUser">
-                <NewUser />
+                <NewUser token={admin.user.accessToken} />
               </Route>
               <Route path="/products">
-                <ProductList />
+                <ProductList token={admin.user.accessToken} />
               </Route>
               <Route path="/product/:productId">
-                <Product />
+                <Product token={admin.user.accessToken} />
               </Route>
               <Route path="/newproduct">
-                <NewProduct />
+                <NewProduct token={admin.user.accessToken} />
               </Route>
             </div>
           </Fragment>
         ) : (
-          <Redirect to="/auth" />
+          <Auth />
         )}
       </Switch>
     </Router>

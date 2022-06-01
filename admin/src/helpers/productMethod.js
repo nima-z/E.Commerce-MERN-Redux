@@ -13,7 +13,7 @@ import {
   createProductsSuccess,
 } from "../redux/productRedux";
 
-import { publicRequest, userRequest } from "./requestMethod";
+import { publicRequest, adminRequest } from "./requestMethod";
 //==============================================
 
 export async function getProducts(dispatch) {
@@ -26,30 +26,32 @@ export async function getProducts(dispatch) {
   }
 }
 
-export async function createProduct(dispatch, newProduct) {
+export async function createProduct(dispatch, token, newProduct) {
   dispatch(createProductsStart());
   try {
-    const res = await userRequest.post(`/products`, { ...newProduct });
+    const res = await adminRequest(token).post(`/products`, { ...newProduct });
     dispatch(createProductsSuccess(res.data.product));
   } catch (err) {
     dispatch(createProductsFailure());
   }
 }
 
-export async function updateProduct(dispatch, pId, updatedItem) {
+export async function updateProduct(dispatch, token, pId, updatedItem) {
   dispatch(updateProductsStart());
   try {
-    const res = await userRequest.patch(`/products/${pId}`, { ...updatedItem });
+    const res = await adminRequest(token).patch(`/products/${pId}`, {
+      ...updatedItem,
+    });
     dispatch(updateProductsSuccess(res.data.product));
   } catch (err) {
     dispatch(updateProductsFailure());
   }
 }
 
-export async function deleteProduct(dispatch, pId) {
+export async function deleteProduct(dispatch, pId, token) {
   dispatch(deleteProductsStart());
   try {
-    const res = await userRequest.delete(`/products/${pId}`);
+    const res = await adminRequest(token).delete(`/products/${pId}`);
     dispatch(deleteProductsSuccess(res.data.product));
   } catch (err) {
     dispatch(deleteProductsFailure());

@@ -14,7 +14,7 @@ import { updateProduct } from "../../helpers/productMethod";
 import "./product.css";
 //==============================================
 
-export default function Product() {
+export default function Product({ token }) {
   const [input, setInput] = useState({});
   const [file, setFile] = useState();
   //---
@@ -70,7 +70,7 @@ export default function Product() {
           // Handle successful uploads on complete
           // For instance, get the download URL: https://firebasestorage.googleapis.com/...
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            updateProduct(dispatch, productId, {
+            updateProduct(dispatch, token, productId, {
               ...input,
               image: downloadURL,
             });
@@ -78,7 +78,7 @@ export default function Product() {
         }
       );
     } else {
-      updateProduct(dispatch, productId, input);
+      updateProduct(dispatch, token, productId, input);
     }
     history.push("/products");
   }

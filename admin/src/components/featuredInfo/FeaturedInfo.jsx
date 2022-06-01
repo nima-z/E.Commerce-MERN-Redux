@@ -1,18 +1,18 @@
 import { useEffect, useState } from "react";
 import { ArrowDownward, ArrowUpward } from "@material-ui/icons";
 //==============================================
-import { userRequest } from "../../helpers/requestMethod";
+import { adminRequest } from "../../helpers/requestMethod";
 import "./featuredInfo.css";
 //==============================================
 
-export default function FeaturedInfo() {
+export default function FeaturedInfo({ token }) {
   const [income, setIncome] = useState([]);
   const [perc, setPerc] = useState(0);
 
   useEffect(() => {
     async function getIncome() {
       try {
-        const res = await userRequest.get("orders/income");
+        const res = await adminRequest(token).get("orders/income");
         const currentMonth = res.data[1].sales / 100;
         const prevtMonth = res.data[0].sales / 100;
         setIncome(currentMonth);
@@ -25,7 +25,7 @@ export default function FeaturedInfo() {
       }
     }
     getIncome();
-  }, []);
+  }, [token]);
 
   return (
     <div className="featured">
