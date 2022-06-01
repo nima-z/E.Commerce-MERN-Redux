@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 //==============================================
@@ -11,15 +11,7 @@ export default function Auth() {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const isFetching = useSelector((state) => state.admin.isFetching);
-  const admin = useSelector((state) => state.admin.currentUser);
   const history = useHistory();
-
-  // useEffect(() => {
-  //   if (admin && !isFetching) {
-  //     history.replace("/");
-  //     console.log("here");
-  //   }
-  // }, [isFetching, history, admin]);
 
   // function handlers
   function emailHandler(e) {

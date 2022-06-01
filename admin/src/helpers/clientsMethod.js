@@ -13,14 +13,14 @@ import {
   createClientsSuccess,
 } from "../redux/clientRedux";
 
-import { userRequest } from "./requestMethod";
+import { adminRequest } from "./requestMethod";
 //==============================================
 
 // fetch all users
-export async function getClients(dispatch) {
+export async function getClients(dispatch, token) {
   dispatch(getClientsStart());
   try {
-    const res = await userRequest.get("/users");
+    const res = await adminRequest(token).get("/users");
     dispatch(getClientsSuccess(res.data.users));
   } catch (err) {
     dispatch(getClientsFailure());
@@ -28,10 +28,12 @@ export async function getClients(dispatch) {
 }
 
 // create a user
-export async function createClients(dispatch, newClient) {
+export async function createClients(dispatch, token, newClient) {
   dispatch(createClientsStart());
   try {
-    const res = await userRequest.post(`/auth/register`, { ...newClient });
+    const res = await adminRequest(token).post(`/auth/register`, {
+      ...newClient,
+    });
     dispatch(createClientsSuccess(res.data.user));
   } catch (err) {
     dispatch(createClientsFailure());
@@ -39,10 +41,12 @@ export async function createClients(dispatch, newClient) {
 }
 
 // edit & update a users
-export async function updateClients(dispatch, pId, updatedClient) {
+export async function updateClients(dispatch, token, uId, updatedClient) {
   dispatch(updateClientsStart());
   try {
-    const res = await userRequest.patch(`/users/${pId}`, { ...updatedClient });
+    const res = await adminRequest(token).patch(`/users/${uId}`, {
+      ...updatedClient,
+    });
     dispatch(updateClientsSuccess(res.data.users));
   } catch (err) {
     dispatch(updateClientsFailure());
@@ -50,10 +54,10 @@ export async function updateClients(dispatch, pId, updatedClient) {
 }
 
 // delete a user
-export async function deleteClients(dispatch, uId) {
+export async function deleteClients(dispatch, uId, token) {
   dispatch(deleteClientsStart());
   try {
-    const res = await userRequest.delete(`/users/${uId}`);
+    const res = await adminRequest(token).delete(`/users/${uId}`);
     dispatch(deleteClientsSuccess(res.data.user));
   } catch (err) {
     dispatch(deleteClientsFailure());

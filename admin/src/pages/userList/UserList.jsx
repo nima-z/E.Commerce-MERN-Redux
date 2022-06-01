@@ -8,17 +8,17 @@ import { deleteClients, getClients } from "../../helpers/clientsMethod";
 import "./userList.css";
 //==============================================
 
-export default function UserList() {
+export default function UserList({ token }) {
   const dispatch = useDispatch();
   const clients = useSelector((state) => state.client.clients);
 
   useEffect(() => {
-    getClients(dispatch);
-  }, [dispatch]);
+    getClients(dispatch, token);
+  }, [dispatch, token]);
 
   //function handlers
   const handleDelete = (id) => {
-    deleteClients(dispatch, id);
+    deleteClients(dispatch, id, token);
   };
 
   const columns = [
@@ -29,7 +29,6 @@ export default function UserList() {
       renderCell: (params) => {
         return (
           <div className="userListUser">
-            {/* <img className="userListImg" src={params.row.image} alt="" /> */}
             {params.row.name} {params.row.lastname}
           </div>
         );

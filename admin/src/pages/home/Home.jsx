@@ -4,11 +4,11 @@ import Chart from "../../components/chart/Chart";
 import WidgetSm from "../../components/widgetSm/WidgetSm";
 import WidgetLg from "../../components/widgetLg/WidgetLg";
 import FeaturedInfo from "../../components/featuredInfo/FeaturedInfo";
-import { userRequest } from "../../helpers/requestMethod";
+import { adminRequest } from "../../helpers/requestMethod";
 import "./home.css";
 //==============================================
 
-export default function Home() {
+export default function Home({ token }) {
   const [stats, setStats] = useState([]);
 
   const MONTHS = useMemo(
@@ -32,27 +32,28 @@ export default function Home() {
   useEffect(() => {
     async function getUserStats() {
       try {
-        const res = await userRequest.get("/users/stats");
+        const res = await adminRequest(token).get("/users/stats");
         res.data.stats.map((item) =>
           setStats((prev) => [
             ...prev,
             { name: MONTHS[item._id - 1], "Active User": item.total },
           ])
         );
+        console.log("finaly works");
       } catch (err) {
         console.log(err);
       }
     }
     getUserStats();
-  }, [MONTHS]);
+  }, [MONTHS, token]);
 
   return (
     <div className="home">
-      <FeaturedInfo />
+      <FeaturedInfo token={token} />
       <Chart data={stats} title="User Analytics" grid dataKey="Active User" />
       <div className="homeWidgets">
-        <WidgetSm />
-        <WidgetLg />
+        <WidgetSm token={token} />
+        <WidgetLg token={token} />
       </div>
     </div>
   );

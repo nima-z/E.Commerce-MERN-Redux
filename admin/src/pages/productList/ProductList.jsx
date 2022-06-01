@@ -7,7 +7,7 @@ import { DeleteOutline } from "@material-ui/icons";
 import { deleteProduct, getProducts } from "../../helpers/productMethod";
 import "./productList.css";
 //==============================================
-export default function ProductList() {
+export default function ProductList({ token }) {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.product.products);
 
@@ -16,7 +16,7 @@ export default function ProductList() {
   }, [dispatch]);
 
   const handleDelete = (id) => {
-    deleteProduct(dispatch, id);
+    deleteProduct(dispatch, id, token);
   };
 
   const columns = [

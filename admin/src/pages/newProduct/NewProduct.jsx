@@ -13,7 +13,7 @@ import { createProduct } from "../../helpers/productMethod";
 import "./newProduct.css";
 //==============================================
 
-export default function NewProduct() {
+export default function NewProduct({ token }) {
   const [input, setInput] = useState();
   const [cat, setCat] = useState("");
   const [tag, setTag] = useState([]);
@@ -102,7 +102,7 @@ export default function NewProduct() {
             size,
           };
 
-          createProduct(dispatch, product);
+          createProduct(dispatch, token, product);
         });
       }
     );
