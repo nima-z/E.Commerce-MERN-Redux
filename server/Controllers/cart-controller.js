@@ -30,69 +30,69 @@ async function createCart(req, res) {
 }
 
 //Edit cart
-async function updateCart(req, res) {
-  const { cartId } = req.params;
+// async function updateCart(req, res) {
+//   const { cartId } = req.params;
 
-  const client = await dbConnection();
-  const db = client.db();
+//   const client = await dbConnection();
+//   const db = client.db();
 
-  try {
-    const updatedCart = await db.collection("carts").findOneAndUpdate(
-      { _id: ObjectId(cartId) },
-      {
-        $set: req.body,
-        $currentDate: { updatedAt: true },
-      },
-      { returnDocument: "after" }
-    );
-    client.close();
-    res.status(200).json({
-      message: "Cart has been Updated",
-      cart: updatedCart.value,
-    });
-  } catch (err) {
-    client.close();
-    res.status(500).json(err);
-  }
-}
+//   try {
+//     const updatedCart = await db.collection("carts").findOneAndUpdate(
+//       { _id: ObjectId(cartId) },
+//       {
+//         $set: req.body,
+//         $currentDate: { updatedAt: true },
+//       },
+//       { returnDocument: "after" }
+//     );
+//     client.close();
+//     res.status(200).json({
+//       message: "Cart has been Updated",
+//       cart: updatedCart.value,
+//     });
+//   } catch (err) {
+//     client.close();
+//     res.status(500).json(err);
+//   }
+// }
 
-//Delete Cart
-async function deleteCart(req, res) {
-  const { cartId } = req.params;
+// //Delete Cart
+// async function deleteCart(req, res) {
+//   const { cartId } = req.params;
 
-  const client = await dbConnection();
-  const db = client.db();
+//   const client = await dbConnection();
+//   const db = client.db();
 
-  try {
-    await db.collection("carts").findOneAndDelete({ _id: ObjectId(cartId) });
-    client.close();
-    res.status(200).json({ message: "Cart has been deleted" });
-  } catch (err) {
-    client.close();
-    res.status(500).json(err);
-  }
-}
+//   try {
+//     await db.collection("carts").findOneAndDelete({ _id: ObjectId(cartId) });
+//     client.close();
+//     res.status(200).json({ message: "Cart has been deleted" });
+//   } catch (err) {
+//     client.close();
+//     res.status(500).json(err);
+//   }
+// }
 
-//Get user cart
-async function getCart(req, res) {
-  const { userId } = req.params;
+// //Get user cart
+// async function getCart(req, res) {
+//   const { userId } = req.params;
 
-  const client = await dbConnection();
-  const db = client.db();
+//   const client = await dbConnection();
+//   const db = client.db();
 
-  try {
-    const foundCart = await db
-      .collection("carts")
-      .findOne({ userId: ObjectId(userId) });
-    client.close();
-    res
-      .status(200)
-      .json({ message: "Product has been found", cart: foundCart });
-  } catch (err) {
-    client.close();
-    res.status(500).json(err);
-  }
-}
+//   try {
+//     const foundCart = await db
+//       .collection("carts")
+//       .findOne({ userId: ObjectId(userId) });
+//     client.close();
+//     res
+//       .status(200)
+//       .json({ message: "Product has been found", cart: foundCart });
+//   } catch (err) {
+//     client.close();
+//     res.status(500).json(err);
+//   }
+// }
 
 async function getAllCarts(req, res) {
   const client = await dbConnection();
@@ -110,4 +110,4 @@ async function getAllCarts(req, res) {
 }
 
 //===========================================
-module.exports = { createCart, updateCart, deleteCart, getCart, getAllCarts };
+module.exports = { createCart, getAllCarts };

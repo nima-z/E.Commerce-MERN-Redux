@@ -12,11 +12,11 @@ const Container = styled.div`
   ${mobile({ gridTemplateColumns: "repeat(2, 1fr)", padding: "1rem 2rem" })}
 `;
 
-function ProductGrid({ products }) {
+function ProductGrid({ products, token }) {
   return (
     <Container>
       {products.map((product) => (
-        <ProductItem key={product._id} product={product} />
+        <ProductItem key={product._id} product={product} token={token} />
       ))}
     </Container>
   );

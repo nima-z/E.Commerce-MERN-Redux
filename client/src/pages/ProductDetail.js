@@ -25,7 +25,7 @@ export default function ProductDetail() {
 
       async function syncCart() {
         try {
-          await requestWithSignal(controller, cart, user.user._id);
+          await requestWithSignal(controller, cart, `cart/${user.user._id}`);
         } catch (err) {
           console.log(err);
         }

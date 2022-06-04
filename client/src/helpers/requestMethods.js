@@ -18,12 +18,22 @@ export const userRequest = axios.create({
   headers: { token: `Bearer ${token}` },
 });
 
-export function requestWithSignal(controller, cart, userId) {
+export function requestWithSignal(controller, data, URL) {
   return axios.request({
     method: "POST",
-    url: `http://localhost:5000/api/cart/${userId}`,
+    url: `http://localhost:5000/api/${URL}`,
     headers: { token: `Bearer ${token}` },
     signal: controller.signal,
-    data: { ...cart },
+    data: { ...data },
+  });
+}
+
+export function arrayWithSignal(controller, data, URL, newToken) {
+  return axios.request({
+    method: "POST",
+    url: `http://localhost:5000/api/${URL}`,
+    headers: { token: `Bearer ${newToken}` },
+    signal: controller.signal,
+    data,
   });
 }

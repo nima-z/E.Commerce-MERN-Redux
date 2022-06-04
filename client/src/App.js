@@ -21,24 +21,6 @@ function App() {
   // control user login state
   const user = useSelector((state) => state.user.currentUser);
 
-  // const cart = useSelector((state) => state.cart);
-
-  // useEffect(() => {
-  //   const timeHandler= setTimeout(() => {
-  //     async function updateCart() {
-  //       try {
-  //         const res = await userRequest.post(`cart/${user.user._id}`, { cart });
-  //         console.log(res.data);
-  //       } catch (err) {
-  //         console.log(err);
-  //       }
-  //     }
-  //     updateCart();
-  //   }, 2000);
-
-  //   return setInterval(timeHandler,)
-  // }, [cart]);
-
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />

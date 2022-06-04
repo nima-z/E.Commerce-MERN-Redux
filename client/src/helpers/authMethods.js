@@ -7,6 +7,7 @@ import {
   signupSuccess,
   signupFailure,
 } from "../redux/UserRedux";
+import { initiateWishList } from "../redux/WishListRedux";
 import { publicRequest } from "./requestMethods";
 
 export async function loggingIn(dispatch, user) {
@@ -14,8 +15,8 @@ export async function loggingIn(dispatch, user) {
   try {
     const res = await publicRequest.post("auth/login", user);
     dispatch(loginSuccess(res.data));
-    console.log(res.data.user.cart);
     dispatch(initiateCart(res.data.user.cart));
+    dispatch(initiateWishList(res.data.user.wishlist));
   } catch (err) {
     dispatch(loginFailure());
   }

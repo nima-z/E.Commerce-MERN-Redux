@@ -12,6 +12,9 @@ import { addProduct } from "../../redux/CartRedux";
 import { likeProduct } from "../../redux/WishListRedux";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
+import { arrayWithSignal } from "../../helpers/requestMethods";
+
+//======================================================
 
 const Container = styled.div`
   width: 200px;
@@ -86,17 +89,49 @@ const Price = styled.p`
   text-decoration: none;
 `;
 
-function ProductItem({ product }) {
+//=======================================================
+
+function ProductItem({ product, token }) {
   const [liked, setLiked] = useState(false);
   const dispatch = useDispatch();
   const wishList = useSelector((state) => state.wishList.products);
+  const user = useSelector((state) => state.user.currentUser);
 
   useEffect(() => {
-    const isLiked = wishList.find((item) => item._id === product._id);
+    const isLiked = wishList.find((item) => item === product._id);
     if (isLiked) {
       setLiked(true);
+      setCheckLiked(true);
     }
   }, [wishList, product._id]);
+
+  const [checkLiked, setCheckLiked] = useState(liked);
+
+  let controller = new AbortController();
+
+  useEffect(() => {
+    if (liked !== checkLiked && user) {
+      setCheckLiked(liked);
+      async function addToWishlist() {
+        try {
+          const res = await arrayWithSignal(
+            controller,
+            wishList,
+            `wishlist/${user.user._id}`,
+            token
+          );
+          console.log(res.data);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      addToWishlist();
+
+      return () => {
+        controller.abort();
+      };
+    }
+  }, [liked]);
 
   function buyingHandler() {
     dispatch(
@@ -114,6 +149,8 @@ function ProductItem({ product }) {
     setLiked((prev) => !prev);
     dispatch(likeProduct({ ...product }));
   }
+
+  //=======================================
 
   return (
     <Container>
