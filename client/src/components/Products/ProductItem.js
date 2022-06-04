@@ -131,7 +131,7 @@ function ProductItem({ product }) {
           )}
         </Icon>
         <Icon>
-          <Link to={`/product/${product._id}`}>
+          <Link to={`/product/${product._id}#boutique`}>
             <SearchOffOutlined />
           </Link>
         </Icon>

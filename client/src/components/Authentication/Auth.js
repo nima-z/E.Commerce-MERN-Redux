@@ -2,7 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { mobile } from "../../responsive";
 import { useDispatch } from "react-redux";
-import { loggingIn } from "../../helpers/authMethods";
+import { loggingIn, signingUp } from "../../helpers/authMethods";
 import { useSelector } from "react-redux";
 
 const Container = styled.div`
@@ -73,32 +73,21 @@ const Error = styled.span`
 
 export default function Auth() {
   const [login, setLogin] = useState(true);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [confrimPassword, setConfirmPassword] = useState("");
-  const [email, setEmail] = useState("");
+  const [input, setInput] = useState({});
+  const [confirmPass, setConfirmPass] = useState("");
   const dispatch = useDispatch();
   const { isFetching, error } = useSelector((state) => state.user);
 
-  function usernameHandler(e) {
-    setUsername(e.target.value);
-  }
-  function passwordHandler(e) {
-    setPassword(e.target.value);
-  }
-  function confirmPasswordHandler(e) {
-    setConfirmPassword(e.target.value);
-  }
-  function emailHandler(e) {
-    setEmail(e.target.value);
+  function changeHandler(e) {
+    setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
 
   function submitForm(event) {
     event.preventDefault();
     if (login) {
-      loggingIn(dispatch, { email, password });
+      loggingIn(dispatch, { email: input.email, password: input.password });
     } else {
-      console.log("sign up");
+      signingUp(dispatch, input);
     }
   }
 
@@ -111,19 +100,30 @@ export default function Auth() {
       <Wrapper>
         <Title>{login ? "Login" : "Create Account"}</Title>
         <Form onSubmit={submitForm}>
-          <Input placeholder="email" onChange={emailHandler} />
           {!login && (
-            <Input placeholder="username" onChange={usernameHandler} />
+            <Input placeholder="name" name="name" onChange={changeHandler} />
           )}
+          {!login && (
+            <Input
+              placeholder="lastname"
+              name="lastname"
+              onChange={changeHandler}
+            />
+          )}
+          <Input placeholder="email" name="email" onChange={changeHandler} />
           <Input
             placeholder="password"
-            onChange={passwordHandler}
+            name="password"
+            onChange={changeHandler}
             type="password"
           />
           {!login && (
             <Input
               placeholder="confirm password"
-              onChange={confirmPasswordHandler}
+              name="confirmPassword"
+              onChange={(e) => {
+                setConfirmPass(e.target.value);
+              }}
               type="password"
             />
           )}
@@ -150,7 +150,13 @@ export default function Auth() {
             )}
           </ChangeDiv>
           {login ? (
-            <Button disabled={isFetching}>Login</Button>
+            <Button
+              disabled={
+                isFetching || (input.email === "" && input.password === "")
+              }
+            >
+              Login
+            </Button>
           ) : (
             <Button>Create</Button>
           )}

@@ -18,11 +18,11 @@ const {
 const router = express.Router();
 
 //routes
-router.get("/", verifyTokenAndAdmin, getAllCarts);
-router.get("/find/:userId", verifyTokenAndId, getCart);
-router.post("/", verifyToken, createCart);
-router.patch("/:cartId", verifyTokenAndId, updateCart);
-router.delete("/:cartId", verifyTokenAndId, deleteCart);
+// router.get("/", verifyTokenAndAdmin, getAllCarts);
+// router.get("/find/:userId", verifyTokenAndId, getCart);
+router.post("/:userId", verifyTokenAndId, createCart);
+// router.patch("/:cartId", verifyTokenAndId, updateCart);
+// router.delete("/:cartId", verifyTokenAndId, deleteCart);
 
 //========================
 module.exports = router;

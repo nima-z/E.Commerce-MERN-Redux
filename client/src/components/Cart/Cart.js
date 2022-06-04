@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Fragment } from "react";
 import StripeCheckout from "react-stripe-checkout";
 import { useState, useEffect } from "react";
-import { userRequest } from "../../helpers/requestMethods";
+import { requestWithSignal, userRequest } from "../../helpers/requestMethods";
 import { Link, useNavigate } from "react-router-dom";
 import { clearCart, addProduct, removeProduct } from "../../redux/CartRedux";
 
@@ -177,6 +177,30 @@ export default function Cart() {
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+
+  const user = useSelector((state) => state.user.currentUser);
+  const [newCart, setNewCart] = useState(cart);
+
+  let controller = new AbortController();
+
+  useEffect(() => {
+    if (cart.total !== newCart.total) {
+      setNewCart(cart);
+
+      async function syncCart() {
+        try {
+          await requestWithSignal(controller, cart, user.user._id);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      syncCart();
+
+      return () => {
+        controller.abort();
+      };
+    }
+  }, [cart]);
 
   function onClearCart() {
     dispatch(clearCart());

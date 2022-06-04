@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import ProductGrid from "../components/Products/ProductGrid";
 import FilterTab from "../components/FilterTab/FilterTab";
 import useProducts from "../hooks/useProducts";
+import { requestWithSignal } from "../helpers/requestMethods";
+import { useSelector } from "react-redux";
 //------------------------------------------------
 
 function AllProducts() {
@@ -13,6 +15,32 @@ function AllProducts() {
   const [sort, setSort] = useState("newest");
   const [filteredProducts, setFilteredProducts] = useState([]);
   const { data, isLoading, isError, error, status } = useProducts(category);
+
+  const cart = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.user.currentUser);
+  const [newCart, setNewCart] = useState(cart);
+
+  let controller = new AbortController();
+
+  useEffect(() => {
+    if (cart.total !== newCart.total) {
+      setNewCart(cart);
+
+      async function syncCart() {
+        try {
+          const res = await requestWithSignal(controller, cart, user.user._id);
+          console.log(res.data);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      syncCart();
+
+      return () => {
+        controller.abort();
+      };
+    }
+  }, [cart]);
 
   useEffect(() => {
     if (status === "success") {

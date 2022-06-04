@@ -17,3 +17,13 @@ export const userRequest = axios.create({
   baseURL,
   headers: { token: `Bearer ${token}` },
 });
+
+export function requestWithSignal(controller, cart, userId) {
+  return axios.request({
+    method: "POST",
+    url: `http://localhost:5000/api/cart/${userId}`,
+    headers: { token: `Bearer ${token}` },
+    signal: controller.signal,
+    data: { ...cart },
+  });
+}

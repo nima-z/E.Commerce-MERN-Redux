@@ -11,6 +11,7 @@ import CartPage from "./pages/CartPage";
 import Success from "./pages/Success";
 import useInitial from "./hooks/useInitial";
 import "./App.css";
+
 //------------------------------------------------------
 
 // fetch and cache all products for Initial state
@@ -19,6 +20,24 @@ function App() {
 
   // control user login state
   const user = useSelector((state) => state.user.currentUser);
+
+  // const cart = useSelector((state) => state.cart);
+
+  // useEffect(() => {
+  //   const timeHandler= setTimeout(() => {
+  //     async function updateCart() {
+  //       try {
+  //         const res = await userRequest.post(`cart/${user.user._id}`, { cart });
+  //         console.log(res.data);
+  //       } catch (err) {
+  //         console.log(err);
+  //       }
+  //     }
+  //     updateCart();
+  //   }, 2000);
+
+  //   return setInterval(timeHandler,)
+  // }, [cart]);
 
   return (
     <Routes>

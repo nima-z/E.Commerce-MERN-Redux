@@ -7,7 +7,7 @@ const dbConnection = require("../Helper/db-connection");
 
 // REGISTER USER
 async function register(req, res) {
-  const { name, lastname, phone, password, email } = req.body;
+  const { name, lastname, password, email } = req.body;
 
   const createDate = new Date();
   const encryptedPass = cryptoJS.AES.encrypt(
@@ -21,9 +21,10 @@ async function register(req, res) {
     email,
     password: encryptedPass,
     isAdmin: false,
-    phone,
+    phone: "",
     address: {},
-    cart: [],
+    cart: {},
+    wishList: [],
     orders: [],
     createdAt: createDate,
     updatedAt: createDate,

@@ -6,20 +6,26 @@ const dbConnection = require("../Helper/db-connection");
 
 //Create Cart
 async function createCart(req, res) {
-  const { title, desc, price, category } = req.body;
-  const newCart = { title, desc, price, category };
+  const { userId } = req.params;
 
   const client = await dbConnection();
   const db = client.db();
 
   try {
-    await db.collection("carts").insertOne(newCart);
+    const user = await db.collection("users").findOneAndUpdate(
+      { _id: ObjectId(userId) },
+      {
+        $set: { cart: req.body },
+        $currentDate: { updatedAt: true },
+      },
+      { returnDocument: "after" }
+    );
     client.close();
     res
       .status(201)
-      .json({ message: "new cart has been created", cart: newCart });
+      .json({ message: "cart has been updated", user: user.value });
   } catch (err) {
-    res.status(500).json({ message: "could not create a new cart", err });
+    res.status(500).json({ message: "could not update cart", err });
   }
 }
 
