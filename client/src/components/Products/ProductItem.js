@@ -98,7 +98,7 @@ function ProductItem({ product, token }) {
   const user = useSelector((state) => state.user.currentUser);
 
   useEffect(() => {
-    const isLiked = wishList.find((item) => item === product._id);
+    const isLiked = wishList.find((item) => item._id === product._id);
     if (isLiked) {
       setLiked(true);
       setCheckLiked(true);

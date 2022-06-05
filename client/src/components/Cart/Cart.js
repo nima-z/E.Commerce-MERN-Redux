@@ -46,7 +46,7 @@ const TopTexts = styled.div`
 const TopText = styled.span`
   cursor: pointer;
   text-decoration: underline;
-  margin: 0 1rem;
+  margin-right: 3rem;
 `;
 
 const Bottom = styled.div`
@@ -272,10 +272,7 @@ export default function Cart() {
         </TopButton>
         <TopTexts>
           <TopText>
-            <Link to="/cart">Shopping cart ({cart.quantity})</Link>
-          </TopText>
-          <TopText>
-            <Link to="/wishlist">Your Wishlist</Link>
+            <Link to="/wishlist">Go to Wishlist</Link>
           </TopText>
         </TopTexts>
         <TopButton type="filled" onClick={onClearCart}>

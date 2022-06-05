@@ -9,16 +9,16 @@ const wishSlice = createSlice({
   reducers: {
     likeProduct: (state, action) => {
       const existItem = state.products.find(
-        (item) => item === action.payload._id
+        (item) => item._id === action.payload._id
       );
 
       if (!existItem) {
         state.quantity += 1;
-        state.products.push(action.payload._id);
+        state.products.push(action.payload);
       } else {
         state.quantity -= 1;
         state.products = state.products.filter(
-          (item) => item !== action.payload._id
+          (item) => item._id !== action.payload._id
         );
       }
     },

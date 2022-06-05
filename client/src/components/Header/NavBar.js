@@ -15,9 +15,16 @@ function NavBar() {
     navigate("/");
   }
 
-  let firstLetter;
+  let username;
   if (currentUser) {
-    firstLetter = currentUser.user.name.charAt(0).toUpperCase();
+    const name =
+      currentUser.user.name.charAt(0).toUpperCase() +
+      currentUser.user.name.slice(1);
+    const lastname =
+      currentUser.user.lastname.charAt(0).toUpperCase() +
+      currentUser.user.lastname.slice(1);
+
+    username = name + " " + lastname;
   }
 
   return (
@@ -36,7 +43,7 @@ function NavBar() {
             </Badge>
           </Link>
           {currentUser ? (
-            <ProfileMenu letter={firstLetter} />
+            <ProfileMenu username={username} />
           ) : (
             <Link to="/authentication" style={{ textDecoration: "none" }}>
               Sign in

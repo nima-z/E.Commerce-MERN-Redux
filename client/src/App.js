@@ -8,6 +8,7 @@ import AllProducts from "./pages/AllProducts";
 import ProductDetail from "./pages/ProductDetail";
 import Authentication from "./pages/Authentication";
 import CartPage from "./pages/CartPage";
+import WishList from "./pages/Wishlist";
 import Success from "./pages/Success";
 import useInitial from "./hooks/useInitial";
 import "./App.css";
@@ -34,6 +35,7 @@ function App() {
         element={!user ? <Authentication /> : <HomePage />}
       ></Route>
       <Route path="/cart" element={<CartPage />} />
+      <Route path="/wishlist" element={<WishList />} />
       <Route path="/success" element={<Success />} />
     </Routes>
   );
