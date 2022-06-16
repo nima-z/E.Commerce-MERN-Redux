@@ -1,31 +1,38 @@
 import { Container, Wrapper, Left, Center, Right, Logo } from "./styles";
 
 import ProfileMenu from "./ProfileMenu";
-import { MdSearch, MdOutlineShoppingCart } from "react-icons/md";
+import { MdOutlineShoppingCart, MdStarOutline } from "react-icons/md";
 import Badge from "@mui/material/Badge";
 import { useNavigate, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import SearchBox from "./SearchBox";
+import { useEffect, useState } from "react";
 
 function NavBar() {
+  const [username, setUsername] = useState("");
   const cart = useSelector((state) => state.cart);
+  const wishlist = useSelector((state) => state.wishList);
   const currentUser = useSelector((state) => state.user.currentUser);
+
   const navigate = useNavigate();
   function navigation(e) {
     navigate("/");
   }
 
-  let username;
-  if (currentUser) {
-    const name =
-      currentUser.user.name.charAt(0).toUpperCase() +
-      currentUser.user.name.slice(1);
-    const lastname =
-      currentUser.user.lastname.charAt(0).toUpperCase() +
-      currentUser.user.lastname.slice(1);
+  useEffect(() => {
+    if (currentUser) {
+      const name =
+        currentUser.user.firstname.charAt(0).toUpperCase() +
+        currentUser.user.firstname.slice(1);
+      const lastname =
+        currentUser.user.lastname.charAt(0).toUpperCase() +
+        currentUser.user.lastname.slice(1);
 
-    username = name + " " + lastname;
-  }
+      setUsername(name + " " + lastname);
+    } else {
+      setUsername("");
+    }
+  }, [currentUser]);
 
   return (
     <Container id="boutique">
@@ -37,6 +44,11 @@ function NavBar() {
           <Logo onClick={navigation}>Boutique</Logo>
         </Center>
         <Right>
+          <Link to="/wishlist">
+            <Badge badgeContent={wishlist.quantity} color="error">
+              <MdStarOutline size="20px" />
+            </Badge>
+          </Link>
           <Link to="/cart">
             <Badge badgeContent={cart.quantity} color="primary">
               <MdOutlineShoppingCart size="20px" />

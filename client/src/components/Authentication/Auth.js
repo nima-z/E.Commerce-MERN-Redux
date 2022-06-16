@@ -4,6 +4,17 @@ import { mobile } from "../../responsive";
 import { useDispatch } from "react-redux";
 import { loggingIn, signingUp } from "../../helpers/authMethods";
 import { useSelector } from "react-redux";
+import TextField from "@mui/material/TextField";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import { LoadingButton } from "@mui/lab";
+import AssignmentIcon from "@mui/icons-material/Assignment";
+import LoginIcon from "@mui/icons-material/Login";
+
+import { useForm } from "react-hook-form";
+//===================================================
 
 const Container = styled.div`
   width: 100%;
@@ -17,7 +28,7 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-  width: 30%;
+  min-width: 10%;
   background-color: white;
   padding: 2rem;
   ${mobile({ width: "70%" })}
@@ -30,26 +41,13 @@ const Title = styled.h1`
 const Form = styled.form`
   display: flex;
   flex-direction: column;
+  width: 20rem;
+  gap: 0.5rem;
 `;
-const Input = styled.input`
-  min-width: 100px;
-  padding: 0.5rem;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-  color: gray;
-`;
+
 const Agreement = styled.span`
   margin: 0.5rem 0;
   font-size: 0.8rem;
-`;
-
-const Button = styled.button`
-  max-width: 100px;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  &:disabled {
-    cursor: not-allowed;
-  }
 `;
 
 const ChangeDiv = styled.div`
@@ -66,28 +64,32 @@ const ChangeButton = styled.button`
   font-size: 0.9rem;
 `;
 
+const ActionDiv = styled.div`
+  width: 50%;
+`;
 const Error = styled.span`
   color: red;
   margin-top: 0.8rem;
 `;
+//=======================================
 
 export default function Auth() {
   const [login, setLogin] = useState(true);
-  const [input, setInput] = useState({});
-  const [confirmPass, setConfirmPass] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const { isFetching, error } = useSelector((state) => state.user);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm();
 
-  function changeHandler(e) {
-    setInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  }
-
-  function submitForm(event) {
-    event.preventDefault();
+  function submitForm(e) {
     if (login) {
-      loggingIn(dispatch, { email: input.email, password: input.password });
+      loggingIn(dispatch, e);
     } else {
-      signingUp(dispatch, input);
+      signingUp(dispatch, e);
     }
   }
 
@@ -95,36 +97,125 @@ export default function Auth() {
     setLogin(!login);
   }
 
+  function handleShowPassword() {
+    setShowPassword((prev) => !prev);
+  }
+
+  function handleMouseDownPassword(event) {
+    event.preventDefault();
+  }
+
   return (
     <Container>
       <Wrapper>
         <Title>{login ? "Login" : "Create Account"}</Title>
-        <Form onSubmit={submitForm}>
+        <Form onSubmit={handleSubmit(submitForm)}>
           {!login && (
-            <Input placeholder="name" name="name" onChange={changeHandler} />
-          )}
-          {!login && (
-            <Input
-              placeholder="lastname"
-              name="lastname"
-              onChange={changeHandler}
+            <TextField
+              label={errors.firstname ? errors.firstname.message : "First Name"}
+              {...register("firstname", {
+                required: { value: true, message: "* Required" },
+                maxLength: {
+                  value: 10,
+                  message: "It must be less than 10 letters",
+                },
+                minLength: {
+                  value: 2,
+                  message: "It must be at least 2 letters",
+                },
+              })}
+              error={errors.firstname && true}
             />
           )}
-          <Input placeholder="email" name="email" onChange={changeHandler} />
-          <Input
-            placeholder="password"
-            name="password"
-            onChange={changeHandler}
-            type="password"
+
+          {!login && (
+            <TextField
+              label={errors.lastname ? errors.lastname.message : "Last Name"}
+              {...register("lastname", {
+                required: { value: true, message: "* Required" },
+                maxLength: {
+                  value: 10,
+                  message: "It must be less than 10 letters",
+                },
+                minLength: {
+                  value: 2,
+                  message: "It must be at least 2 letters",
+                },
+              })}
+              error={errors.lastname && true}
+            />
+          )}
+
+          <TextField
+            label={errors.email ? errors.email.message : "Email"}
+            {...register("email", {
+              required: { value: true, message: "* Required" },
+              pattern: {
+                value:
+                  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)*$/,
+                message: "Please enter a valid email",
+              },
+            })}
+            error={errors.email && true}
+          />
+          <TextField
+            label={errors.password ? errors.password.message : "Password"}
+            type={showPassword ? "text" : "password"}
+            {...register("password", {
+              required: { value: true, message: "* Required" },
+              pattern: {
+                value: /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,20}$/,
+                message:
+                  "7 to 20 characters which contain at least one numeric digit and a special character",
+              },
+            })}
+            error={errors.password && true}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
           {!login && (
-            <Input
-              placeholder="confirm password"
-              name="confirmPassword"
-              onChange={(e) => {
-                setConfirmPass(e.target.value);
+            <TextField
+              label={
+                errors.confirmPassword
+                  ? errors.confirmPassword.message
+                  : "ConfirmPassword"
+              }
+              type={showPassword ? "text" : "password"}
+              {...register("confirmPassword", {
+                required: { value: true, message: "* Required" },
+                validate: (val) => {
+                  if (watch("password") !== val) {
+                    return "Your passwords do no match";
+                  }
+                },
+              })}
+              error={errors.confirmPassword && true}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
               }}
-              type="password"
             />
           )}
           {!login && (
@@ -145,21 +236,43 @@ export default function Auth() {
               </ChangeButton>
             ) : (
               <ChangeButton type="button" onClick={ChangeForm}>
-                Login
+                Sign In
               </ChangeButton>
             )}
           </ChangeDiv>
-          {login ? (
-            <Button
-              disabled={
-                isFetching || (input.email === "" && input.password === "")
-              }
-            >
-              Login
-            </Button>
-          ) : (
-            <Button>Create</Button>
-          )}
+          <ActionDiv>
+            {login ? (
+              <LoadingButton
+                loading={isFetching}
+                loadingPosition="end"
+                endIcon={<LoginIcon />}
+                disabled={
+                  isFetching ||
+                  watch("email") === "" ||
+                  watch("password") === ""
+                }
+                variant="contained"
+                type="submit"
+              >
+                {isFetching ? "Signing In" : "Sign In"}
+              </LoadingButton>
+            ) : (
+              <LoadingButton
+                loading={isFetching}
+                loadingPosition="end"
+                endIcon={<AssignmentIcon />}
+                disabled={
+                  isFetching ||
+                  watch("email") === "" ||
+                  watch("password") === ""
+                }
+                variant="outlined"
+                type="submit"
+              >
+                {isFetching ? "Signing Up" : "Sign Up"}
+              </LoadingButton>
+            )}
+          </ActionDiv>
           {error && <Error>Email or Password is not correct!</Error>}
         </Form>
       </Wrapper>

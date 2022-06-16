@@ -139,7 +139,6 @@ const Icon = styled.div`
 `;
 
 export default function WishList() {
-  const navigate = useNavigate();
   const wishlist = useSelector((state) => state.wishList.products);
   const user = useSelector((state) => state.user.currentUser);
   const [liked, setLiked] = useState(true);
@@ -201,11 +200,7 @@ export default function WishList() {
         <TopButton>
           <Link to="/products">Continue Shopping</Link>
         </TopButton>
-        <TopTexts>
-          <TopText>
-            <Link to="/cart">Go to Shopping Cart </Link>
-          </TopText>
-        </TopTexts>
+
         <TopButton type="filled" onClick={onClearWishList}>
           Clear Wishlist
         </TopButton>

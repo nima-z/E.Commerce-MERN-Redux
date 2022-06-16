@@ -18,7 +18,7 @@ export default function ProfileMenu({ username }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
-  const firstLetter = username.charAt(0).toUpperCase();
+  const firstLetter = username.charAt(0);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);

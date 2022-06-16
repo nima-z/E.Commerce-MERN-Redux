@@ -169,6 +169,12 @@ const IconButton = styled.button`
   cursor: ${(props) => (props.disabled ? "default" : "pointer")};
 `;
 
+const MessageDiv = styled.div`
+  text-align: center;
+`;
+
+const Message = styled.p``;
+
 export default function Cart() {
   const [quantity, setQuantity] = useState(1);
   const [max, setMax] = useState(false);
@@ -232,13 +238,6 @@ export default function Cart() {
     setQuantity(newQ);
     dispatch(removeProduct({ ...product }));
   }
-  // function onAddProduct() {
-  //   dispatch(addProduct());
-  // }
-
-  // function onRemoveProduct() {
-  //   dispatch(removeProduct());
-  // }
 
   const STRIPE_KEY = process.env.REACT_APP_STRIPE;
 
@@ -270,96 +269,100 @@ export default function Cart() {
         <TopButton>
           <Link to="/products">Continue Shopping</Link>
         </TopButton>
-        <TopTexts>
-          <TopText>
-            <Link to="/wishlist">Go to Wishlist</Link>
-          </TopText>
-        </TopTexts>
+
         <TopButton type="filled" onClick={onClearCart}>
           Clear Cart
         </TopButton>
       </Top>
-      <Bottom>
-        <Info>
-          {cart &&
-            cart.products.map((product) => (
-              <Fragment key={`${product._id} ${product.color} ${product.size}`}>
-                <Product>
-                  <ProductDetail>
-                    <Link to={`/product/${product._id}#boutique`}>
-                      <Image src={product.image} />
-                    </Link>
-                    <Details>
-                      <ProductName>
-                        <b>Product:</b> {product.title}
-                      </ProductName>
-                      <ProductId>
-                        <b>Price:</b> $ {product.price}
-                      </ProductId>
-                      <ProductColor color={product.color} />
-                      <ProductSize>
-                        <b>Size:</b> {product.size}
-                      </ProductSize>
-                    </Details>
-                  </ProductDetail>
-                  <PriceDetail>
-                    <AmountContainer>
-                      <IconButton
-                        onClick={() => {
-                          increaseItem(product);
-                        }}
-                      >
-                        <Add />
-                      </IconButton>
+      {cart.products.length !== 0 ? (
+        <Bottom>
+          <Info>
+            {cart &&
+              cart.products.map((product) => (
+                <Fragment
+                  key={`${product._id} ${product.color} ${product.size}`}
+                >
+                  <Product>
+                    <ProductDetail>
+                      <Link to={`/product/${product._id}#boutique`}>
+                        <Image src={product.image} />
+                      </Link>
+                      <Details>
+                        <ProductName>
+                          <b>Product:</b> {product.title}
+                        </ProductName>
+                        <ProductId>
+                          <b>Price:</b> $ {product.price}
+                        </ProductId>
+                        <ProductColor color={product.color} />
+                        <ProductSize>
+                          <b>Size:</b> {product.size}
+                        </ProductSize>
+                      </Details>
+                    </ProductDetail>
+                    <PriceDetail>
+                      <AmountContainer>
+                        <IconButton
+                          onClick={() => {
+                            increaseItem(product);
+                          }}
+                        >
+                          <Add />
+                        </IconButton>
 
-                      <Amount>{product.quantity}</Amount>
-                      <IconButton
-                        onClick={() => {
-                          decreaseItem(product);
-                        }}
-                      >
-                        <Remove />
-                      </IconButton>
-                    </AmountContainer>
-                    <Price> $ {product.totalPrice}</Price>
-                  </PriceDetail>
-                </Product>
-                <Hr />
-              </Fragment>
-            ))}
-        </Info>
-        <Summary>
-          <SummaryTitle>Order Summary</SummaryTitle>
-          <SummaryItem>
-            <SummaryItemText>Subtotal</SummaryItemText>
-            <SummaryItemPrice>{cart.total}</SummaryItemPrice>
-          </SummaryItem>
-          <SummaryItem>
-            <SummaryItemText>Estimated Shipping</SummaryItemText>
-            <SummaryItemPrice>$ 5.90</SummaryItemPrice>
-          </SummaryItem>
-          <SummaryItem>
-            <SummaryItemText>Shipping Discount</SummaryItemText>
-            <SummaryItemPrice>$ -5.90</SummaryItemPrice>
-          </SummaryItem>
-          <SummaryItem type="total">
-            <SummaryItemText>Total</SummaryItemText>
-            <SummaryItemPrice>{cart.total}</SummaryItemPrice>
-          </SummaryItem>
-          <StripeCheckout
-            name="Boutique"
-            image="https://media.istockphoto.com/vectors/fashion-boutique-and-store-logo-label-emblems-with-doodle-line-art-vector-id1034771616?k=20&m=1034771616&s=612x612&w=0&h=_d6sgEXXV1f-bGNwNu8zrDrr89o6OOknS8Nlu4Hz4MA="
-            billingAddress
-            shippingAddress
-            description={`Total: $${cart.total}`}
-            amount={cart.total * 100}
-            token={onToken}
-            stripeKey={STRIPE_KEY}
-          >
-            <SummaryButton>Checkout Now</SummaryButton>
-          </StripeCheckout>
-        </Summary>
-      </Bottom>
+                        <Amount>{product.quantity}</Amount>
+                        <IconButton
+                          onClick={() => {
+                            decreaseItem(product);
+                          }}
+                        >
+                          <Remove />
+                        </IconButton>
+                      </AmountContainer>
+                      <Price> $ {product.totalPrice}</Price>
+                    </PriceDetail>
+                  </Product>
+                  <Hr />
+                </Fragment>
+              ))}
+          </Info>
+          <Summary>
+            <SummaryTitle>Order Summary</SummaryTitle>
+            <SummaryItem>
+              <SummaryItemText>Subtotal</SummaryItemText>
+              <SummaryItemPrice>{cart.total}</SummaryItemPrice>
+            </SummaryItem>
+            <SummaryItem>
+              <SummaryItemText>Estimated Shipping</SummaryItemText>
+              <SummaryItemPrice>$ 5.90</SummaryItemPrice>
+            </SummaryItem>
+            <SummaryItem>
+              <SummaryItemText>Shipping Discount</SummaryItemText>
+              <SummaryItemPrice>$ -5.90</SummaryItemPrice>
+            </SummaryItem>
+            <SummaryItem type="total">
+              <SummaryItemText>Total</SummaryItemText>
+              <SummaryItemPrice>{cart.total}</SummaryItemPrice>
+            </SummaryItem>
+            <StripeCheckout
+              name="Boutique"
+              image="https://media.istockphoto.com/vectors/fashion-boutique-and-store-logo-label-emblems-with-doodle-line-art-vector-id1034771616?k=20&m=1034771616&s=612x612&w=0&h=_d6sgEXXV1f-bGNwNu8zrDrr89o6OOknS8Nlu4Hz4MA="
+              billingAddress
+              shippingAddress
+              description={`Total: $${cart.total}`}
+              amount={cart.total * 100}
+              token={onToken}
+              stripeKey={STRIPE_KEY}
+            >
+              <SummaryButton>Checkout Now</SummaryButton>
+            </StripeCheckout>
+          </Summary>
+        </Bottom>
+      ) : (
+        <MessageDiv>
+          <Message>Your Cart is empty</Message>
+        </MessageDiv>
+      )}
     </Container>
   );
 }
