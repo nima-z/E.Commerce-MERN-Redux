@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import ProductGrid from "../components/Products/ProductGrid";
 import FilterTab from "../components/FilterTab/FilterTab";
 import useProducts from "../hooks/useProducts";
+import { requestWithSignal } from "../helpers/requestMethods";
+import { useSelector } from "react-redux";
 //------------------------------------------------
 
 function AllProducts() {
@@ -14,6 +16,39 @@ function AllProducts() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const { data, isLoading, isError, error, status } = useProducts(category);
 
+  const cart = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.user.currentUser);
+  const [newCart, setNewCart] = useState(cart);
+
+  //create a controller to be able to cancel requests
+  let controller = new AbortController();
+  const token = user ? user.user.accessToken : null;
+
+  //manage sending or canceling requests if redux cart is not equal to local state cart
+  useEffect(() => {
+    if (cart.total !== newCart.total) {
+      setNewCart(cart);
+      async function syncCart() {
+        try {
+          const res = await requestWithSignal(
+            controller,
+            cart,
+            `cart/${user.user._id}`
+          );
+          console.log(res.data);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      syncCart();
+
+      return () => {
+        controller.abort();
+      };
+    }
+  }, [cart]);
+
+  //filter products based on size or color
   useEffect(() => {
     if (status === "success") {
       const products = data.products;
@@ -59,11 +94,11 @@ function AllProducts() {
     }
   }, [sort, setFilteredProducts]);
 
-  // Loading
+  // on Loading
   if (isLoading) {
     return <p>Loading...</p>;
   }
-  // Error
+  // on Error
   if (isError) {
     return (
       <p>
@@ -79,7 +114,7 @@ function AllProducts() {
   return (
     <div>
       <FilterTab setFilter={setFilter} setSort={setSort} />
-      <ProductGrid products={filteredProducts} />
+      <ProductGrid products={filteredProducts} token={token} />
     </div>
   );
 }

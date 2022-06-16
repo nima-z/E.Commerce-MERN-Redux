@@ -11,12 +11,15 @@ import Logout from "@mui/icons-material/Logout";
 
 import { logout } from "../../redux/UserRedux";
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
-export default function ProfileMenu({ letter }) {
+export default function ProfileMenu({ username }) {
   const dispatch = useDispatch();
-
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
+  const firstLetter = username.charAt(0);
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -37,7 +40,7 @@ export default function ProfileMenu({ letter }) {
           textAlign: "center",
         }}
       >
-        <Tooltip title="Account settings">
+        <Tooltip title={username}>
           <IconButton
             onClick={handleClick}
             size="small"
@@ -46,7 +49,7 @@ export default function ProfileMenu({ letter }) {
             aria-haspopup="true"
             aria-expanded={open ? "true" : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>{letter}</Avatar>
+            <Avatar sx={{ width: 32, height: 32 }}>{firstLetter}</Avatar>
           </IconButton>
         </Tooltip>
       </Box>
@@ -85,11 +88,12 @@ export default function ProfileMenu({ letter }) {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
+        <MenuItem>Profile</MenuItem>
+        <MenuItem>My account</MenuItem>
         <MenuItem>
-          <Avatar /> Profile
-        </MenuItem>
-        <MenuItem>
-          <Avatar /> My account
+          <Link to="/wishlist#boutique" style={{ textDecoration: "none" }}>
+            Wish List
+          </Link>
         </MenuItem>
         <Divider />
 

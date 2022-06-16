@@ -60,7 +60,9 @@ export default function Footer() {
             <Link to="/#category">Catergory</Link>
           </ListItem>
           <ListItem>My Account</ListItem>
-          <ListItem>Wish List</ListItem>
+          <ListItem>
+            <Link to="/wishlist#boutique">Wish List</Link>
+          </ListItem>
           <ListItem>About</ListItem>
         </List>
       </Center>

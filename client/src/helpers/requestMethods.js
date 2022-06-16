@@ -17,3 +17,23 @@ export const userRequest = axios.create({
   baseURL,
   headers: { token: `Bearer ${token}` },
 });
+
+export function requestWithSignal(controller, data, URL) {
+  return axios.request({
+    method: "POST",
+    url: `http://localhost:5000/api/${URL}`,
+    headers: { token: `Bearer ${token}` },
+    signal: controller.signal,
+    data: { ...data },
+  });
+}
+
+export function arrayWithSignal(controller, data, URL, newToken) {
+  return axios.request({
+    method: "POST",
+    url: `http://localhost:5000/api/${URL}`,
+    headers: { token: `Bearer ${newToken}` },
+    signal: controller.signal,
+    data,
+  });
+}

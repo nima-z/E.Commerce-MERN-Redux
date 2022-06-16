@@ -4,12 +4,39 @@ import { useQueryClient } from "react-query";
 //Imports
 import SingleProduct from "../components/Products/SingleProduct";
 import useProduct from "../hooks/useProduct";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { requestWithSignal } from "../helpers/requestMethods";
+import { useSelector } from "react-redux";
 //------------------------------------------------
 
 export default function ProductDetail() {
   const location = useLocation();
   const { id } = useParams();
+
+  const cart = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.user.currentUser);
+  const [newCart, setNewCart] = useState(cart);
+
+  let controller = new AbortController();
+
+  useEffect(() => {
+    if (cart.total !== newCart.total) {
+      setNewCart(cart);
+
+      async function syncCart() {
+        try {
+          await requestWithSignal(controller, cart, `cart/${user.user._id}`);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      syncCart();
+
+      return () => {
+        controller.abort();
+      };
+    }
+  }, [cart]);
 
   useEffect(() => {
     const element = document.getElementById(location.hash.slice(1));

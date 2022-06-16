@@ -6,23 +6,17 @@ const {
   verifyTokenAndId,
   verifyTokenAndAdmin,
 } = require("../Helper/verifyTokenAndId");
-const {
-  getAllCarts,
-  getCart,
-  createCart,
-  updateCart,
-  deleteCart,
-} = require("../Controllers/cart-controller");
+const { createCart, getAllCarts } = require("../Controllers/cart-controller");
 //--------------------------------
 
 const router = express.Router();
 
 //routes
+router.post("/:userId", verifyTokenAndId, createCart);
 router.get("/", verifyTokenAndAdmin, getAllCarts);
-router.get("/find/:userId", verifyTokenAndId, getCart);
-router.post("/", verifyToken, createCart);
-router.patch("/:cartId", verifyTokenAndId, updateCart);
-router.delete("/:cartId", verifyTokenAndId, deleteCart);
+// router.get("/find/:userId", verifyTokenAndId, getCart);
+// router.patch("/:cartId", verifyTokenAndId, updateCart);
+// router.delete("/:cartId", verifyTokenAndId, deleteCart);
 
 //========================
 module.exports = router;
