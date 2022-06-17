@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { mobile } from "../../responsive";
+import { mobile, tablet, smallScreen } from "../../responsive";
 
 import ProductItem from "./ProductItem";
 
@@ -9,6 +9,11 @@ const Container = styled.div`
   grid-template-columns: repeat(5, 1fr);
   gap: 1rem;
   padding: 2rem 3rem;
+  ${smallScreen({
+    gridTemplateColumns: "repeat(4, 1fr)",
+    padding: "1rem 2rem",
+  })}
+  ${tablet({ gridTemplateColumns: "repeat(3, 1fr)", padding: "1rem 2rem" })}
   ${mobile({ gridTemplateColumns: "repeat(2, 1fr)", padding: "1rem 2rem" })}
 `;
 

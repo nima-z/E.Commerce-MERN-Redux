@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 import styled from "styled-components";
-import { mobile } from "../../responsive";
+import { mobile, tablet } from "../../responsive";
 
 import ArrowLeftOutlinedIcon from "@mui/icons-material/ArrowLeftOutlined";
 import ArrowRightOutlinedIcon from "@mui/icons-material/ArrowRightOutlined";
@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 const Container = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 90vh;
   display: flex;
   position: relative;
   overflow: hidden;
@@ -42,6 +42,7 @@ const ImgContainer = styled.div`
 
 const Image = styled.img`
   height: 80%;
+  margin-top: 2rem;
 `;
 
 const InfoContainer = styled.div`
@@ -53,12 +54,14 @@ const InfoContainer = styled.div`
 const Title = styled.h1`
   font-size: 4rem;
   color: rgba(0, 0, 0, 0.8);
+  ${tablet({ fontSize: "2rem" })}
 `;
 const Description = styled.p`
   margin: 3rem 0;
   font-size: 1.5rem;
   font-weight: 500;
   letter-spacing: 3px;
+  ${tablet({ fontSize: "1rem" })}
 `;
 const Button = styled.button`
   padding: 1rem 1.5rem;
@@ -71,6 +74,7 @@ const Button = styled.button`
   & a {
     text-decoration: none;
   }
+  ${tablet({ fontSize: "0.8rem", padding: "0.9rem" })}
 `;
 
 const Arrow = styled.div`

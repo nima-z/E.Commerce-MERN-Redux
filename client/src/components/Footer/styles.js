@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { mobile } from "../../responsive";
+import { mobile, tablet } from "../../responsive";
 
 export const Container = styled.div`
   display: flex;
@@ -49,6 +49,7 @@ export const List = styled.ul`
   padding: 0;
   display: flex;
   flex-wrap: wrap;
+  ${tablet({ flexDirection: "column" })}
 `;
 
 export const ListItem = styled.li`

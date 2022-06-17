@@ -2,11 +2,14 @@ import styled from "styled-components";
 import { mobile } from "../../responsive";
 
 export const Container = styled.header`
-  height: 80px;
+  height: 90px;
+  display: flex;
+  align-items: center;
   ${mobile({ height: "60px" })}
 `;
 
 export const Wrapper = styled.div`
+  width: 100%;
   padding: 0 2rem;
   display: flex;
   justify-content: space-between;
@@ -16,9 +19,7 @@ export const Wrapper = styled.div`
 
 export const Left = styled.div`
   flex: 1;
-  display: flex;
-  align-items: center;
-  /* margin-left: 0.5rem; */
+
   ${mobile({ display: "none" })}
 `;
 export const Center = styled.div`
@@ -61,8 +62,17 @@ export const Input = styled.input`
   }
 `;
 
-export const Logo = styled.h1`
-  font-weight: bold;
-  ${mobile({ fontSize: "1.5rem" })}
+export const Logo = styled.img`
+  width: 150px;
+  height: 100%;
   cursor: pointer;
+`;
+
+export const MobileLogo = styled.div`
+  width: 100%;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+  display: none;
+  ${mobile({ display: "flex" })}
 `;

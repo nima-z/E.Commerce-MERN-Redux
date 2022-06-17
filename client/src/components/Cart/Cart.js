@@ -8,6 +8,7 @@ import { useState, useEffect } from "react";
 import { requestWithSignal, userRequest } from "../../helpers/requestMethods";
 import { Link, useNavigate } from "react-router-dom";
 import { clearCart, addProduct, removeProduct } from "../../redux/CartRedux";
+import logoImage from "../Header/images/logo.jpeg";
 
 const Container = styled.div`
   padding: 1.5rem;
@@ -346,7 +347,7 @@ export default function Cart() {
             </SummaryItem>
             <StripeCheckout
               name="Boutique"
-              image="https://media.istockphoto.com/vectors/fashion-boutique-and-store-logo-label-emblems-with-doodle-line-art-vector-id1034771616?k=20&m=1034771616&s=612x612&w=0&h=_d6sgEXXV1f-bGNwNu8zrDrr89o6OOknS8Nlu4Hz4MA="
+              image={logoImage}
               billingAddress
               shippingAddress
               description={`Total: $${cart.total}`}

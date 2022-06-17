@@ -55,13 +55,13 @@ export default function SearchBox() {
   }
 
   return (
-    <Stack spacing={2} sx={{ width: 300 }}>
+    <Stack spacing={2} sx={{ width: 200 }}>
       <Autocomplete
         id="free-solo-demo"
         freeSolo
         options={products.map((product) => product.title)}
         renderInput={(params) => (
-          <TextField {...params} label="Search Product" />
+          <TextField {...params} label="Search Product" size="small" />
         )}
         onSelect={onSelect}
         onKeyDown={enterHandler}

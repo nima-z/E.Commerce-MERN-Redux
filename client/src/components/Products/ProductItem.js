@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
-import { mobile } from "../../responsive";
+import { mobile, tablet, smallScreen } from "../../responsive";
 import {
   FavoriteBorderOutlined,
   FavoriteOutlined,
@@ -27,6 +27,18 @@ const Container = styled.div`
   &:hover > .icons {
     opacity: 1;
   }
+  ${smallScreen({
+    width: "180px",
+    height: "260px",
+    display: "flex",
+    flexDirection: "column",
+  })}
+  ${tablet({
+    width: "165px",
+    height: "240px",
+    display: "flex",
+    flexDirection: "column",
+  })}
   ${mobile({
     width: "150px",
     height: "220px",

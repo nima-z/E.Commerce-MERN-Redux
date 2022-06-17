@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import SendIcon from "@mui/icons-material/Send";
+import { tablet } from "../../responsive";
 
 const Container = styled.div`
   width: 100%;
@@ -15,6 +16,7 @@ const Title = styled.h1`
   font-size: 3rem;
   margin-top: 0;
   color: rgba(0, 0, 0, 0.8);
+  ${tablet({ fontSize: "2rem" })}
 `;
 
 const Description = styled.p`

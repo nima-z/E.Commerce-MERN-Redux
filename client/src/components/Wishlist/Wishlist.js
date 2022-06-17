@@ -50,16 +50,6 @@ const TopButton = styled.button`
   }
 `;
 
-const TopTexts = styled.div`
-  ${mobile({ display: "none" })}
-`;
-
-const TopText = styled.span`
-  cursor: pointer;
-  text-decoration: underline;
-  margin-right: 2rem;
-`;
-
 const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
@@ -113,6 +103,7 @@ const Icons = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  ${mobile({ flexDirection: "row" })}
 `;
 
 const Hr = styled.hr`

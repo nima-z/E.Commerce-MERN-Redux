@@ -7,6 +7,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import SearchBox from "./SearchBox";
 import { useEffect, useState } from "react";
+import LogoImage from "./images/logo.jpeg";
 
 function NavBar() {
   const [username, setUsername] = useState("");
@@ -38,12 +39,11 @@ function NavBar() {
     <Container id="boutique">
       <Wrapper>
         <Left>
-          <SearchBox />
+          <Logo src={LogoImage} onClick={navigation} />
         </Left>
-        <Center>
-          <Logo onClick={navigation}>Boutique</Logo>
-        </Center>
+        {/* <Center></Center> */}
         <Right>
+          <SearchBox />
           <Link to="/wishlist">
             <Badge badgeContent={wishlist.quantity} color="error">
               <MdStarOutline size="20px" />
