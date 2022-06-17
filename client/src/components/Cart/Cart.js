@@ -40,16 +40,6 @@ const TopButton = styled.button`
   }
 `;
 
-const TopTexts = styled.div`
-  ${mobile({ display: "none" })}
-`;
-
-const TopText = styled.span`
-  cursor: pointer;
-  text-decoration: underline;
-  margin-right: 3rem;
-`;
-
 const Bottom = styled.div`
   display: flex;
   justify-content: space-between;

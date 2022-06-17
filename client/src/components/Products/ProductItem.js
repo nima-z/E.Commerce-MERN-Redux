@@ -132,7 +132,6 @@ function ProductItem({ product, token }) {
             `wishlist/${user.user._id}`,
             token
           );
-          console.log(res.data);
         } catch (err) {
           console.log(err);
         }

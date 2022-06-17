@@ -36,7 +36,6 @@ export default function Success() {
           status: data.status,
         });
         setOrderId(res.data.order._id);
-        console.log(res.data.order);
         if (res.data.order.status === "succeeded") {
           dispatch(clearCart());
         }

@@ -39,7 +39,6 @@ export default function Home({ token }) {
             { name: MONTHS[item._id - 1], "Active User": item.total },
           ])
         );
-        console.log("finaly works");
       } catch (err) {
         console.log(err);
       }

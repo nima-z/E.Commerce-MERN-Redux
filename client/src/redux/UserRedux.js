@@ -24,7 +24,6 @@ const userSlice = createSlice({
     },
     signupSuccess: (state, action) => {
       state.isFetching = false;
-      console.log(action.payload);
     },
     signupFailure: (state) => {
       state.isFetching = false;
