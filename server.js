@@ -2,6 +2,7 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 
 // modules
 const usersRoutes = require("./Routes/users-routes");
@@ -21,6 +22,7 @@ const app = express();
 // middlewares
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "client", "build")));
 
 // routes
 app.use("/api/auth", authRoutes);
@@ -32,6 +34,9 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/checkout", stripeRoute);
 app.use("/api/search", searchRoutes);
 // app.use("/api/db", dbRoute);
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 
 //express port
 app.listen(process.env.PORT || 5000, () => {
