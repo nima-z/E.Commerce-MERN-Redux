@@ -41,4 +41,5 @@ app.get("*", (req, res) => {
 //express port
 app.listen(process.env.PORT || 5000, () => {
   console.log("Server is Listening");
+  console.log(process.env.PORT);
 });

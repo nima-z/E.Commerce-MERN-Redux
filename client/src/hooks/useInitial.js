@@ -6,7 +6,7 @@ export default function useInitial() {
 
   return useQuery(
     ["products", "all"],
-    () => axios.get(`${process.env.PORT}/api/products`).then((res) => res.data),
+    () => axios.get(`/api/products`).then((res) => res.data),
     {
       onSuccess: (data) => {
         data.products.forEach((product) => {
