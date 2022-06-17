@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "http://localhost:5000/api/";
+const baseURL = process.env.PORT;
 
 const token =
   localStorage.getItem("persist:root") &&
@@ -21,7 +21,7 @@ export const userRequest = axios.create({
 export function requestWithSignal(controller, data, URL) {
   return axios.request({
     method: "POST",
-    url: `http://localhost:5000/api/${URL}`,
+    url: `${process.env.PORT}/${URL}`,
     headers: { token: `Bearer ${token}` },
     signal: controller.signal,
     data: { ...data },
@@ -31,7 +31,7 @@ export function requestWithSignal(controller, data, URL) {
 export function arrayWithSignal(controller, data, URL, newToken) {
   return axios.request({
     method: "POST",
-    url: `http://localhost:5000/api/${URL}`,
+    url: `${process.env.PORT}/${URL}`,
     headers: { token: `Bearer ${newToken}` },
     signal: controller.signal,
     data,
