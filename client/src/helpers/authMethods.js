@@ -13,7 +13,7 @@ import { initiateWishList } from "../redux/WishListRedux";
 export async function loggingIn(dispatch, user) {
   dispatch(loginStart());
   try {
-    const res = await axios.post("/auth/login", user);
+    const res = await axios.post("/api/auth/login", user);
     dispatch(loginSuccess(res.data));
     dispatch(initiateCart(res.data.user.cart));
     dispatch(initiateWishList(res.data.user.wishlist));
@@ -25,7 +25,7 @@ export async function loggingIn(dispatch, user) {
 export async function signingUp(dispatch, user) {
   dispatch(signupStart());
   try {
-    const res = await axios.post("/auth/register", user);
+    const res = await axios.post("/api/auth/register", user);
     dispatch(signupSuccess(res.data));
     loggingIn(dispatch, {
       email: user.email,
