@@ -6,8 +6,8 @@ export default function useProducts(category) {
     axios
       .get(
         category
-          ? `${process.env.PORT}/products?qcategory=${category}`
-          : `${process.env.PORT}/products`
+          ? `${process.env.PORT}/api/products?qcategory=${category}`
+          : `${process.env.PORT}/api/products`
       )
       .then((res) => res.data)
   );
