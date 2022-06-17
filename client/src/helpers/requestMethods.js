@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = "";
+const baseURL = "/api";
 
 const token =
   localStorage.getItem("persist:root") &&
@@ -8,10 +8,6 @@ const token =
     .currentUser &&
   JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user).currentUser
     .user.accessToken;
-
-export const publicRequest = axios.create({
-  baseURL,
-});
 
 export const userRequest = axios.create({
   baseURL,

@@ -1,4 +1,5 @@
 import { initiateCart } from "../redux/CartRedux";
+import axios from "axios";
 import {
   loginFailure,
   loginStart,
@@ -8,12 +9,11 @@ import {
   signupFailure,
 } from "../redux/UserRedux";
 import { initiateWishList } from "../redux/WishListRedux";
-import { publicRequest } from "./requestMethods";
 
 export async function loggingIn(dispatch, user) {
   dispatch(loginStart());
   try {
-    const res = await publicRequest.post("auth/login", user);
+    const res = await axios.post("/auth/login", user);
     dispatch(loginSuccess(res.data));
     dispatch(initiateCart(res.data.user.cart));
     dispatch(initiateWishList(res.data.user.wishlist));
@@ -25,7 +25,7 @@ export async function loggingIn(dispatch, user) {
 export async function signingUp(dispatch, user) {
   dispatch(signupStart());
   try {
-    const res = await publicRequest.post("auth/register", user);
+    const res = await axios.post("/auth/register", user);
     dispatch(signupSuccess(res.data));
     loggingIn(dispatch, {
       email: user.email,

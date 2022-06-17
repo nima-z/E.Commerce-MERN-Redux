@@ -2,9 +2,8 @@ import { useState, useEffect } from "react";
 import TextField from "@mui/material/TextField";
 import Stack from "@mui/material/Stack";
 import Autocomplete from "@mui/material/Autocomplete";
-import { publicRequest } from "../../helpers/requestMethods";
 import { useNavigate } from "react-router-dom";
-
+import axios from "axios";
 export default function SearchBox() {
   const [products, setProducts] = useState([]);
   const [input, setInput] = useState("");
@@ -14,7 +13,7 @@ export default function SearchBox() {
   useEffect(() => {
     if (products.length === 0) {
       (async () => {
-        const res = await publicRequest.get("/search/");
+        const res = await axios.get("/api/search/");
         setProducts(res.data.products);
       })();
     }

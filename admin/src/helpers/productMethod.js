@@ -13,13 +13,14 @@ import {
   createProductsSuccess,
 } from "../redux/productRedux";
 
-import { publicRequest, adminRequest } from "./requestMethod";
+import { adminRequest } from "./requestMethod";
+import axios from "axios";
 //==============================================
 
 export async function getProducts(dispatch) {
   dispatch(getProductsStart());
   try {
-    const res = await publicRequest.get("/products");
+    const res = await axios.get("/api/products");
     dispatch(getProductsSuccess(res.data.products));
   } catch (err) {
     dispatch(getProductsFailure());
