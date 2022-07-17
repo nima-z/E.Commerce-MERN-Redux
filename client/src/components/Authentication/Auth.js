@@ -24,14 +24,19 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  ${mobile({ height: "90vh" })}
+  ${mobile({
+    height: "65vh",
+    background:
+      "url('https://images.unsplash.com/photo-1621261027519-a71ac66d5a68?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8ZmFzaGlvbiUyMGJvdXRpcXVlfGVufDB8fDB8fA%3D%3D&w=1000&q=80')",
+    backgroundSize: "contain",
+  })}
 `;
 
 const Wrapper = styled.div`
-  min-width: 10%;
+  width: 35%;
   background-color: white;
   padding: 2rem;
-  ${mobile({ width: "70%" })}
+  ${mobile({ width: "80%" })}
 `;
 
 const Title = styled.h1`
@@ -41,7 +46,7 @@ const Title = styled.h1`
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  width: 20rem;
+  /* width: 20rem; */
   gap: 0.5rem;
 `;
 

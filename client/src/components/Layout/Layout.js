@@ -14,10 +14,10 @@ export default function Layout(props) {
   }
   return (
     <Fragment>
-      <NavBar />
       <MobileLogo>
         <Logo src={LogoImage} onClick={navigation} />
       </MobileLogo>
+      <NavBar />
       <Announcement />
       <main>{props.children}</main>
       <Footer />

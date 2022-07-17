@@ -57,11 +57,13 @@ export default function Footer() {
             <Link to="/cart#boutique">Cart</Link>
           </ListItem>
           <ListItem>
-            <Link to="/#category">Catergory</Link>
+            <Link to="/products">All Products</Link>
           </ListItem>
-          <ListItem>My Account</ListItem>
           <ListItem>
             <Link to="/wishlist#boutique">Wish List</Link>
+          </ListItem>
+          <ListItem>
+            <Link to="/#category">Catergory</Link>
           </ListItem>
           <ListItem>About</ListItem>
         </List>

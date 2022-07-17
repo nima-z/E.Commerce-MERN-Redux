@@ -1,4 +1,4 @@
-import { Container, Wrapper, Left, Center, Right, Logo } from "./styles";
+import { Container, Wrapper, Left, Right, Logo } from "./styles";
 
 import ProfileMenu from "./ProfileMenu";
 import { MdOutlineShoppingCart, MdStarOutline } from "react-icons/md";
@@ -41,7 +41,6 @@ function NavBar() {
         <Left>
           <Logo src={LogoImage} onClick={navigation} />
         </Left>
-        {/* <Center></Center> */}
         <Right>
           <SearchBox />
           <Link to="/wishlist">

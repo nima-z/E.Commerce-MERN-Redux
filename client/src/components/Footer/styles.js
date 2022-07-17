@@ -1,3 +1,4 @@
+import { MobileFriendlyOutlined } from "@mui/icons-material";
 import styled from "styled-components";
 import { mobile, tablet } from "../../responsive";
 
@@ -36,7 +37,7 @@ export const SocialIcon = styled.div`
 export const Center = styled.div`
   flex: 1;
   padding: 1.7rem;
-  ${mobile({ display: "none" })}
+  /* ${mobile({ display: "none" })} */
 `;
 
 export const Title = styled.h3`
@@ -49,7 +50,6 @@ export const List = styled.ul`
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  ${tablet({ flexDirection: "column" })}
 `;
 
 export const ListItem = styled.li`
